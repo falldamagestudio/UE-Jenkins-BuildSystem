@@ -18,3 +18,8 @@ plugins:
     source:
       version: 2.6.3
 
+  # This plugin makes the account used when launching a job configurable (by default, jobs are launched as SYSTEM)
+  # https://plugins.jenkins.io/authorize-project/
+  - artifactId: authorize-project
+    source:
+      version: 1.3.0
