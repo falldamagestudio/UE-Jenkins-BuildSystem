@@ -12,3 +12,9 @@ plugins:
     source:
       version: 4.4.4
 
+  # This plugin provides Matrix Authorization, i.e. giving individual users/groups permission to do individual things
+  # https://plugins.jenkins.io/matrix-auth/
+  - artifactId: matrix-auth
+    source:
+      version: 2.6.3
+
