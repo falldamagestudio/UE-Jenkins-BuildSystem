@@ -1,0 +1,14 @@
+plugins:
+
+  # This plugin allows configuration of Jenkins based on human-readable declarative configuration files.
+  # https://plugins.jenkins.io/configuration-as-code/
+  - artifactId: configuration-as-code
+    source:
+      version: 1.44
+
+  # This plugin integrates Git with Jenkins.
+  # https://plugins.jenkins.io/git/
+  - artifactId: git
+    source:
+      version: 4.4.4
+
