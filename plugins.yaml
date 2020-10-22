@@ -23,3 +23,39 @@ plugins:
   - artifactId: authorize-project
     source:
       version: 1.3.0
+
+  # A key component of the Pipeline plugin suite, this plugin provides the Jenkins job and build types for Pipeline along with a generic user interface
+  # https://plugins.jenkins.io/workflow-job/
+  - artifactId: workflow-job
+    source:
+      version: 2.40
+
+  # A key component of the Pipeline plugin suite, this provides the standard execution engine for Pipeline steps, based on a custom Groovy interpreter that runs inside the Jenkins master process.
+  # https://plugins.jenkins.io/workflow-cps/
+  - artifactId: workflow-cps
+    source:
+      version: 2.83
+
+  # Provides a stage-by-stage progress view for Pipeline jobs
+  # https://plugins.jenkins.io/pipeline-stage-view/
+  - artifactId: pipeline-stage-view
+    source:
+      version: 2.17
+
+  # This plugin adds folder support to jenkins; the folders can be used to group/organize jobs
+  # https://plugins.jenkins.io/cloudbees-folder/
+  - artifactId: cloudbees-folder
+    source:
+      version: 6.14
+
+  # This plugin allows writing jobs in the text-based Job DSL
+  # https://plugins.jenkins.io/job-dsl/
+  - artifactId: job-dsl
+    source:
+      version: 1.77
+
+  # The Pipeline Model Definition Plugin provides a config-like syntax for defining Pipelines - thus Declarative Pipeline
+  # https://plugins.jenkins.io/pipeline-model-definition/
+  - artifactId: pipeline-model-definition
+    source:
+      version: 1.7.2
