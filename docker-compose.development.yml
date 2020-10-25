@@ -1,0 +1,8 @@
+services:
+
+  jenkins:
+    environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/config/development
+      - JENKINS_ADMIN_USERNAME=admin
+      - JENKINS_ADMIN_PASSWORD=smurf
+  

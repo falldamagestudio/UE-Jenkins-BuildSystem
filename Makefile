@@ -1,12 +1,7 @@
-
-
-.PHONY: build run
+.PHONY: build run-development
 
 build:
 	docker-compose build
 
-start:
-	docker-compose up
-
-stop:
-	docker-compose down -v
+run-development:
+	docker-compose -f docker-compose.yml -f docker-compose.development.yml up
