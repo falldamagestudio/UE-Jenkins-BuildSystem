@@ -59,3 +59,9 @@ plugins:
   - artifactId: pipeline-model-definition
     source:
       version: 1.7.2
+  
+  # This is a Jenkins plugin which lets you log in to Jenkins with your Google account. Also allows you to restrict access to accounts in a given Google Apps domain.
+  # https://plugins.jenkins.io/google-login/
+  - artifactId: google-login
+    source:
+      version: 1.6

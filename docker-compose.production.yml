@@ -1,0 +1,8 @@
+services:
+
+  jenkins:
+    environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/config/production
+      - JENKINS_URL=http://localhost:8080/
+      - GOOGLE_OAUTH_CLIENT_ID=clientid
+      - GOOGLE_OAUTH_CLIENT_SECRET=clientsecret
