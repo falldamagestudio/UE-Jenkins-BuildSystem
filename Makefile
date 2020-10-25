@@ -3,8 +3,10 @@
 .PHONY: build run
 
 build:
-	docker build -t j --progress plain .
+	docker-compose build
 
-run: 
-	docker run --rm -p 8080:8080 --name jenkins -it --env JENKINS_ADMIN_USERNAME=admin --env JENKINS_ADMIN_PASSWORD=smurf j
+start:
+	docker-compose up
 
+stop:
+	docker-compose down -v

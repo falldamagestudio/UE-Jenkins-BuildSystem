@@ -1,0 +1,18 @@
+
+version: "3.8"
+services:
+
+  jenkins:
+    build:
+      context: .
+    image: j
+    user: jenkins
+    privileged: true
+    ports:
+      - 8080:8080
+      - 50000:50000
+    container_name: jenkins
+    environment:
+      - JENKINS_ADMIN_USERNAME=admin
+      - JENKINS_ADMIN_PASSWORD=smurf
+  
