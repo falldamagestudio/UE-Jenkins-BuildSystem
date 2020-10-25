@@ -63,7 +63,7 @@ def configXml = """\
     <concurrentBuild>false</concurrentBuild>
     <builders>
       <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.37">
-        <targets>**/*.groovy</targets>
+        <targets>*.groovy</targets>
         <usingScriptText>false</usingScriptText>
         <ignoreExisting>false</ignoreExisting>
         <removedJobAction>IGNORE</removedJobAction>
@@ -82,7 +82,19 @@ if (!Jenkins.instance.getItem(jobName)) {
   def xmlStream = new ByteArrayInputStream( configXml.getBytes() )
   try {
     def seedJob = Jenkins.instance.createProjectFromXML(jobName, xmlStream)
-    seedJob.scheduleBuild(0, null)
+
+    // Do not run the seed job automatically at startup.
+    // It will be run as the SYSTEM user, and will fail with the output below.
+    // If you run the seed job manually, it will run in the context of your user, and work as intended.
+    //-------------------
+    // Started
+    // Running as SYSTEM
+    // Building in workspace /var/jenkins_home/jobs/SeedJob/workspace
+    // Processing DSL script test.groovy
+    // ERROR: script not yet approved for use
+    // Finished: FAILURE
+    //-------------------
+    // seedJob.scheduleBuild(0, null)
   } catch (ex) {
     println "ERROR: ${ex}"
     println configXml.stripIndent()
