@@ -1,0 +1,20 @@
+# Ignore any local Terraform cache folders
+
+.terraform
+
+# Ignore any local Terraform state files
+
+*.tfstate
+*.tfstate.*
+
+# Ignore any local per-user Terraform pre-defined variable files
+
+user.auto.tfvars
+
+# Ignore any local crash logs
+
+crash.log
+
+# Ignore private key file(s)
+
+/ansible/jenkins-master-ansible.private_key
