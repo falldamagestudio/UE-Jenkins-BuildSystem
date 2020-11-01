@@ -1,20 +1,13 @@
 
 module "google_apis" {
-  source = "../services/google_apis"
-}
-
-module "oauth" {
-  depends_on = [module.google_apis]
-  source = "../services/oauth"
-
-  support_email = "jenkins-master@falldamagestudio.com"
+  source = "../../services/google_apis"
 }
 
 module "vm" {
 
-  depends_on = [module.google_apis, module.oauth]
+  depends_on = [module.google_apis]
 
-  source = "../services/vm"
+  source = "../../services/vm"
 
   name           = var.instance_name
   image          = var.image
