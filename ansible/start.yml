@@ -25,3 +25,7 @@
         files:
           - docker-compose.yml
           - docker-compose.production.yml
+      environment:
+        GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
+        GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
+
