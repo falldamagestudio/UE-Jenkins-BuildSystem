@@ -13,4 +13,6 @@ services:
       - 50000:50000
     container_name: jenkins
     volumes:
-      - ./config:/var/jenkins_home/config
+      - ../config:/var/jenkins_home/mounted-configs/config
+      - ../init.groovy.d:/var/jenkins_home/mounted-configs/init.groovy.d
+      - ../job-dsl:/var/jenkins_home/mounted-configs/job-dsl

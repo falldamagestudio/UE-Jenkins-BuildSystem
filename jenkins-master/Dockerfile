@@ -5,10 +5,12 @@ ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 ADD plugins.yaml /usr/share/jenkins/ref/plugins.yaml
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.yaml --verbose
 
-# Groovy script to create the "SeedJob" (the standard way, not with DSL)
-COPY init.groovy.d/* /usr/share/jenkins/ref/init.groovy.d/
-
-# The place where to put the DSL files for the Seed Job to run
-RUN mkdir -p /usr/share/jenkins/ref/jobs/SeedJob
-
-COPY job-dsl /usr/share/jenkins/ref/jobs/SeedJob/workspace
+# Create three folders:
+# /var/jenkins_home/mounted-configs/config - which should contain JCasC configuration files
+# /var/jenkins_home/mounted-configs/init.groovy.d - which should contain groovy init scripts (this is particuarly used to create the SeedJob)
+# /var/jenkins_home/mounted-configs/job-dsl - which should contain Job DSL scripts that will create the pipeline jobs
+RUN mkdir -p /var/jenkins_home/mounted-configs \
+    && mkdir -p /usr/share/jenkins/ref/jobs/SeedJob \
+    && ln -s /var/jenkins_home/config /var/jenkins_home/mounted-configs/config \
+    && ln -s /usr/share/jenkins/ref/init.groovy.d /var/jenkins_home/mounted-configs/init.groovy.d \
+    && ln -s /usr/share/jenkins/ref/jobs/SeedJob/workspace /var/jenkins_home/mounted-configs/job-dsl
