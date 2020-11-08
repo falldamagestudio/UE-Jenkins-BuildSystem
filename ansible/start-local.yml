@@ -12,7 +12,7 @@
         docker_compose_location: "../jenkins-master-docker-compose"
         docker_compose_files: [
           "docker-compose.yml",
-          "docker-compose.development.yml"
+          "docker-compose.local-auth.yml"
         ]
         docker_compose_environment_variables:
           JENKINS_URL: "http://localhost:8080/"

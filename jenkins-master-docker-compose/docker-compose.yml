@@ -13,6 +13,9 @@ services:
       - 50000:50000
     container_name: jenkins
     environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/mounts/config
       - JENKINS_URL=${JENKINS_URL}
     volumes:
-      - ../jenkins-master-config:/var/jenkins_home/mounted-configs
+      - ../jenkins-master-config/init.groovy.d:/var/jenkins_home/mounts/init.groovy.d
+      - ../jenkins-master-config/job-dsl:/var/jenkins_home/mounts/job-dsl
+

@@ -1,9 +1,0 @@
-version: "2"
-
-services:
-
-  jenkins:
-    environment:
-      - CASC_JENKINS_CONFIG=/var/jenkins_home/mounted-configs/config/production
-      - GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}
-      - GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET}

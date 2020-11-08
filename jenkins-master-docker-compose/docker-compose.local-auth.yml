@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+
+  jenkins:
+    volumes:
+      - ../jenkins-master-config/config/local-auth:/var/jenkins_home/mounts/config/local-auth
+      - ../jenkins-master-config/config/shared:/var/jenkins_home/mounts/config/shared
+    environment:
+      - JENKINS_ADMIN_USERNAME=${JENKINS_ADMIN_USERNAME}
+      - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD}
+  
