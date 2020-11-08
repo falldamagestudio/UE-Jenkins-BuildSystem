@@ -5,7 +5,6 @@ services:
   jenkins:
     environment:
       - CASC_JENKINS_CONFIG=/var/jenkins_home/mounted-configs/config/development
-      - JENKINS_URL=http://localhost:8080/
       - JENKINS_ADMIN_USERNAME=${JENKINS_ADMIN_USERNAME}
       - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD}
   

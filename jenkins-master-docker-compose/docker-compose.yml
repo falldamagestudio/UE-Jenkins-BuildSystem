@@ -12,5 +12,7 @@ services:
       - 8080:8080
       - 50000:50000
     container_name: jenkins
+    environment:
+      - JENKINS_URL=${JENKINS_URL}
     volumes:
       - ../jenkins-master-config:/var/jenkins_home/mounted-configs

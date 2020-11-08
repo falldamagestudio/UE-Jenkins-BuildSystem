@@ -10,6 +10,7 @@ docker_compose_files: [
 ]
 
 docker_compose_environment_variables:
+  JENKINS_URL: "{{ JENKINS_URL }}"
   GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
   GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
 

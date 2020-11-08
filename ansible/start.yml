@@ -13,6 +13,7 @@
           "docker-compose.production.yml"
         ]
         docker_compose_environment_variables:
+          JENKINS_URL: "http://localhost:8080/"
           GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
           GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
         
