@@ -1,0 +1,19 @@
+- name: Install jenkins-master container
+  hosts: localhost
+
+  roles:
+    - role: jenkins_master
+      vars:
+        deploy_config: false
+        deploy_docker_compose: false
+
+        mounted_configs: "./mounted-configs"
+
+        docker_compose_location: "../jenkins-master-docker-compose"
+        docker_compose_files: [
+          "docker-compose.yml",
+          "docker-compose.development.yml"
+        ]
+        docker_compose_environment_variables:
+          JENKINS_ADMIN_USERNAME: "admin"
+          JENKINS_ADMIN_PASSWORD: "smurf"

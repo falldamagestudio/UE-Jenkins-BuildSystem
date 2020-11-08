@@ -5,4 +5,14 @@
   become_user: root
 
   roles:
-    - jenkins_master
+    - role: jenkins_master
+      vars:
+        docker_compose_location: "{{ jenkins_home }}/jenkins-master-docker-compose"
+        docker_compose_files: [
+          "docker-compose.yml",
+          "docker-compose.production.yml"
+        ]
+        docker_compose_environment_variables:
+          GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
+          GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
+        

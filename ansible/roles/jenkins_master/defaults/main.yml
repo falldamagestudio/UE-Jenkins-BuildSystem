@@ -1,0 +1,18 @@
+jenkins_home: "/var/jenkins/home"
+
+mounted_configs: "/usr/jenkins_home/mounted-configs"
+
+docker_compose_location: "{{ jenkins_home }}/docker-compose"
+
+docker_compose_files: [
+  docker-compose.yml,
+  docker-compose.production.yml
+]
+
+docker_compose_environment_variables:
+  GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
+  GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
+
+deploy_config: true
+deploy_docker_compose: true
+start_container: true

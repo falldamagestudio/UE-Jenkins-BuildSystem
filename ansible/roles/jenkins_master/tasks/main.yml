@@ -1,20 +1,23 @@
 ---
-# - name: Deploy config files
-#   copy:
-#     src: ../jenkins-master-config/
-#     dest: "{{ mounted_configs }}"
-
-# - name: Deploy Docker Compose files
-#   copy:
-#     src: ../jenkins-master-docker-compose/
-#     dest: "{{ jenkins_home }}/docker-compose"
+- name: Deploy config files
+  copy:
+    src: ../jenkins-master-config/
+    dest: "{{ mounted_configs }}"
+  when:
+    deploy_config
+    
+- name: Deploy Docker Compose files
+  copy:
+    src: ../jenkins-master-docker-compose/
+    dest: "{{ jenkins_home }}/docker-compose"
+  when:
+    deploy_docker_compose
 
 - name: Start jenkins-master container
   docker_compose:
-    project_src: "{{ jenkins_home }}/docker-compose"
-    files:
-      - docker-compose.yml
-      - docker-compose.production.yml
+    project_src: "{{ docker_compose_location }}"
+    files: "{{ docker_compose_files }}"
   environment:
-    GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
-    GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
+    "{{ docker_compose_environment_variables }}"
+  when:
+    start_container
