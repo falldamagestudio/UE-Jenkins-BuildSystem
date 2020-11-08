@@ -2,4 +2,4 @@ jenkins:
   securityRealm:
     googleOAuth2:
       clientId: "${GOOGLE_OAUTH_CLIENT_ID}"
-      clientSecret: "blah-${GOOGLE_OAUTH_CLIENT_SECRET}"
+      clientSecret: "${GOOGLE_OAUTH_CLIENT_SECRET}"
