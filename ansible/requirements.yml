@@ -5,3 +5,8 @@ collections:
 roles:
   - name: robertdebock.python_pip
     version: 3.4.0
+
+  - name: angstwad.docker_ubuntu
+    src: https://github.com/angstwad/docker.ubuntu
+    version: v3.9.0
+

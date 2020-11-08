@@ -4,24 +4,5 @@
   become: yes
   become_user: root
 
-  tasks:
-    - name: Install required system packages
-      apt: name={{ item }} state=latest update_cache=yes
-      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
-
-    - name: Add Docker GPG apt Key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: Add Docker Repository
-      apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu bionic stable
-        state: present
-
-    - name: Update apt and install docker-ce + docker-compose
-      apt: update_cache=yes name=docker-ce,docker-compose state=latest
-
-    - name: Install docker Python library
-      pip:
-        name: docker
+  roles:
+    - angstwad.docker_ubuntu
