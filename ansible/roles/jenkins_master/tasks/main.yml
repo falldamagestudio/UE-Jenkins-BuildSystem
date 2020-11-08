@@ -1,12 +1,12 @@
 ---
 - name: Deploy config files
   copy:
-    src: ../jenkins/config
+    src: ../jenkins-master/config
     dest: "{{ jenkins_home }}"
 
 - name: copy Docker Compose files
   copy:
-    src: ../jenkins/{{ item }}
+    src: ../jenkins-master/{{ item }}
     dest: "{{ jenkins_home }}/{{ item }}"
   loop:
     - docker-compose.yml
