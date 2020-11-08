@@ -1,12 +1,17 @@
 ---
-- name: Deploy config files
-  copy:
-    src: ../jenkins-master-config/
-    dest: "{{ mounted_configs }}"
+# - name: Deploy config files
+#   copy:
+#     src: ../jenkins-master-config/
+#     dest: "{{ mounted_configs }}"
+
+# - name: Deploy Docker Compose files
+#   copy:
+#     src: ../jenkins-master-docker-compose/
+#     dest: "{{ jenkins_home }}/docker-compose"
 
 - name: Start jenkins-master container
   docker_compose:
-    project_src: "{{ mounted_configs }}/docker-compose"
+    project_src: "{{ jenkins_home }}/docker-compose"
     files:
       - docker-compose.yml
       - docker-compose.production.yml
