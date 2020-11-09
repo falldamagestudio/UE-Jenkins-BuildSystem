@@ -4,19 +4,17 @@
   roles:
     - role: jenkins_master
       vars:
-        deploy_config: false
-        deploy_docker_compose: false
+        local_docker_host: true
 
-        mounted_configs: "./mounted-configs"
-
-        docker_compose_location: "../jenkins-master-docker-compose"
         docker_compose_files: [
           "docker-compose.yml",
           "docker-compose.google-auth.yml"
         ]
+
         docker_compose_environment_variables:
           JENKINS_URL: "http://localhost:8080/"
 #           JENKINS_ADMIN_USERNAME: "admin"
 #           JENKINS_ADMIN_PASSWORD: "smurf"
           GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
           GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
+          HOST_MOUNTS: "../jenkins-master-config"

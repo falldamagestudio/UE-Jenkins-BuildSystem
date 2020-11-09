@@ -4,8 +4,8 @@ services:
 
   jenkins:
     volumes:
-      - ../jenkins-master-config/config/local-auth:/var/jenkins_home/mounts/config/local-auth
-      - ../jenkins-master-config/config/shared:/var/jenkins_home/mounts/config/shared
+      - ${HOST_MOUNTS}/config/local-auth:/var/jenkins_home/mounts/config/local-auth
+      - ${HOST_MOUNTS}/config/shared:/var/jenkins_home/mounts/config/shared
     environment:
       - JENKINS_ADMIN_USERNAME=${JENKINS_ADMIN_USERNAME}
       - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD}

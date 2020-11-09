@@ -1,21 +1,26 @@
 ---
+- name: Set docker host paths
+  set_fact: |
+    docker_host__mounts_location="{{ local_host__mounts_location if local_docker_host else remote_host_mounts_location }}"
+    docker_host__docker_compose_location="{{ local_host__docker_compose_location if local_docker_host else remote_host__docker_compose_location }}"
+
 - name: Deploy config files
   copy:
-    src: ../jenkins-master-config/
-    dest: "{{ mounted_configs }}"
+    src: "{{ local_host__mounts_location }}"
+    dest: "{{ remote_host__mounts_location }}"
   when:
-    deploy_config
+    (not local_docker_host) and deploy_config
     
 - name: Deploy Docker Compose files
   copy:
-    src: ../jenkins-master-docker-compose/
-    dest: "{{ jenkins_home }}/docker-compose"
+    src: "{{ local_host__docker_compose_location }}"
+    dest: "{{ remote_host__docker_compose_location }}"
   when:
-    deploy_docker_compose
+    (not local_docker_host) and deploy_docker_compose
 
 - name: Start jenkins-master container
   docker_compose:
-    project_src: "{{ docker_compose_location }}"
+    project_src: "{{ docker_host__docker_compose_location }}"
     files: "{{ docker_compose_files }}"
   environment:
     "{{ docker_compose_environment_variables }}"

@@ -1,19 +1,24 @@
-jenkins_home: "/var/jenkins/home"
-
-mounted_configs: "/usr/jenkins_home/mounted-configs"
-
-docker_compose_location: "{{ jenkins_home }}/docker-compose"
-
+---
 docker_compose_files: [
-  docker-compose.yml,
-  docker-compose.production.yml
+  docker-compose.yml
 ]
 
 docker_compose_environment_variables:
   JENKINS_URL: "{{ JENKINS_URL }}"
   GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
   GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
+  HOST_MOUNTS: "{{ HOST_MOUNTS }}"
 
+local_docker_host: false
 deploy_config: true
 deploy_docker_compose: true
 start_container: true
+
+local_host__mounts_location: "../jenkins-master-config"
+local_host__docker_compose_location: "../jenkins-master-docker-compose"
+
+remote_host__mounts_location: "~/jenkins-master-mounts"
+remote_host__docker_compose_location: "~/jenkins-master-docker-compose"
+
+container__jenkins_home_location: "/var/jenkins_home"
+container__jenkins_mounts_location: "/var/jenkins_home/mounts"
