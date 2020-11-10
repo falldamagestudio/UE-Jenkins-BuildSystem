@@ -20,8 +20,8 @@ start_container: true
 local_host__mounts_location: "../jenkins-master-config"
 local_host__docker_compose_location: "../jenkins-master-docker-compose"
 
-remote_host__mounts_location: "~/jenkins-master-mounts"
-remote_host__docker_compose_location: "~/jenkins-master-docker-compose"
+remote_host__mounts_location: "/root/jenkins-master-mounts"
+remote_host__docker_compose_location: "/root/jenkins-master-docker-compose"
 
 container__jenkins_home_location: "/var/jenkins_home"
 container__jenkins_mounts_location: "/var/jenkins_home/mounts"
