@@ -10,6 +10,9 @@ docker_compose_environment_variables:
   HOST_MOUNTS: "{{ HOST_MOUNTS }}"
 
 local_docker_host: false
+install_docker: true
+install_rsync: true
+stop_container: false
 deploy_config: true
 deploy_docker_compose: true
 start_container: true

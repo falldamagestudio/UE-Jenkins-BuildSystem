@@ -1,4 +1,4 @@
-- name: Install jenkins-master container
+- name: Install & start jenkins-master container
   hosts: jenkins-master
   remote_user: ansible
   become: yes
@@ -7,13 +7,14 @@
   roles:
     - role: jenkins_master
       vars:
-        docker_compose_location: "{{ jenkins_home }}/jenkins-master-docker-compose"
+
         docker_compose_files: [
           "docker-compose.yml",
           "docker-compose.google-auth.yml"
         ]
+
         docker_compose_environment_variables:
           JENKINS_URL: "http://localhost:8080/"
           GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
           GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
-        
+          HOST_MOUNTS: "~/jenkins-master-mounts"

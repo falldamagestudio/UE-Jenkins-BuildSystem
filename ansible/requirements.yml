@@ -9,4 +9,3 @@ roles:
   - name: angstwad.docker_ubuntu
     src: https://github.com/angstwad/docker.ubuntu
     version: v3.9.0
-

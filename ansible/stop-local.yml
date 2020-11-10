@@ -1,4 +1,4 @@
-- name: Install & start jenkins-master container
+- name: Stop jenkins-master container
   hosts: localhost
 
   roles:
@@ -18,3 +18,9 @@
           GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
           GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
           HOST_MOUNTS: "../jenkins-master-config"
+
+        stop_container: true
+        deploy_config: false
+        deploy_docker_compose: false
+        start_container: false
+  
