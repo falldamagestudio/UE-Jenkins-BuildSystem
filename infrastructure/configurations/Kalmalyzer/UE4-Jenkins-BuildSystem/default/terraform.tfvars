@@ -1,6 +1,6 @@
-terraform_state_bucket = "fd-jenkins-cloud-state"
+terraform_state_bucket = "kalms-ue4-jenkins-buildsystem-state"
 
-project_id = "fd-jenkins-cloud"
+project_id = "kalms-ue4-jenkins-buildsystem"
 zone       = "europe-west1-b"
 
 image          = "ubuntu-os-cloud/ubuntu-minimal-2004-lts"
