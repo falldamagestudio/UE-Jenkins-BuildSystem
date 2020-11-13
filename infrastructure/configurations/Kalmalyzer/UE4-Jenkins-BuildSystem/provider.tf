@@ -5,3 +5,8 @@ provider "google" {
   project = var.project_id
   zone    = var.zone
 }
+
+provider "time" {
+
+  version = "~> 0.6"
+}
