@@ -1,13 +1,13 @@
 
 module "google_apis" {
-  source = "../../../../services/google_apis"
+  source = "../../../services/google_apis"
 }
 
 module "vm" {
 
   depends_on = [module.google_apis]
 
-  source = "../../../../services/vm"
+  source = "../../../services/vm"
 
   name           = var.instance_name
   image          = var.image
