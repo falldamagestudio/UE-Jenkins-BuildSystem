@@ -1,5 +1,3 @@
-terraform_state_bucket = "kalms-ue4-jenkins-buildsystem-state"
-
 project_id = "kalms-ue4-jenkins-buildsystem"
 zone       = "europe-west1-b"
 
