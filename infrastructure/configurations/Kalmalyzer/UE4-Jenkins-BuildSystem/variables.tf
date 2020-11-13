@@ -8,11 +8,6 @@ variable "zone" {
   type        = string
 }
 
-variable "terraform_state_bucket" {
-  description = "Name of GCS bucket that contains all Terraform state files."
-  type        = string
-}
-
 variable "image" {
   description = "Name of a VM disk image that will be used when creating the license manager VM. The image must already have been built with Packer, and exist within the GCP project."
   type        = string
