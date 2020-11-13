@@ -14,7 +14,7 @@
         ]
 
         docker_compose_environment_variables:
-          JENKINS_URL: "http://jenkins-cloud.falldamagestudio.com:8080/"
+          JENKINS_URL: "{{ JENKINS_URL }}"
           GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
           GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
           HOST_MOUNTS: "~/jenkins-master-mounts"

@@ -12,7 +12,7 @@
         ]
 
         docker_compose_environment_variables:
-          JENKINS_URL: "http://localhost:8080/"
+          JENKINS_URL: "{{ JENKINS_URL }}"
 #           JENKINS_ADMIN_USERNAME: "admin"
 #           JENKINS_ADMIN_PASSWORD: "smurf"
           GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
