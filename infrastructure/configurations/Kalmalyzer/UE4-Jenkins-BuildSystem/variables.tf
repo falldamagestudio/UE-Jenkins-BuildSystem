@@ -3,6 +3,11 @@ variable "project_id" {
   type        = string
 }
 
+variable "build_artifacts_location" {
+  description = "Docker build artifact registry region/multi-region."
+  type        = string
+}
+
 variable "zone" {
   description = "License server VM zone."
   type        = string

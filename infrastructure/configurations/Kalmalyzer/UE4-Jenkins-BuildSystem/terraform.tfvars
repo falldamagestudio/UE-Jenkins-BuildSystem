@@ -1,6 +1,8 @@
 project_id = "kalms-ue4-jenkins-buildsystem"
 zone       = "europe-west1-b"
 
+build_artifacts_location = "europe-west1"
+
 image          = "ubuntu-os-cloud/ubuntu-minimal-2004-lts"
 boot_disk_type = "pd-balanced"
 boot_disk_size = "10"

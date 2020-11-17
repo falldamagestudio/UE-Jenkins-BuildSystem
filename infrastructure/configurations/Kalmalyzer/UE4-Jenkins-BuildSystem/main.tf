@@ -3,6 +3,14 @@ module "google_apis" {
   source = "../../../services/google_apis"
 }
 
+module "docker_build_artifacts" {
+  depends_on = [module.google_apis]
+
+  source = "../../../services/docker_build_artifacts"
+
+  location = var.build_artifacts_location
+}
+
 module "vm" {
 
   depends_on = [module.google_apis]
