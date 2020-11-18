@@ -32,3 +32,11 @@ variable "ssh_username" {
 variable "ssh_pub_key_path" {
   type = string
 }
+
+variable "build_artifacts_location" {
+  type = string
+}
+
+variable "build_artifacts_name" {
+  type = string
+}

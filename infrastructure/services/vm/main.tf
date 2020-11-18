@@ -23,7 +23,26 @@ resource "google_compute_instance" "default" {
     }
   }
 
+  service_account {
+    email  = google_service_account.ue4_jenkins_master_service_account.email
+    scopes = ["cloud-platform"]
+  }
+
   allow_stopping_for_update = true
+}
+
+resource "google_service_account" "ue4_jenkins_master_service_account" {
+  account_id   = "ue4-jenkins-master"
+  display_name = "UE4 Jenkins Master VM"
+}
+
+resource "google_artifact_registry_repository_iam_member" "build_artifact_downloader_access" {
+  provider = google-beta
+
+  location = var.build_artifacts_location
+  repository = var.build_artifacts_name
+  role   = "roles/artifactregistry.reader"
+  member = "serviceAccount:${google_service_account.ue4_jenkins_master_service_account.email}"
 }
 
 resource "google_compute_address" "external_ip_address" {

@@ -13,9 +13,12 @@ module "docker_build_artifacts" {
 
 module "vm" {
 
-  depends_on = [module.google_apis]
+  depends_on = [module.google_apis, module.docker_build_artifacts]
 
   source = "../../../services/vm"
+
+  build_artifacts_location = var.build_artifacts_location
+  build_artifacts_name = module.docker_build_artifacts.name
 
   name           = var.instance_name
   image          = var.image
