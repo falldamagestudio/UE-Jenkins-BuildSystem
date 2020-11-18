@@ -12,6 +12,7 @@
         ]
 
         docker_compose_environment_variables:
+          IMAGE_WITH_TAG: "{{ IMAGE_WITH_TAG }}"
           JENKINS_URL: "{{ JENKINS_URL }}"
 #           JENKINS_ADMIN_USERNAME: "admin"
 #           JENKINS_ADMIN_PASSWORD: "smurf"

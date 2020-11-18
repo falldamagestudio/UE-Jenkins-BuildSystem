@@ -14,7 +14,10 @@
         ]
 
         docker_compose_environment_variables:
+          IMAGE_WITH_TAG: "{{ IMAGE_WITH_TAG }}"
           JENKINS_URL: "{{ JENKINS_URL }}"
           GOOGLE_OAUTH_CLIENT_ID: "{{ GOOGLE_OAUTH_CLIENT_ID }}"
           GOOGLE_OAUTH_CLIENT_SECRET: "{{ GOOGLE_OAUTH_CLIENT_SECRET }}"
           HOST_MOUNTS: "~/jenkins-master-mounts"
+
+        artifact_registry_location: "{{ ARTIFACT_REGISTRY_LOCATION }}"

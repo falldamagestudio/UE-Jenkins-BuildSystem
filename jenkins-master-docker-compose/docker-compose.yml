@@ -3,10 +3,7 @@ version: "2"
 services:
 
   jenkins:
-    build:
-      # TODO: make path no longer hardcoded
-      context: .
-    image: j
+    image: ${IMAGE_WITH_TAG}
     user: jenkins
     privileged: true
     ports:
