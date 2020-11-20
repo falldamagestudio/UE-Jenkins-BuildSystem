@@ -44,11 +44,11 @@
   when:
     (not local_docker_host) and deploy_docker_compose
 
-#- name: Configure docker to authenticate against Google Artifact Registry
-#  shell: gcloud auth configure-docker {{ artifact_registry_location }}
-#  when:
-#    (not local_docker_host) and start_container
-#
+- name: Configure docker to authenticate against Google Artifact Registry
+  shell: gcloud auth configure-docker {{ artifact_registry_location }}-docker.pkg.dev
+  when:
+    (not local_docker_host) and start_container
+
 - name: Start jenkins-master container (with restart if already running)
   docker_compose:
     project_src: "{{ docker_host__docker_compose_location }}"
