@@ -45,7 +45,7 @@
     (not local_docker_host) and deploy_docker_compose
 
 - name: Configure docker to authenticate against Google Artifact Registry
-  shell: gcloud auth configure-docker {{ artifact_registry_location }}-docker.pkg.dev
+  shell: echo "Y" | gcloud auth configure-docker {{ artifact_registry_location }}-docker.pkg.dev
   when:
     (not local_docker_host) and start_container
 

@@ -36,14 +36,23 @@ resource "google_service_account" "ue4_jenkins_master_service_account" {
   display_name = "UE4 Jenkins Master VM"
 }
 
-resource "google_artifact_registry_repository_iam_member" "build_artifact_downloader_access" {
-  provider = google-beta
 
-  location = var.build_artifacts_location
-  repository = var.build_artifacts_name
+# Allow VM to download artifacts from all repositories in project
+resource "google_project_iam_member" "build_artifact_downloader_access" {
+
   role   = "roles/artifactregistry.reader"
   member = "serviceAccount:${google_service_account.ue4_jenkins_master_service_account.email}"
 }
+
+# Allowing VM to download from just one repository seemed to not work
+# resource "google_artifact_registry_repository_iam_member" "build_artifact_downloader_access" {
+#   provider = google-beta
+#
+#   location = var.build_artifacts_location
+#   repository = var.build_artifacts_name
+#   role   = "roles/artifactregistry.reader"
+#   member = "serviceAccount:${google_service_account.ue4_jenkins_master_service_account.email}"
+# }
 
 resource "google_compute_address" "external_ip_address" {
   name = "ipv4-address"
