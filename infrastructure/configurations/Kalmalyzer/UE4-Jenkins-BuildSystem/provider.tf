@@ -1,6 +1,44 @@
-provider "google" {
+terraform {
 
-  version = "~> 3.0"
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 3.0"
+    }
+
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = "~> 3.0"
+    }
+
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.6"
+    }
+
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 2.0.0"
+    }
+
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.0.0"
+    }
+
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0.0"
+    }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 1.10, != 1.11.0"
+    }
+  }
+}
+
+provider "google" {
 
   project = var.project_id
   zone    = var.zone
@@ -8,27 +46,20 @@ provider "google" {
 
 provider "google-beta" {
 
-  version = "~> 3.0"
-
   project = var.project_id
   zone    = var.zone
 }
 
 provider "time" {
-
-  version = "~> 0.6"
 }
 
 provider "external" {
-    version = "~> 2.0.0"
 }
 
 provider "null" {
-    version = "~> 3.0.0"
 }
 
 provider "random" {
-    version = "~> 3.0.0"
 }
 
 /******************************************
@@ -43,7 +74,6 @@ data "google_client_config" "default" {
  *****************************************/
 
 provider "kubernetes" {
-  version                = "~> 1.10, != 1.11.0"
   load_config_file       = false
 //  host                   = "https://${local.cluster_endpoint}"
   token                  = data.google_client_config.default.access_token
