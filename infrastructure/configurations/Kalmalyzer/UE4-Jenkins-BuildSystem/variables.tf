@@ -8,6 +8,11 @@ variable "build_artifacts_location" {
   type        = string
 }
 
+variable "region" {
+  description = "License server VM region."
+  type        = string
+}
+
 variable "zone" {
   description = "License server VM zone."
   type        = string

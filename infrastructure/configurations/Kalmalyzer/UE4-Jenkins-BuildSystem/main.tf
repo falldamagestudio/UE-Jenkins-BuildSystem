@@ -29,3 +29,15 @@ module "vm" {
   ssh_username = var.ssh_username
   ssh_pub_key_path = var.ssh_pub_key_path
 }
+
+module "slave_cluster" {
+
+  depends_on = [module.vm]
+
+  source = "../../../services/slave_cluster"
+
+  project_id = var.project_id
+  cluster_name = "test-cluster"
+  region = var.region
+  zone = var.zone
+}
