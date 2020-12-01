@@ -6,10 +6,10 @@ module "slave_cluster" {
   name                       = var.cluster_name
   region                     = var.region
   zones                      = [var.zone]
-  network                    = "vpc-01"
-  subnetwork                 = "us-central1-01"
-  ip_range_pods              = "us-central1-01-gke-01-pods"
-  ip_range_services          = "us-central1-01-gke-01-services"
+  network                    = "default" // TODO: place cluster into separate network
+  subnetwork                 = "default" // TODO: place cluster into separate sub network
+  ip_range_pods              = "" // TODO: May need to specify name of IP range
+  ip_range_services          = "" // TODO: May need to specify name of IP range
   http_load_balancing        = false
   horizontal_pod_autoscaling = true
   network_policy             = true

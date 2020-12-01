@@ -2,6 +2,7 @@ locals {
   google_apis = [
     "artifactregistry.googleapis.com",
     "compute.googleapis.com",
+    "container.googleapis.com",
     "iap.googleapis.com"
   ]
 }
