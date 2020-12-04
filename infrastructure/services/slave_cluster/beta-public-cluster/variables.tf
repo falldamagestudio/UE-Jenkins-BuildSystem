@@ -16,6 +16,12 @@
 
 // This file was automatically generated from a template in ./autogen/main
 
+variable "module_depends_on" {
+  description = "List of modules or resources this module depends on."
+  type        = list
+  default     = []
+}
+
 variable "project_id" {
   type        = string
   description = "The project ID to host the cluster in (required)"

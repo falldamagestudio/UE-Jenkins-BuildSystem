@@ -49,6 +49,7 @@ resource "google_compute_firewall" "intra_egress" {
   allow { protocol = "ah" }
 
   depends_on = [
+    var.module_depends_on,
     google_container_cluster.primary,
   ]
 }
@@ -78,6 +79,7 @@ resource "google_compute_firewall" "master_webhooks" {
   }
 
   depends_on = [
+    var.module_depends_on,
     google_container_cluster.primary,
   ]
 

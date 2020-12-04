@@ -28,6 +28,8 @@ locals {
 }
 
 resource "random_string" "cluster_service_account_suffix" {
+  depends_on   = [ var.module_depends_on ]
+
   upper   = false
   lower   = true
   special = false
@@ -35,6 +37,8 @@ resource "random_string" "cluster_service_account_suffix" {
 }
 
 resource "google_service_account" "cluster_service_account" {
+  depends_on   = [ var.module_depends_on ]
+
   count        = var.create_service_account ? 1 : 0
   project      = var.project_id
   account_id   = "tf-gke-${substr(var.name, 0, min(15, length(var.name)))}-${random_string.cluster_service_account_suffix.result}"
@@ -42,6 +46,8 @@ resource "google_service_account" "cluster_service_account" {
 }
 
 resource "google_project_iam_member" "cluster_service_account-log_writer" {
+  depends_on   = [ var.module_depends_on ]
+
   count   = var.create_service_account ? 1 : 0
   project = google_service_account.cluster_service_account[0].project
   role    = "roles/logging.logWriter"
@@ -49,6 +55,8 @@ resource "google_project_iam_member" "cluster_service_account-log_writer" {
 }
 
 resource "google_project_iam_member" "cluster_service_account-metric_writer" {
+  depends_on   = [ var.module_depends_on ]
+
   count   = var.create_service_account ? 1 : 0
   project = google_project_iam_member.cluster_service_account-log_writer[0].project
   role    = "roles/monitoring.metricWriter"
@@ -56,6 +64,8 @@ resource "google_project_iam_member" "cluster_service_account-metric_writer" {
 }
 
 resource "google_project_iam_member" "cluster_service_account-monitoring_viewer" {
+  depends_on   = [ var.module_depends_on ]
+
   count   = var.create_service_account ? 1 : 0
   project = google_project_iam_member.cluster_service_account-metric_writer[0].project
   role    = "roles/monitoring.viewer"
@@ -63,6 +73,8 @@ resource "google_project_iam_member" "cluster_service_account-monitoring_viewer"
 }
 
 resource "google_project_iam_member" "cluster_service_account-resourceMetadata-writer" {
+  depends_on   = [ var.module_depends_on ]
+
   count   = var.create_service_account ? 1 : 0
   project = google_project_iam_member.cluster_service_account-monitoring_viewer[0].project
   role    = "roles/stackdriver.resourceMetadata.writer"
@@ -70,6 +82,8 @@ resource "google_project_iam_member" "cluster_service_account-resourceMetadata-w
 }
 
 resource "google_project_iam_member" "cluster_service_account-gcr" {
+  depends_on   = [ var.module_depends_on ]
+
   count   = var.create_service_account && var.grant_registry_access ? 1 : 0
   project = var.registry_project_id == "" ? var.project_id : var.registry_project_id
   role    = "roles/storage.objectViewer"
@@ -77,6 +91,8 @@ resource "google_project_iam_member" "cluster_service_account-gcr" {
 }
 
 resource "google_project_iam_member" "cluster_service_account-artifact-registry" {
+  depends_on   = [ var.module_depends_on ]
+
   count   = var.create_service_account && var.grant_registry_access ? 1 : 0
   project = var.registry_project_id == "" ? var.project_id : var.registry_project_id
   role    = "roles/artifactregistry.reader"

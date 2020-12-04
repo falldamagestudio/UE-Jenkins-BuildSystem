@@ -1,4 +1,14 @@
+locals {
+  wait = length(
+    google_compute_instance.default.id) + length(
+    google_project_iam_member.build_artifact_downloader_access.id) + length(
+    google_compute_firewall.allow_ssh.id) + length(
+    google_compute_firewall.allow_admin_ui_http.id)
+}
+
 resource "google_compute_instance" "default" {
+  depends_on = [ var.module_depends_on ]
+
   name         = var.name
   machine_type = var.machine_type
   zone         = var.zone
@@ -32,6 +42,8 @@ resource "google_compute_instance" "default" {
 }
 
 resource "google_service_account" "ue4_jenkins_master_service_account" {
+  depends_on = [ var.module_depends_on ]
+
   account_id   = "ue4-jenkins-master"
   display_name = "UE4 Jenkins Master VM"
 }
@@ -39,6 +51,7 @@ resource "google_service_account" "ue4_jenkins_master_service_account" {
 
 # Allow VM to download artifacts from all repositories in project
 resource "google_project_iam_member" "build_artifact_downloader_access" {
+  depends_on = [ var.module_depends_on ]
 
   role   = "roles/artifactregistry.reader"
   member = "serviceAccount:${google_service_account.ue4_jenkins_master_service_account.email}"
@@ -55,10 +68,14 @@ resource "google_project_iam_member" "build_artifact_downloader_access" {
 # }
 
 resource "google_compute_address" "external_ip_address" {
+  depends_on = [ var.module_depends_on ]
+
   name = "ipv4-address"
 }
 
 resource "google_compute_firewall" "allow_ssh" {
+  depends_on = [ var.module_depends_on ]
+
   name       = "allow-ssh"
   network    = "default"
 
@@ -69,6 +86,8 @@ resource "google_compute_firewall" "allow_ssh" {
 }
 
 resource "google_compute_firewall" "allow_admin_ui_http" {
+  depends_on = [ var.module_depends_on ]
+
   name       = "allow-admin-ui-http"
   network    = "default"
 

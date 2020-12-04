@@ -1,4 +1,6 @@
 locals {
+  wait = length(time_sleep.wait_30_seconds.id)
+
   google_apis = [
     "artifactregistry.googleapis.com",
     "compute.googleapis.com",

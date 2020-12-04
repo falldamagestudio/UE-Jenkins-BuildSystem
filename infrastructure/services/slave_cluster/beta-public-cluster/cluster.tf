@@ -20,6 +20,8 @@
   Create Container Cluster
  *****************************************/
 resource "google_container_cluster" "primary" {
+  depends_on   = [ var.module_depends_on ]
+
   provider = google-beta
 
   name            = var.name
@@ -270,6 +272,8 @@ resource "google_container_cluster" "primary" {
   Create Container Cluster node pools
  *****************************************/
 resource "google_container_node_pool" "pools" {
+  depends_on   = [ var.module_depends_on ]
+
   provider = google-beta
   for_each = local.node_pools
   name     = each.key

@@ -4,7 +4,7 @@ module "google_apis" {
 }
 
 module "docker_build_artifacts" {
-  depends_on = [module.google_apis]
+  module_depends_on = [module.google_apis.wait]
 
   source = "../../../services/docker_build_artifacts"
 
@@ -13,7 +13,7 @@ module "docker_build_artifacts" {
 
 module "vm" {
 
-  depends_on = [module.google_apis, module.docker_build_artifacts]
+  module_depends_on = [module.docker_build_artifacts.wait]
 
   source = "../../../services/vm"
 
@@ -32,7 +32,7 @@ module "vm" {
 
 module "slave_cluster" {
 
-  depends_on = [module.vm]
+  module_depends_on = [module.vm.wait]
 
   source = "../../../services/slave_cluster"
 

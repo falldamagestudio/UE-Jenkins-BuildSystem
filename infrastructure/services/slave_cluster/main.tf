@@ -2,6 +2,8 @@ module "slave_cluster" {
 
   source                     = "./beta-public-cluster"
 
+  module_depends_on          = [ var.module_depends_on ]
+
   project_id                 = var.project_id
   name                       = var.cluster_name
   region                     = var.region
@@ -17,10 +19,10 @@ module "slave_cluster" {
   node_pools = [
     {
       name               = "default-node-pool"
-      machine_type       = "e2-medium"
+      machine_type       = "n1-standard-2"
       node_locations     = var.zone
       min_count          = 1
-      max_count          = 100
+      max_count          = 10
       local_ssd_count    = 0
       disk_size_gb       = 100
       disk_type          = "pd-standard"
@@ -29,7 +31,7 @@ module "slave_cluster" {
       auto_upgrade       = true
       service_account    = google_service_account.slave_service_account.email
       preemptible        = false
-      initial_node_count = 80
+      initial_node_count = 1
     },
   ]
 
@@ -79,6 +81,8 @@ module "slave_cluster" {
 }
 
 resource "google_service_account" "slave_service_account" {
+  depends_on = [ var.module_depends_on ]
+
   account_id   = "ue4-jenkins-slave-node"
   display_name = "UE4 Jenkins Slave Node"
 }

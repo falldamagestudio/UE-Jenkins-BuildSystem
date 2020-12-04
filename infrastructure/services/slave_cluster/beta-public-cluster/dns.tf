@@ -61,6 +61,7 @@ EOF
   }
 
   depends_on = [
+    var.module_depends_on,
     module.gcloud_delete_default_kube_dns_configmap.wait,
     data.google_client_config.default,
     google_container_cluster.primary,
@@ -88,6 +89,7 @@ EOF
   }
 
   depends_on = [
+    var.module_depends_on,
     module.gcloud_delete_default_kube_dns_configmap.wait,
     data.google_client_config.default,
     google_container_cluster.primary,
@@ -118,6 +120,7 @@ EOF
   }
 
   depends_on = [
+    var.module_depends_on,
     module.gcloud_delete_default_kube_dns_configmap.wait,
     data.google_client_config.default,
     google_container_cluster.primary,
