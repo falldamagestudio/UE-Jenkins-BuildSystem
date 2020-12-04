@@ -16,6 +16,17 @@ module "slave_cluster" {
   horizontal_pod_autoscaling = true
   network_policy             = true
 
+  // Workload Identity is not supported for Windows nodes on GKE.
+  // Therefore we disable it for the entire cluster.
+  // https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#limitations
+  identity_namespace         = "null"
+
+  // Expose all VM metadata to pods. This is less secure than ideally.
+  // We should either enable Metadata Concealment, or wait for
+  // GKE to support Workload Identity for Windows nodes.
+  // https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_cluster#node_metadata
+  node_metadata              = "EXPOSE"
+
   node_pools = [
     {
       name               = "default-node-pool"
