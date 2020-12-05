@@ -1,4 +1,4 @@
-module "slave_cluster" {
+module "kubernetes_cluster" {
 
   source                     = "./beta-public-cluster"
 
@@ -29,7 +29,24 @@ module "slave_cluster" {
 
   node_pools = [
     {
-      name               = "default-node-pool"
+      name               = "jenkins-controller-node-pool"
+      machine_type       = "n1-standard-2"
+      node_locations     = var.zone
+      min_count          = 1
+      max_count          = 1
+      local_ssd_count    = 0
+      disk_size_gb       = 10
+      disk_type          = "pd-standard"
+      image_type         = "COS"
+      auto_repair        = true
+      auto_upgrade       = true
+      service_account    = google_service_account.controller_service_account.email
+      preemptible        = false
+      initial_node_count = 1
+    },
+
+    {
+      name               = "jenkins-agent-node-pool"
       machine_type       = "n1-standard-2"
       node_locations     = var.zone
       min_count          = 1
@@ -40,7 +57,7 @@ module "slave_cluster" {
       image_type         = "COS"
       auto_repair        = true
       auto_upgrade       = true
-      service_account    = google_service_account.slave_service_account.email
+      service_account    = google_service_account.agent_service_account.email
       preemptible        = false
       initial_node_count = 1
     },
@@ -49,7 +66,11 @@ module "slave_cluster" {
   node_pools_oauth_scopes = {
     all = []
 
-    default-node-pool = [
+    jenkins-controller-node-pool = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
+
+    jenkins-agent-node-pool = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
   }
@@ -57,15 +78,22 @@ module "slave_cluster" {
   node_pools_labels = {
     all = {}
 
-    default-node-pool = {
-      default-node-pool = true
+    jenkins-controller-node-pool = {
+      jenkins-controller-node-pool = true
+    }
+
+    jenkins-agent-node-pool = {
+      jenkins-agent-node-pool = true
     }
   }
 
   node_pools_metadata = {
     all = {}
 
-    default-node-pool = {
+    jenkins-controller-node-pool = {
+      node-pool-metadata-custom-value = "my-node-pool"
+    }
+    jenkins-agent-node-pool = {
       node-pool-metadata-custom-value = "my-node-pool"
     }
   }
@@ -73,9 +101,17 @@ module "slave_cluster" {
   node_pools_taints = {
     all = []
 
-    default-node-pool = [
+    jenkins-controller-node-pool = [
       {
-        key    = "default-node-pool"
+        key    = "jenkins-controller-node-pool"
+        value  = true
+        effect = "PREFER_NO_SCHEDULE"
+      },
+    ]
+
+    jenkins-agent-node-pool = [
+      {
+        key    = "jenkins-agent-node-pool"
         value  = true
         effect = "PREFER_NO_SCHEDULE"
       },
@@ -85,15 +121,26 @@ module "slave_cluster" {
   node_pools_tags = {
     all = []
 
-    default-node-pool = [
-      "default-node-pool",
+    jenkins-controller-node-pool = [
+      "jenkins-controller-node-pool",
+    ]
+
+    jenkins-agent-node-pool = [
+      "jenkins-agent-node-pool",
     ]
   }
 }
 
-resource "google_service_account" "slave_service_account" {
+resource "google_service_account" "agent_service_account" {
   depends_on = [ var.module_depends_on ]
 
-  account_id   = "ue4-jenkins-slave-node"
-  display_name = "UE4 Jenkins Slave Node"
+  account_id   = "ue4-jenkins-agent-node"
+  display_name = "UE4 Jenkins Agent Node"
+}
+
+resource "google_service_account" "controller_service_account" {
+  depends_on = [ var.module_depends_on ]
+
+  account_id   = "ue4-jenkins-controller-node"
+  display_name = "UE4 Jenkins Controller Node"
 }
