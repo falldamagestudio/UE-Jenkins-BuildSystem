@@ -30,14 +30,14 @@ module "vm" {
   ssh_pub_key_path = var.ssh_pub_key_path
 }
 
-module "slave_cluster" {
+module "kubernetes_cluster" {
 
   module_depends_on = [module.vm.wait]
 
-  source = "../../../services/slave_cluster"
+  source = "../../../services/kubernetes_cluster"
 
   project_id = var.project_id
-  cluster_name = "test-cluster"
+  cluster_name = "jenkins"
   region = var.region
   zone = var.zone
 }
