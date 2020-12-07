@@ -1,0 +1,5 @@
+controller:
+  image: "jenkins/jenkins"
+  tag: "local"
+  imagePullPolicy: "Never"
+  installPlugins: []

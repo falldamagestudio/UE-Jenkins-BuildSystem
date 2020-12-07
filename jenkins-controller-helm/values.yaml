@@ -1,0 +1,15 @@
+GOOGLE_OAUTH_CLIENT_ID: undefined
+GOOGLE_OAUTH_CLIENT_SECRET: undefined
+
+controller:
+  jenkinsUrl: http://localhost:8080
+
+  JCasC:
+    authorizationStrategy: |-
+      loggedInUsersCanDoAnything:
+        allowAnonymousRead: false
+
+    securityRealm: |-
+      googleOAuth2:
+        clientId: "{{ .Values.GOOGLE_OAUTH_CLIENT_ID }}"
+        clientSecret: "{{ .Values.GOOGLE_OAUTH_CLIENT_SECRET }}"
