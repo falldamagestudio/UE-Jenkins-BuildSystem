@@ -1,0 +1,9 @@
+controller:
+  ingress:
+    enabled: true
+    paths: []
+    hostName: "undefined"
+    annotations:
+      kubernetes.io/ingress.global-static-ip-name: "undefined"
+
+      

@@ -1,0 +1,3 @@
+controller:
+  nodeSelector:
+    jenkins-controller-node-pool: "true"

@@ -11,3 +11,5 @@ machine_type   = "n1-standard-1"
 instance_name  = "jenkins-master"
 ssh_username = "ansible"
 ssh_pub_key_path = "jenkins-master-ansible.pub"
+
+external_ip_address_name = "jenkins-controller-external-ip-address"

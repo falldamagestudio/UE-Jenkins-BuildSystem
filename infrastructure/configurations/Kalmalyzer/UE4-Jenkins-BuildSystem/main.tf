@@ -40,4 +40,6 @@ module "kubernetes_cluster" {
   cluster_name = "jenkins"
   region = var.region
   zone = var.zone
+
+  external_ip_address_name = var.external_ip_address_name
 }

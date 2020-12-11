@@ -12,7 +12,7 @@ module "kubernetes_cluster" {
   subnetwork                 = "default" // TODO: place cluster into separate sub network
   ip_range_pods              = "" // TODO: May need to specify name of IP range
   ip_range_services          = "" // TODO: May need to specify name of IP range
-  http_load_balancing        = false
+  http_load_balancing        = true
   horizontal_pod_autoscaling = true
   network_policy             = true
 
@@ -138,9 +138,31 @@ resource "google_service_account" "agent_service_account" {
   display_name = "UE4 Jenkins Agent Node"
 }
 
+# Allow controller node to download artifacts from all repositories in project
+resource "google_project_iam_member" "agent_build_artifact_downloader_access" {
+  depends_on = [ var.module_depends_on ]
+
+  role   = "roles/artifactregistry.reader"
+  member = "serviceAccount:${google_service_account.agent_service_account.email}"
+}
+
 resource "google_service_account" "controller_service_account" {
   depends_on = [ var.module_depends_on ]
 
   account_id   = "ue4-jenkins-controller-node"
   display_name = "UE4 Jenkins Controller Node"
+}
+
+# Allow controller node to download artifacts from all repositories in project
+resource "google_project_iam_member" "controller_build_artifact_downloader_access" {
+  depends_on = [ var.module_depends_on ]
+
+  role   = "roles/artifactregistry.reader"
+  member = "serviceAccount:${google_service_account.controller_service_account.email}"
+}
+
+resource "google_compute_global_address" "external_ip_address" {
+  depends_on = [ var.module_depends_on ]
+
+  name = var.external_ip_address_name
 }

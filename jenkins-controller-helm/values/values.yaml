@@ -1,8 +1,14 @@
 GOOGLE_OAUTH_CLIENT_ID: undefined
 GOOGLE_OAUTH_CLIENT_SECRET: undefined
 
+# Only used by GKE deploy
+STATIC_IP_ADDRESS_NAME: undefined
+IMAGE_TAG: undefined
+
+SUBDOMAIN_NAME: undefined
+
 controller:
-  jenkinsUrl: http://localhost:8080
+#  jenkinsUrl: http://localhost:8080
 
   JCasC:
     authorizationStrategy: |-
