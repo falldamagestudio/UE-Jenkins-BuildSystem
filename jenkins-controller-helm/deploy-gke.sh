@@ -14,7 +14,7 @@ VALUES="values/values.yaml"
 PROJECT="kalms-ue4-jenkins-buildsystem"
 REGION="europe-west1"
 
-IMAGE="${REGION}-docker.pkg.dev/${PROJECT}/docker-build-artifacts/ue4-jenkins-master"
+IMAGE="${REGION}-docker.pkg.dev/${PROJECT}/docker-build-artifacts/ue4-jenkins-controller"
 
 if [[ `helm list --filter ${RELEASE} -o json | jq ".[0]"` != "null" ]]; then
     OPERATION="upgrade"
