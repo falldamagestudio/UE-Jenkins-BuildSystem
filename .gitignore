@@ -14,7 +14,3 @@ user.auto.tfvars
 # Ignore any local crash logs
 
 crash.log
-
-# Ignore private key file(s)
-
-/ansible/jenkins-master-ansible.private_key

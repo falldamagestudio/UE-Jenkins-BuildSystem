@@ -5,7 +5,7 @@ module "kubernetes_cluster" {
   module_depends_on          = [ var.module_depends_on ]
 
   project_id                 = var.project_id
-  name                       = var.cluster_name
+  name                       = "jenkins"
   region                     = var.region
   zones                      = [var.zone]
   network                    = "default" // TODO: place cluster into separate network

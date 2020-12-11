@@ -9,11 +9,6 @@ variable "project_id" {
   default = null
 }
 
-variable "cluster_name" {
-  type    = string
-  default = null
-}
-
 variable "region" {
   type    = string
   default = null
