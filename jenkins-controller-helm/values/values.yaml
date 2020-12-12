@@ -8,7 +8,6 @@ IMAGE_TAG: undefined
 SUBDOMAIN_NAME: undefined
 
 controller:
-#  jenkinsUrl: http://localhost:8080
 
   JCasC:
     authorizationStrategy: |-
