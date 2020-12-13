@@ -49,7 +49,7 @@ module "kubernetes_cluster" {
       name               = "jenkins-agent-node-pool"
       machine_type       = "n1-standard-2"
       node_locations     = var.zone
-      min_count          = 1
+      min_count          = 0
       max_count          = 10
       local_ssd_count    = 0
       disk_size_gb       = 100
@@ -59,7 +59,7 @@ module "kubernetes_cluster" {
       auto_upgrade       = true
       service_account    = google_service_account.agent_service_account.email
       preemptible        = false
-      initial_node_count = 1
+      initial_node_count = 0
     },
   ]
 
@@ -102,18 +102,13 @@ module "kubernetes_cluster" {
     all = []
 
     jenkins-controller-node-pool = [
-      {
-        key    = "jenkins-controller-node-pool"
-        value  = true
-        effect = "PREFER_NO_SCHEDULE"
-      },
     ]
 
     jenkins-agent-node-pool = [
       {
         key    = "jenkins-agent-node-pool"
         value  = true
-        effect = "PREFER_NO_SCHEDULE"
+        effect = "NO_SCHEDULE"
       },
     ]
   }
