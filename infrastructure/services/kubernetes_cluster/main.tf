@@ -6,6 +6,7 @@ module "kubernetes_cluster" {
 
   project_id                 = var.project_id
   name                       = "jenkins"
+  regional                   = false // This will be a single-zone cluster, with a single master in the given zone
   region                     = var.region
   zones                      = [var.zone]
   network                    = "default" // TODO: place cluster into separate network
