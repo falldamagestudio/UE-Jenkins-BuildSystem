@@ -26,7 +26,7 @@ data "google_client_config" "default" {
 /******************************************
   Configure provider
  *****************************************/
-/*
+
 provider "kubernetes" {
   version                = "~> 1.10, != 1.11.0"
   load_config_file       = false
@@ -34,4 +34,3 @@ provider "kubernetes" {
   token                  = data.google_client_config.default.access_token
   cluster_ca_certificate = base64decode(local.cluster_ca_certificate)
 }
-*/
