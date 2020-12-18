@@ -7,3 +7,5 @@ kubectl delete secret jenkins-controller-from-manual-config
 kubectl create secret generic jenkins-controller-from-manual-config \
     --from-literal=google_oauth_client_id=${GOOGLE_OAUTH_CLIENT_ID} \
     --from-literal=google_oauth_client_secret=${GOOGLE_OAUTH_CLIENT_SECRET}
+
+kubectl label nodes docker-desktop jenkins-agent-node-pool=true
