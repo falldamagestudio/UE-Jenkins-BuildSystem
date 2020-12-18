@@ -1,3 +1,12 @@
+locals {
+  wait = length(module.kubernetes_cluster.endpoint
+    ) + length(google_service_account.agent_service_account.id
+    ) + length(google_project_iam_member.agent_build_artifact_downloader_access.id
+    ) + length(google_service_account.controller_service_account.id
+    ) + length(google_project_iam_member.controller_build_artifact_downloader_access.id
+    ) + length(google_compute_global_address.external_ip_address.id)
+}
+
 module "kubernetes_cluster" {
 
   source                     = "./beta-public-cluster"

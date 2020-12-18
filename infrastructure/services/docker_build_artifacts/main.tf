@@ -1,5 +1,7 @@
 locals {
   wait = length(google_artifact_registry_repository_iam_member.build_artifact_uploader_access.etag)
+
+  repository_id = "docker-build-artifacts"
 }
 
 resource "google_artifact_registry_repository" "build_artifacts" {
@@ -8,7 +10,7 @@ resource "google_artifact_registry_repository" "build_artifacts" {
   depends_on = [ var.module_depends_on ]
 
   location = var.location
-  repository_id = "docker-build-artifacts"
+  repository_id = local.repository_id
   description = "Docker build artifacts"
   format = "DOCKER"
 }
