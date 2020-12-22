@@ -12,3 +12,12 @@ https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-deskt
 
 # Tips on how to run one Pod per Node, and how to force system pods onto the controller node
 https://medium.com/google-cloud/scale-your-kubernetes-cluster-to-almost-zero-with-gke-autoscaler-9c78051cbf40
+
+# Understanding Kustomize (kubectl apply -k)
+https://blog.stack-labs.com/code/kustomize-101/
+
+# Tips on how to create stateful Jenkins agents on Kubernetes
+https://blog.hiya.com/kubernetes-base-jenkins-stateful-agents/
+
+# Point workspace to a persistent volume claim
+https://stackoverflow.com/questions/57793663/how-to-define-workspace-volume-for-jenkins-pipeline-declarative
