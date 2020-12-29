@@ -9,7 +9,9 @@ GOOGLE_OAUTH_CLIENT_ID=`kubectl get secrets jenkins-controller-from-manual-confi
 GOOGLE_OAUTH_CLIENT_SECRET=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_secret}" | base64 --decode`
 SUBDOMAIN_NAME=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.hostname}" | base64 --decode`
 STATIC_IP_ADDRESS_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.ingress_static_ip_address_name}" | base64 --decode`
+
 CONTROLLER_IMAGE="${IMAGE_REGISTRY_PREFIX}/ue-jenkins-controller"
+
 UE_JENKINS_BUILDTOOLS_IMAGE="${IMAGE_REGISTRY_PREFIX}/ue-jenkins-buildtools"
 UE_JENKINS_BUILDTOOLS_IMAGE_TAG="undefined"
 
