@@ -14,7 +14,7 @@ variable "kubernetes_cluster_endpoint" {
   type        = string
 }
 
-variable "controller_image" {
+variable "image_registry_prefix" {
   type    = string
   default = null
 }

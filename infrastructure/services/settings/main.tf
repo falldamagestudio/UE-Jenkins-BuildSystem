@@ -10,7 +10,7 @@ resource "kubernetes_secret" "jenkins-controller-from-terraform" {
     project = var.project_id
     region = var.region
     ingress_static_ip_address_name = var.external_ip_address_name
-    controller_image = var.controller_image
+    image_registry_prefix = var.image_registry_prefix
   }
 
   type = "Opaque"

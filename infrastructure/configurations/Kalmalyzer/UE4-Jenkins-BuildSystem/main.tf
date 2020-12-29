@@ -34,7 +34,7 @@ module "settings" {
   kubernetes_cluster_endpoint = module.kubernetes_cluster.endpoint
   kubernetes_cluster_ca_certificate = module.kubernetes_cluster.ca_certificate
 
-  controller_image = "${module.docker_build_artifacts.docker_registry}/ue-jenkins-controller"
+  image_registry_prefix = "${module.docker_build_artifacts.docker_registry}"
 
   project_id = var.project_id
   region = var.region
