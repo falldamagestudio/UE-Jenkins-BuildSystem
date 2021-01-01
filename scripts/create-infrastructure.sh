@@ -7,8 +7,8 @@ if [ -z "${ENVIRONMENT_DIR}" ]; then
 	exit 1
 fi
 
-ROOT_MODULE_DIR="${BASH_SOURCE%/*}/../infrastructure/root_module"
+RELATIVE_ROOT_MODULE_DIR="../../infrastructure/root_module"
 
-terraform init -backend-config="${ENVIRONMENT_DIR}/backend.hcl" "${ROOT_MODULE_DIR}"
+(cd "${ENVIRONMENT_DIR}" && terraform init -backend-config="backend.hcl" "${RELATIVE_ROOT_MODULE_DIR}") || exit $?
 
-terraform apply "${ROOT_MODULE_DIR}"
+(cd "${ENVIRONMENT_DIR}" && terraform apply -var-file="terraform.tfvars" "${RELATIVE_ROOT_MODULE_DIR}") || exit $?
