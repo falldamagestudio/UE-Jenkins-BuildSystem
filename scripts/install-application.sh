@@ -50,6 +50,23 @@ if [ "${CLUSTER_TYPE}" = "local" ]; then
 
 	fi
 
+elif [ "${CLUSTER_TYPE}" = "gke" ]; then
+
+	./tools/gke/deploy.sh "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
+
+	PORT_FORWARD=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".port_forward"`
+
+	if [ -z "${PORT_FORWARD}" ]; then
+		1>&2 echo "You must specify port_forward in kube-config.json for local clusters"
+		exit 1
+	fi
+
+	if [ "${PORT_FORWARD}" == "yes" ]; then
+
+		./tools/local/port_forward.sh
+
+	fi
+
 else
 	1>&2 echo "Cluster type ${CLUSTER_TYPE} is not supported"
 	exit 1

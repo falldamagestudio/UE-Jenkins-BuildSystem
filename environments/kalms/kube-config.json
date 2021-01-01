@@ -1,0 +1,4 @@
+{
+    "cluster_type": "gke",
+    "cluster_name": "gke_kalms-ue4-jenkins-buildsystem_europe-west1-b_jenkins"
+}
