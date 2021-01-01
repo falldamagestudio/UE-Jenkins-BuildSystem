@@ -1,0 +1,24 @@
+GOOGLE_OAUTH_CLIENT_ID: undefined
+GOOGLE_OAUTH_CLIENT_SECRET: undefined
+
+# Only used by GKE deploy
+STATIC_IP_ADDRESS_NAME: undefined
+IMAGE_TAG: undefined
+
+SUBDOMAIN_NAME: undefined
+
+controller:
+
+  JCasC:
+    authorizationStrategy: |-
+      loggedInUsersCanDoAnything:
+        allowAnonymousRead: false
+
+    securityRealm: |-
+      googleOAuth2:
+        clientId: "{{ .Values.GOOGLE_OAUTH_CLIENT_ID }}"
+        clientSecret: "{{ .Values.GOOGLE_OAUTH_CLIENT_SECRET }}"
+
+# Enable the kubernetes-credentials-provider-plugin to read secrets
+rbac:
+  readSecrets: true

@@ -19,6 +19,43 @@ controller:
         clientId: "{{ .Values.GOOGLE_OAUTH_CLIENT_ID }}"
         clientSecret: "{{ .Values.GOOGLE_OAUTH_CLIENT_SECRET }}"
 
+#    configScripts:
+#      pipeline-job: | 
+#        jobs:
+#          - script: >
+#              job('Seed Job') {
+#                scm { 
+#                  git("https://github.com/Kalmalyzer/UE-Jenkins-Job")
+#                  credentials("github-user")
+#                }
+#                steps {
+#                  dsl {
+#                    external("*.groovy")
+#                    removeAction("DELETE")
+#                  }
+#                }
+#              }
+
+#        jobs:
+#          - script: >                                     
+#              pipelineJob('Seed Job') {
+#                definition {
+#                  cpsScm {
+#                    scm {
+#                      git {
+#                        remote {
+#                          url('${SEED_JOB_URL}')
+#                        }
+#                        branch('*/main')
+#                      }
+#                    }
+#                    scriptPath("**/*.groovy")
+#                    lightweight()
+#                  }
+#                }
+#              } 
+
+
 # Enable the kubernetes-credentials-provider-plugin to read secrets
 rbac:
   readSecrets: true
