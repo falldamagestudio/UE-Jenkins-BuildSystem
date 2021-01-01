@@ -33,3 +33,9 @@ https://github.com/adamrehn/ue4-docker/blob/master/ue4docker/dockerfiles/ue4-bui
 
 # Aborting a Helm upgrade partway through can leave Helm in an inconsistent state, rollback to get out of it
 https://github.com/helm/helm/issues/8987
+
+# Adding a seed job to the Helm chart
+https://github.com/jenkinsci/helm-charts/issues/28#issuecomment-736256300
+
+# Example of a seed job that creates multiple other jobs
+https://github.com/robinbowes/jenkins-job-dsl-seed-all-demo/blob/master/jobs/seed_all.groovy
