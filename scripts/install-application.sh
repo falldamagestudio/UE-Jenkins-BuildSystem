@@ -10,13 +10,6 @@ if [ -z "${ENVIRONMENT_DIR}" ]; then
 	exit 1
 fi
 
-CHART_VERSION=`cat "${ENVIRONMENT_DIR}/helm-config.json" | jq -r ".chart_version"`
-
-if [ -z "${CHART_VERSION}" ]; then
-	1>&2 echo "You must specify chart version in helm-config.json"
-	exit 1
-fi
-
 CLUSTER_TYPE=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".cluster_type"`
 
 if [ -z "${CLUSTER_TYPE}" ]; then
@@ -35,7 +28,7 @@ fi
 
 if [ "${CLUSTER_TYPE}" = "local" ]; then
 
-	./tools/local/deploy.sh "${CHART_VERSION}" || exit 1
+	./tools/local/deploy.sh "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
 
 	PORT_FORWARD=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".port_forward"`
 

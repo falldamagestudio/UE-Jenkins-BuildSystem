@@ -1,3 +1,8 @@
 {
-	"chart_version": "v3.0.2"
+	"chart_name": "jenkins/jenkins",
+	"chart_version": "v3.0.2",
+	"controller_image": "ue-jenkins-controller",
+	"controller_image_tag": "local",
+	"ue_buildtools_linux_image": "ue-buildtools-linux",
+	"ue_buildtools_linux_image_tag": "local"
 }
