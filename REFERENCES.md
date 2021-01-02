@@ -39,3 +39,6 @@ https://github.com/jenkinsci/helm-charts/issues/28#issuecomment-736256300
 
 # Example of a seed job that creates multiple other jobs
 https://github.com/robinbowes/jenkins-job-dsl-seed-all-demo/blob/master/jobs/seed_all.groovy
+
+# Helper web service for quickly iterating on Job DSL syntax
+http://job-dsl.herokuapp.com/
