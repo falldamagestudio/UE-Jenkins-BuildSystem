@@ -26,40 +26,8 @@ fi
 
 "${SCRIPTS_DIR}/tools/activate_cluster.sh" "${CLUSTER_NAME}" || exit 1
 
-if [ "${CLUSTER_TYPE}" = "local" ]; then
-
-	"${SCRIPTS_DIR}/tools/local/deploy.sh" "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
-
-	PORT_FORWARD=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".port_forward"`
-
-	if [ -z "${PORT_FORWARD}" ]; then
-		1>&2 echo "You must specify port_forward in kube-config.json for local clusters"
-		exit 1
-	fi
-
-	if [ "${PORT_FORWARD}" == "yes" ]; then
-
-		"${SCRIPTS_DIR}/tools/local/port_forward.sh"
-
-	fi
-
-elif [ "${CLUSTER_TYPE}" = "gke" ]; then
-
-	"${SCRIPTS_DIR}/tools/gke/deploy.sh" "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
-
-	PORT_FORWARD=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".port_forward"`
-
-	if [ -z "${PORT_FORWARD}" ]; then
-		1>&2 echo "You must specify port_forward in kube-config.json for local clusters"
-		exit 1
-	fi
-
-	if [ "${PORT_FORWARD}" == "yes" ]; then
-
-		"${SCRIPTS_DIR}/tools/local/port_forward.sh"
-
-	fi
-
+if [ "${CLUSTER_TYPE}" = "local" ] || [ "${CLUSTER_TYPE}" = "gke" ]; then
+	"${SCRIPTS_DIR}/tools/${CLUSTER_TYPE}/deploy.sh" "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
 else
 	1>&2 echo "Cluster type ${CLUSTER_TYPE} is not supported"
 	exit 1

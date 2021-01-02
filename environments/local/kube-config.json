@@ -1,5 +1,4 @@
 {
     "cluster_type": "local",
-    "cluster_name": "docker-desktop",
-    "port_forward": "yes"
+    "cluster_name": "docker-desktop"
 }
