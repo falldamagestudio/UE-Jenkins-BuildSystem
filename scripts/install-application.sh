@@ -2,7 +2,7 @@
 
 ENVIRONMENT_DIR=$1
 
-APPLICATION_DIR="${BASH_SOURCE%/*}/../application"
+SCRIPTS_DIR="${BASH_SOURCE%/*}/"
 
 
 if [ -z "${ENVIRONMENT_DIR}" ]; then
@@ -24,11 +24,11 @@ if [ -z "${CLUSTER_NAME}" ]; then
 	exit 1
 fi
 
-./tools/activate_cluster.sh "${CLUSTER_NAME}" || exit 1
+"${SCRIPTS_DIR}/tools/activate_cluster.sh" "${CLUSTER_NAME}" || exit 1
 
 if [ "${CLUSTER_TYPE}" = "local" ]; then
 
-	./tools/local/deploy.sh "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
+	"${SCRIPTS_DIR}/tools/local/deploy.sh" "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
 
 	PORT_FORWARD=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".port_forward"`
 
@@ -39,13 +39,13 @@ if [ "${CLUSTER_TYPE}" = "local" ]; then
 
 	if [ "${PORT_FORWARD}" == "yes" ]; then
 
-		./tools/local/port_forward.sh
+		"${SCRIPTS_DIR}/tools/local/port_forward.sh"
 
 	fi
 
 elif [ "${CLUSTER_TYPE}" = "gke" ]; then
 
-	./tools/gke/deploy.sh "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
+	"${SCRIPTS_DIR}/tools/gke/deploy.sh" "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
 
 	PORT_FORWARD=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".port_forward"`
 
@@ -56,7 +56,7 @@ elif [ "${CLUSTER_TYPE}" = "gke" ]; then
 
 	if [ "${PORT_FORWARD}" == "yes" ]; then
 
-		./tools/local/port_forward.sh
+		"${SCRIPTS_DIR}/tools/local/port_forward.sh"
 
 	fi
 
