@@ -19,6 +19,29 @@ controller:
         clientId: "{{ .Values.GOOGLE_OAUTH_CLIENT_ID }}"
         clientSecret: "{{ .Values.GOOGLE_OAUTH_CLIENT_SECRET }}"
 
+    # Add seed job
+    configScripts:
+      seed-job: |
+        jobs:
+          - script: >
+              pipelineJob('Seed Job') {
+                definition {
+                  cpsScm {
+                    scm {
+                      git {
+                        remote {
+                          url('${SEED_JOB_URL}')
+                          credentials('github-user')
+                        }
+                        branch('*/main')
+                      }
+                    }
+                    scriptPath("seed-job.groovy")
+                  }
+                }
+              }
+
 # Enable the kubernetes-credentials-provider-plugin to read secrets
 rbac:
   readSecrets: true
+
