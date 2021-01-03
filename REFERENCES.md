@@ -42,3 +42,6 @@ https://github.com/robinbowes/jenkins-job-dsl-seed-all-demo/blob/master/jobs/see
 
 # Helper web service for quickly iterating on Job DSL syntax
 http://job-dsl.herokuapp.com/
+
+# Disabling Script Security for Job DSL scripts
+https://github.com/jenkinsci/job-dsl-plugin/wiki/Script-Security
