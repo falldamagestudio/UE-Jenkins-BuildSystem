@@ -19,27 +19,36 @@ controller:
         clientId: "{{ .Values.GOOGLE_OAUTH_CLIENT_ID }}"
         clientSecret: "{{ .Values.GOOGLE_OAUTH_CLIENT_SECRET }}"
 
-    # Add seed job
     configScripts:
+      # Add seed job
       seed-job: |
         jobs:
           - script: >
-              pipelineJob('Seed Job') {
-                definition {
-                  cpsScm {
-                    scm {
-                      git {
-                        remote {
-                          url('${SEED_JOB_URL}')
-                          credentials('github-user')
-                        }
-                        branch('*/main')
-                      }
+              job('Seed Job') {
+                scm {
+                  git {
+                    remote {
+                      url('${SEED_JOB_URL}')
+                      credentials('github-user')
                     }
-                    scriptPath("seed-job.groovy")
+                    branch('*/main')
+                  }
+                }
+                steps {
+                  jobDsl {
+                    targets "*.groovy"
                   }
                 }
               }
+
+      # Disable Script Security globally for Job DSL
+      # In some sense this presents a potential security risk (any Job DSL code is trusted by default);
+      #  the other options are to either run any Job DSL code in the Groovy Sandbox + whitelist any necessary functions,
+      #  or to manually perform whitelisting of individual .groovy files from the seed job before running those scripts
+      disable-script-security-for-job-dsl: |-
+        security:
+          globalJobDslSecurityConfiguration:
+            useScriptSecurity: false
 
 # Enable the kubernetes-credentials-provider-plugin to read secrets
 rbac:
