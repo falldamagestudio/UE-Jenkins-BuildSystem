@@ -50,6 +50,19 @@ controller:
           globalJobDslSecurityConfiguration:
             useScriptSecurity: false
 
+      # Add the UE_JENKINS_BUILDTOOLS_LINUX* OS-level environment variables as job environment variables
+      # These will be available in all jobs
+      ue-jenkins-buildtools-linux-env: |-
+        jenkins:
+          globalNodeProperties:
+            - envVars:
+                env:
+                - key: "UE_JENKINS_BUILDTOOLS_LINUX_IMAGE"
+                  value: "${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE}"
+                - key: "UE_JENKINS_BUILDTOOLS_LINUX_IMAGE_TAG"
+                  value: "${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE_TAG}"
+
+
 # Enable the kubernetes-credentials-provider-plugin to read secrets
 rbac:
   readSecrets: true
