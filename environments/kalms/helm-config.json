@@ -1,8 +1,7 @@
 {
 	"chart_name": "jenkins/jenkins",
 	"chart_version": "v3.0.2",
-	"controller_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-controller",
-	"controller_image_tag": "commit-c1e4e36877635e2e77e1602787bdda668bf35008",
+	"controller_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-controller:commit-c1e4e36877635e2e77e1602787bdda668bf35008",
 	"ue_jenkins_buildtools_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-buildtools-linux:undefined",
 	"seed_job_url": "https://github.com/Kalmalyzer/UE-Jenkins-Jobs"
 }

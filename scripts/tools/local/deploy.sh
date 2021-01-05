@@ -9,8 +9,10 @@ GOOGLE_OAUTH_CLIENT_SECRET=`kubectl get secrets jenkins-controller-from-manual-c
 
 HELM_CONFIG_JSON=`cat ${HELM_CONFIG_FILE}`
 
-CONTROLLER_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".controller_image"`
-CONTROLLER_IMAGE_TAG=`echo $HELM_CONFIG_JSON | jq -r ".controller_image_tag"`
+CONTROLLER_IMAGE_AND_TAG=`echo $HELM_CONFIG_JSON | jq -r ".controller_image"`
+# Split string into image and tag sections at the last ':' in the string
+CONTROLLER_IMAGE=${CONTROLLER_IMAGE_AND_TAG%:*}
+CONTROLLER_IMAGE_TAG=${CONTROLLER_IMAGE_AND_TAG##*:}
 
 UE_JENKINS_BUILDTOOLS_LINUX_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_buildtools_linux_image"`
 
