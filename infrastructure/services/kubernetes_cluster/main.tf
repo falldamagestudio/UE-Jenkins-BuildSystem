@@ -56,7 +56,7 @@ module "kubernetes_cluster" {
     },
 
     {
-      name               = "jenkins-agent-node-pool"
+      name               = "jenkins-agent-linux-node-pool"
       machine_type       = "n1-standard-32"
       node_locations     = var.zone
       min_count          = 0
@@ -71,6 +71,26 @@ module "kubernetes_cluster" {
       preemptible        = false
       initial_node_count = 0
     },
+
+    {
+      name               = "jenkins-agent-windows-node-pool"
+      machine_type       = "n1-standard-32"
+      node_locations     = var.zone
+      min_count          = 0
+      max_count          = 10
+      local_ssd_count    = 0
+      disk_size_gb       = 100
+      disk_type          = "pd-ssd"
+      image_type         = "WINDOWS_LTSC"
+      auto_repair        = true
+      auto_upgrade       = true
+      service_account    = google_service_account.agent_service_account.email
+      preemptible        = false
+      initial_node_count = 0
+
+      enable_secure_boot = false // Windows nodes do not support Shielded Instance features
+      enable_integrity_monitoring = false // Windows nodes do not support Shielded Instance features
+    },
   ]
 
   node_pools_oauth_scopes = {
@@ -80,7 +100,11 @@ module "kubernetes_cluster" {
       "https://www.googleapis.com/auth/cloud-platform",
     ]
 
-    jenkins-agent-node-pool = [
+    jenkins-agent-linux-node-pool = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
+
+    jenkins-agent-windows-node-pool = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
   }
@@ -92,8 +116,12 @@ module "kubernetes_cluster" {
       jenkins-controller-node-pool = true
     }
 
-    jenkins-agent-node-pool = {
-      jenkins-agent-node-pool = true
+    jenkins-agent-linux-node-pool = {
+      jenkins-agent-linux-node-pool = true
+    }
+
+    jenkins-agent-windows-node-pool = {
+      jenkins-agent-windows-node-pool = true
     }
   }
 
@@ -103,7 +131,10 @@ module "kubernetes_cluster" {
     jenkins-controller-node-pool = {
       node-pool-metadata-custom-value = "my-node-pool"
     }
-    jenkins-agent-node-pool = {
+    jenkins-agent-linux-node-pool = {
+      node-pool-metadata-custom-value = "my-node-pool"
+    }
+    jenkins-agent-windows-node-pool = {
       node-pool-metadata-custom-value = "my-node-pool"
     }
   }
@@ -114,10 +145,25 @@ module "kubernetes_cluster" {
     jenkins-controller-node-pool = [
     ]
 
-    jenkins-agent-node-pool = [
+    jenkins-agent-linux-node-pool = [
       {
-        key    = "jenkins-agent-node-pool"
+        key    = "jenkins-agent-linux-node-pool"
         value  = true
+        effect = "NO_SCHEDULE"
+      },
+    ]
+
+    jenkins-agent-windows-node-pool = [
+      {
+        key    = "jenkins-agent-windows-node-pool"
+        value  = true
+        effect = "NO_SCHEDULE"
+      },
+
+      // GKE automatically adds this taint for Windows node pools
+      {
+        key    = "node.kubernetes.io/os"
+        value  = "windows"
         effect = "NO_SCHEDULE"
       },
     ]
@@ -130,8 +176,12 @@ module "kubernetes_cluster" {
       "jenkins-controller-node-pool",
     ]
 
-    jenkins-agent-node-pool = [
-      "jenkins-agent-node-pool",
+    jenkins-agent-linux-node-pool = [
+      "jenkins-agent-linux-node-pool",
+    ]
+
+    jenkins-agent-windows-node-pool = [
+      "jenkins-agent-windows-node-pool",
     ]
   }
 }
