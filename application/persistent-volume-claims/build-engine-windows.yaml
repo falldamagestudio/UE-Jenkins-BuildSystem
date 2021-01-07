@@ -5,6 +5,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: pd-balanced-ntfs
   resources:
     requests:
       storage: 300Gi
