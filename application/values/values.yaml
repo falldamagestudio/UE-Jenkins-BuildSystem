@@ -31,7 +31,7 @@ controller:
                       url('${SEED_JOB_URL}')
                       credentials('github-user')
                     }
-                    branch('*/windows-agents')
+                    branch('*/main')
                   }
                 }
                 steps {
