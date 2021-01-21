@@ -12,9 +12,17 @@ module "docker_build_artifacts" {
   location = var.build_artifacts_location
 }
 
+module "image_builder" {
+  module_depends_on = [module.google_apis.wait]
+
+  source = "../services/image_builder"
+
+  build_artifact_uploader_service_account_name = module.docker_build_artifacts.build_artifact_uploader_service_account_name
+}
+
 module "kubernetes_cluster" {
 
-  module_depends_on = [module.docker_build_artifacts.wait]
+  module_depends_on = [module.docker_build_artifacts.wait, module.image_builder.wait]
 
   source = "../services/kubernetes_cluster"
 
