@@ -62,6 +62,13 @@ controller:
                 - key: "UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE"
                   value: "${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE}"
 
+      # Add timestamps to all job logs
+      timestamper: |-
+        unclassified:
+          timestamper:
+            allPipelines: true
+            elapsedTimeFormat: "'<b>'HH:mm:ss.SSS'</b> '"
+            systemTimeFormat: "'<b>'yyyy-MM-dd HH:mm:ss'</b> '"
 
 # Enable the kubernetes-credentials-provider-plugin to read secrets
 rbac:
