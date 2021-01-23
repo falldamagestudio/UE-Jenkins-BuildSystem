@@ -20,9 +20,19 @@ module "image_builder" {
   build_artifact_uploader_service_account_name = module.docker_build_artifacts.build_artifact_uploader_service_account_name
 }
 
+module "longtail_store" {
+
+  module_depends_on = [module.google_apis.wait]
+
+  source = "../services/longtail_store"
+
+  bucket_name = var.longtail_store_bucket_name
+  location = var.longtail_store_location
+}
+
 module "kubernetes_cluster" {
 
-  module_depends_on = [module.docker_build_artifacts.wait, module.image_builder.wait]
+  module_depends_on = [module.docker_build_artifacts.wait, module.image_builder.wait, module.longtail_store.wait]
 
   source = "../services/kubernetes_cluster"
 
@@ -31,6 +41,8 @@ module "kubernetes_cluster" {
   zone = var.zone
 
   external_ip_address_name = var.external_ip_address_name
+
+  longtail_store_bucket_id = var.longtail_store_bucket_name
 }
 
 module "settings" {
@@ -47,4 +59,6 @@ module "settings" {
   project_id = var.project_id
   region = var.region
   external_ip_address_name = var.external_ip_address_name
+
+  longtail_store_bucket_name = var.longtail_store_bucket_name
 }

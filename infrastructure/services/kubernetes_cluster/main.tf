@@ -2,6 +2,7 @@ locals {
   wait = length(module.kubernetes_cluster.endpoint
     ) + length(google_service_account.agent_service_account.id
     ) + length(google_project_iam_member.agent_build_artifact_downloader_access.id
+    ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
     ) + length(google_service_account.controller_service_account.id
     ) + length(google_project_iam_member.controller_build_artifact_downloader_access.id
     ) + length(google_compute_global_address.external_ip_address.id)
@@ -193,11 +194,20 @@ resource "google_service_account" "agent_service_account" {
   display_name = "UE4 Jenkins Agent Node"
 }
 
-# Allow controller node to download artifacts from all repositories in project
+# Allow agent nodes to download artifacts from all repositories in project
 resource "google_project_iam_member" "agent_build_artifact_downloader_access" {
   depends_on = [ var.module_depends_on ]
 
   role   = "roles/artifactregistry.reader"
+  member = "serviceAccount:${google_service_account.agent_service_account.email}"
+}
+
+# Allow agent nodes to manage content in Longtail store
+resource "google_storage_bucket_iam_member" "agent_longtail_store_admin_access" {
+  depends_on = [ var.module_depends_on ]
+
+  bucket   = var.longtail_store_bucket_id
+  role     = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.agent_service_account.email}"
 }
 

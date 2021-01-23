@@ -21,3 +21,11 @@ variable "zone" {
 variable "external_ip_address_name" {
   type = string
 }
+
+variable "longtail_store_bucket_name" {
+  type = string
+}
+
+variable "longtail_store_location" {
+  type = string
+}

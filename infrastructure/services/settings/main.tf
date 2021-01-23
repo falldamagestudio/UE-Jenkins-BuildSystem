@@ -11,6 +11,7 @@ resource "kubernetes_secret" "jenkins-controller-from-terraform" {
     region = var.region
     ingress_static_ip_address_name = var.external_ip_address_name
     image_registry_prefix = var.image_registry_prefix
+    longtail_store_bucket_name = var.longtail_store_bucket_name
   }
 
   type = "Opaque"

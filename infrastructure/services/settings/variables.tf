@@ -33,3 +33,7 @@ variable "external_ip_address_name" {
   type    = string
   default = null
 }
+
+variable "longtail_store_bucket_name" {
+  type = string
+}
