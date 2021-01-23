@@ -6,7 +6,7 @@ SCRIPTS_DIR="${BASH_SOURCE%/*}/"
 
 
 if [ -z "${ENVIRONMENT_DIR}" ]; then
-	1>&2 echo "Usage: create-infrastructure.sh <environment dir>"
+	1>&2 echo "Usage: set-manual-config.sh <environment dir> <vars>"
 	exit 1
 fi
 
@@ -26,13 +26,8 @@ fi
 
 "${SCRIPTS_DIR}/tools/activate_cluster.sh" "${CLUSTER_NAME}" || exit 1
 
-if ! `kubectl get secrets jenkins-controller-from-manual-config > /dev/null 2>&1`; then
-	1>&2 echo "You must run set-manual-config.sh before installing application"
-	exit 1
-fi
-
 if [ "${CLUSTER_TYPE}" = "local" ] || [ "${CLUSTER_TYPE}" = "gke" ]; then
-	"${SCRIPTS_DIR}/tools/${CLUSTER_TYPE}/deploy.sh" "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
+	"${SCRIPTS_DIR}/tools/${CLUSTER_TYPE}/set-manual-config.sh" $@ || exit 1
 else
 	1>&2 echo "Cluster type ${CLUSTER_TYPE} is not supported"
 	exit 1
