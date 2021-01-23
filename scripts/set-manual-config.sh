@@ -26,6 +26,8 @@ fi
 
 "${SCRIPTS_DIR}/tools/activate_cluster.sh" "${CLUSTER_NAME}" || exit 1
 
+shift
+
 if [ "${CLUSTER_TYPE}" = "local" ] || [ "${CLUSTER_TYPE}" = "gke" ]; then
 	"${SCRIPTS_DIR}/tools/${CLUSTER_TYPE}/set-manual-config.sh" $@ || exit 1
 else
