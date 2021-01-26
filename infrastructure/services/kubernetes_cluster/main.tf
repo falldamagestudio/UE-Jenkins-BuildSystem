@@ -58,7 +58,7 @@ module "kubernetes_cluster" {
 
     {
       name               = "jenkins-agent-linux-node-pool"
-      machine_type       = "n1-standard-32"
+      machine_type       = "n1-standard-16"
       node_locations     = var.zone
       min_count          = 0
       max_count          = 10
@@ -75,7 +75,7 @@ module "kubernetes_cluster" {
 
     {
       name               = "jenkins-agent-windows-node-pool"
-      machine_type       = "n1-standard-32"
+      machine_type       = "n1-standard-16"
       node_locations     = var.zone
       min_count          = 0
       max_count          = 10
