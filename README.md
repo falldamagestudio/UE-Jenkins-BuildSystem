@@ -8,7 +8,7 @@ This repo brings up a Kubernetes cluster in Google Kubernetes Engine. It install
 
 Linux doesn't build Unreal Engine yet due to [Unreal's setup script failing if UE is imported as a submodule](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/25).
 
-Windows build both Engine and an example game. The cold boot times for build jobs are sub-par (it takes ~20 minutes to create a VM and pull the required images).
+Windows build both Engine and an example game. [The cold boot times for build jobs are sub-par (it takes ~20 minutes to create a VM and pull the required images)](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/20).
 
 # Architecture
 
