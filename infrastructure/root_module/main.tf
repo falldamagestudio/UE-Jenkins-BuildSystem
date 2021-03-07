@@ -17,6 +17,7 @@ module "image_builder" {
 
   source = "../services/image_builder"
 
+  region = var.region
   build_artifact_uploader_service_account_name = module.docker_build_artifacts.build_artifact_uploader_service_account_name
 }
 

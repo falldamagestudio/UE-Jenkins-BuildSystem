@@ -1,11 +1,36 @@
 locals {
   wait = length(module.kubernetes_cluster.endpoint
+    ) + length(google_compute_network.kubernetes_network.id
+    ) + length(google_compute_subnetwork.kubernetes_subnetwork.id
     ) + length(google_service_account.agent_service_account.id
     ) + length(google_project_iam_member.agent_build_artifact_downloader_access.id
     ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
     ) + length(google_service_account.controller_service_account.id
     ) + length(google_project_iam_member.controller_build_artifact_downloader_access.id
     ) + length(google_compute_global_address.external_ip_address.id)
+}
+
+resource "google_compute_network" "kubernetes_network" {
+  name = "kubernetes-network"
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "kubernetes_subnetwork" {
+  name          = "kubernetes-subnetwork"
+  ip_cidr_range = "10.132.0.0/20"
+  region        = var.region
+  network       = google_compute_network.kubernetes_network.id
+
+  secondary_ip_range = [
+    {
+      range_name    = "kubernetes-subnetwork-pods"
+      ip_cidr_range = "10.24.0.0/14"
+    },
+    {
+      range_name    = "kubernetes-subnetwork-services"
+      ip_cidr_range = "10.28.0.0/20"
+    }
+  ]
 }
 
 module "kubernetes_cluster" {
@@ -19,10 +44,10 @@ module "kubernetes_cluster" {
   regional                   = false // This will be a single-zone cluster, with a single master in the given zone
   region                     = var.region
   zones                      = [var.zone]
-  network                    = "default" // TODO: place cluster into separate network
-  subnetwork                 = "default" // TODO: place cluster into separate sub network
-  ip_range_pods              = "" // TODO: May need to specify name of IP range
-  ip_range_services          = "" // TODO: May need to specify name of IP range
+  network                    = google_compute_network.kubernetes_network.name
+  subnetwork                 = google_compute_subnetwork.kubernetes_subnetwork.name
+  ip_range_pods              = "kubernetes-subnetwork-pods" // TODO: refer to this by object, not string
+  ip_range_services          = "kubernetes-subnetwork-services" // TODO: refer to this by object, not string
   http_load_balancing        = true
   horizontal_pod_autoscaling = true
   network_policy             = true

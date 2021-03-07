@@ -4,6 +4,10 @@ variable "module_depends_on" {
   default     = []
 }
 
+variable "region" {
+  type = string
+}
+
 variable "build_artifact_uploader_service_account_name" {
   type = string
 }
