@@ -2,10 +2,20 @@ controller:
   ingress:
     enabled: true
     paths: []
+
+    # Set external host name (this should be tied to the static IP address), Jenkins will use this when generating internal URLs
+    # The value of the 'undefined' parameter should be provided as an extra commandline argument when calling 'helm install'
+    # Reference: https://github.com/jenkinsci/helm-charts/blob/main/charts/jenkins/VALUES_SUMMARY.md#kubernetes-ingress
     hostName: "undefined"
+
     annotations:
+      # Connect load balancer to a static IP address
+      # The value of the 'undefined' parameter should be provided as an extra commandline argument when calling 'helm install'
+      # Reference: https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer#optional_configuring_a_static_ip_address
       kubernetes.io/ingress.global-static-ip-name: "undefined"
 
+      # Redirect HTTP to HTTPS using a frontend config
+      # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#https_redirect
       networking.gke.io/v1beta1.FrontendConfig: "ingress-frontend-config"
 
       # Enable HTTPS, using a Google-managed SSL certificate
@@ -13,10 +23,6 @@ controller:
       networking.gke.io/managed-certificates: jenkins-ssl-cert
       kubernetes.io/ingress.class: "gce"
       
-#      # Disable HTTP
-#      # Reference: https://cloud.google.com/kubernetes-engine/docs/concepts/ingress-xlb#disabling_http
-#      kubernetes.io/ingress.allow-http: "false"
-
   # Ensure Jenkins adds https:// prefix when generating internal URLs
   # Reference: https://github.com/jenkinsci/helm-charts/blob/main/charts/jenkins/VALUES_SUMMARY.md#jenkins-global-settings
   jenkinsUrlProtocol: "https"
