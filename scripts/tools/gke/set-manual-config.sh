@@ -17,3 +17,11 @@ kubectl create secret generic jenkins-controller-from-manual-config \
     --from-literal=google_oauth_client_id=$GOOGLE_OAUTH_CLIENT_ID \
     --from-literal=google_oauth_client_secret=$GOOGLE_OAUTH_CLIENT_SECRET \
     --from-literal=hostname=$HOSTNAME
+
+if `kubectl get secret iap-configuration > /dev/null 2>&1`; then
+    kubectl delete secret iap-configuration
+fi
+
+kubectl create secret generic iap-configuration \
+    --from-literal=client_id=$GOOGLE_OAUTH_CLIENT_ID \
+    --from-literal=client_secret=$GOOGLE_OAUTH_CLIENT_SECRET

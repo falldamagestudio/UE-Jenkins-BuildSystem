@@ -3,6 +3,11 @@ variable "project_id" {
   type        = string
 }
 
+variable "project_number" {
+  description = "Number for the GCP project that will contain the license server."
+  type        = string
+}
+
 variable "build_artifacts_location" {
   description = "Docker build artifact registry region/multi-region."
   type        = string
@@ -27,5 +32,9 @@ variable "longtail_store_bucket_name" {
 }
 
 variable "longtail_store_location" {
+  type = string
+}
+
+variable "allowed_login_domain" {
   type = string
 }

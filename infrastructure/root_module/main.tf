@@ -38,12 +38,15 @@ module "kubernetes_cluster" {
   source = "../services/kubernetes_cluster"
 
   project_id = var.project_id
+  project_number = var.project_number
   region = var.region
   zone = var.zone
 
   external_ip_address_name = var.external_ip_address_name
 
   longtail_store_bucket_id = var.longtail_store_bucket_name
+
+  allowed_login_domain = var.allowed_login_domain
 }
 
 module "settings" {

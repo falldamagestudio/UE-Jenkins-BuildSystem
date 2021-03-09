@@ -3,6 +3,7 @@ https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
 
 # Adding an Identity-Aware Proxy in front of Jenkins
 https://www.opcito.com/blogs/securing-jenkins-on-gke-with-iap/
+https://vmarchaud.fr/gke-use-iap-secure-internal-apps/
 
 # Configuring pod-based agents
 https://itnext.io/dynamic-jenkins-agent-from-kubernetes-4adb98901906

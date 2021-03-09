@@ -7,7 +7,8 @@ locals {
     ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
     ) + length(google_service_account.controller_service_account.id
     ) + length(google_project_iam_member.controller_build_artifact_downloader_access.id
-    ) + length(google_compute_global_address.external_ip_address.id)
+    ) + length(google_compute_global_address.external_ip_address.id
+    ) + length(google_iap_web_iam_member.access_iap_policy.id)
 }
 
 resource "google_compute_network" "kubernetes_network" {
@@ -255,4 +256,13 @@ resource "google_compute_global_address" "external_ip_address" {
   depends_on = [ var.module_depends_on ]
 
   name = var.external_ip_address_name
+}
+
+resource "google_iap_web_iam_member" "access_iap_policy" {
+  provider  = google-beta
+
+  role      = "roles/iap.httpsResourceAccessor"
+  # Configure which users/groups/domains will be accepted by Identity-Aware Proxy
+  # Reference: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iap_web_iam#argument-reference
+  member    = "domain:${var.allowed_login_domain}"
 }

@@ -9,6 +9,11 @@ variable "project_id" {
   default = null
 }
 
+variable "project_number" {
+  type    = string
+  default = null
+}
+
 variable "region" {
   type    = string
   default = null
@@ -25,5 +30,9 @@ variable "external_ip_address_name" {
 }
 
 variable "longtail_store_bucket_id" {
+  type = string
+}
+
+variable "allowed_login_domain" {
   type = string
 }

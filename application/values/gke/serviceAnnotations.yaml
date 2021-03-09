@@ -1,0 +1,3 @@
+controller:
+  serviceAnnotations:
+    cloud.google.com/backend-config: '{"default": "ingress-backend-config"}'
