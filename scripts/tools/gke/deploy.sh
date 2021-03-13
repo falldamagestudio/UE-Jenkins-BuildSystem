@@ -26,4 +26,31 @@ CHART_VERSION=`echo $HELM_CONFIG_JSON | jq -r ".chart_version"`
 
 SEED_JOB_URL=`echo $HELM_CONFIG_JSON | jq -r ".seed_job_url"`
 
-helm upgrade --install --values "${APPLICATION_DIR}/values/values.yaml" --values "${APPLICATION_DIR}/values/gke/serviceType.yaml" --values "${APPLICATION_DIR}/values/gke/nodeSelector.yaml" --values "${APPLICATION_DIR}/values/gke/ingress.yaml" --values "${APPLICATION_DIR}/values/gke/gke-image.yaml" --values "${APPLICATION_DIR}/values/gke/serviceAnnotations.yaml" --values "${APPLICATION_DIR}/values/plastic/volumes.yaml" --version=${CHART_VERSION} ${RELEASE} ${CHART_NAME} --debug --set GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID} --set GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET} --set controller.ingress.annotations.kubernetes\\.io/ingress\\.global-static-ip-name=${STATIC_IP_ADDRESS_NAME} --set controller.image=${CONTROLLER_IMAGE} --set controller.tag=${CONTROLLER_IMAGE_TAG} --set controller.ingress.hostName=${SUBDOMAIN_NAME} --set controller.containerEnv[0].name=UE_JENKINS_BUILDTOOLS_LINUX_IMAGE --set controller.containerEnv[0].value=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} --set controller.containerEnv[1].name=SEED_JOB_URL --set controller.containerEnv[1].value=${SEED_JOB_URL} --set controller.containerEnv[2].name=UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE --set controller.containerEnv[2].value=${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE} --set controller.containerEnv[3].name=LONGTAIL_STORE_BUCKET_NAME --set controller.containerEnv[3].value=${LONGTAIL_STORE_BUCKET_NAME} --wait
+helm upgrade \
+    --install \
+    --values "${APPLICATION_DIR}/values/values.yaml" \
+    --values "${APPLICATION_DIR}/values/gke/serviceType.yaml" \
+    --values "${APPLICATION_DIR}/values/gke/nodeSelector.yaml" \
+    --values "${APPLICATION_DIR}/values/gke/ingress.yaml" \
+    --values "${APPLICATION_DIR}/values/gke/gke-image.yaml" \
+    --values "${APPLICATION_DIR}/values/gke/serviceAnnotations.yaml" \
+    --values "${APPLICATION_DIR}/values/plastic/volumes.yaml" \
+    --version=${CHART_VERSION} \
+    ${RELEASE} \
+    ${CHART_NAME} \
+    --debug \
+    --set GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID} \
+    --set GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET} \
+    --set controller.ingress.annotations.kubernetes\\.io/ingress\\.global-static-ip-name=${STATIC_IP_ADDRESS_NAME} \
+    --set controller.image=${CONTROLLER_IMAGE} \
+    --set controller.tag=${CONTROLLER_IMAGE_TAG} \
+    --set controller.ingress.hostName=${SUBDOMAIN_NAME} \
+    --set controller.containerEnv[0].name=UE_JENKINS_BUILDTOOLS_LINUX_IMAGE \
+    --set controller.containerEnv[0].value=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \
+    --set controller.containerEnv[1].name=SEED_JOB_URL \
+    --set controller.containerEnv[1].value=${SEED_JOB_URL} \
+    --set controller.containerEnv[2].name=UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE \
+    --set controller.containerEnv[2].value=${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE} \
+    --set controller.containerEnv[3].name=LONGTAIL_STORE_BUCKET_NAME \
+    --set controller.containerEnv[3].value=${LONGTAIL_STORE_BUCKET_NAME} \
+    --wait
