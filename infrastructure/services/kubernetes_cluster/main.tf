@@ -34,6 +34,30 @@ resource "google_compute_subnetwork" "kubernetes_subnetwork" {
   ]
 }
 
+resource "google_compute_firewall" "kubernetes_allow_internal_traffic" {
+  name = "kubernetes-allow-internal-traffic"
+  
+  network = google_compute_network.kubernetes_network.name
+
+  description = "Allow internal traffic on the Kubernetes network"
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "udp"
+    ports = [ "0-65535" ]
+  }
+
+  allow {
+    protocol = "tcp"
+    ports = [ "0-65535" ]
+  }
+
+  source_ranges = [ "10.132.0.0/20" ]
+}
+
 module "kubernetes_cluster" {
 
   source                     = "./beta-public-cluster"
