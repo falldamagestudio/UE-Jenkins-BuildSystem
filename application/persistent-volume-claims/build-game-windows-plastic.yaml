@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: build-game-windows-plastic
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: pd-balanced-ntfs
+  resources:
+    requests:
+      storage: 100Gi
