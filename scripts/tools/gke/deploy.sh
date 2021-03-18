@@ -17,6 +17,9 @@ CONTROLLER_IMAGE_AND_TAG=`echo $HELM_CONFIG_JSON | jq -r ".controller_image"`
 CONTROLLER_IMAGE=${CONTROLLER_IMAGE_AND_TAG%:*}
 CONTROLLER_IMAGE_TAG=${CONTROLLER_IMAGE_AND_TAG##*:}
 
+UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_inbound_agent_linux_image"`
+UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_inbound_agent_windows_image"`
+
 UE_JENKINS_BUILDTOOLS_LINUX_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_buildtools_linux_image"`
 UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_buildtools_windows_image"`
 
@@ -75,4 +78,8 @@ helm upgrade \
     --set controller.containerEnv[2].value=${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE} \
     --set controller.containerEnv[3].name=LONGTAIL_STORE_BUCKET_NAME \
     --set controller.containerEnv[3].value=${LONGTAIL_STORE_BUCKET_NAME} \
+    --set controller.containerEnv[4].name=UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE \
+    --set controller.containerEnv[4].value=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE} \
+    --set controller.containerEnv[5].name=UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE \
+    --set controller.containerEnv[5].value=${UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE} \
     --wait

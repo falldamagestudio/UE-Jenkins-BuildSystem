@@ -2,6 +2,7 @@
 	"chart_name": "jenkins/jenkins",
 	"chart_version": "v3.0.2",
 	"controller_image": "ue-jenkins-controller:local",
+	"ue_jenkins_inbound_agent_linux_image": "jenkins-inbound-agent-linux:local",
 	"ue_jenkins_buildtools_linux_image": "ue-jenkins-buildtools-linux:local",
 	"seed_job_url": "https://github.com/Kalmalyzer/UE-Jenkins-Jobs",
 	"plastic": "true"

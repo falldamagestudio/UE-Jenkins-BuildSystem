@@ -64,6 +64,18 @@ controller:
                 - key: "LONGTAIL_STORE_BUCKET_NAME"
                   value: "${LONGTAIL_STORE_BUCKET_NAME}"
 
+      # Add the UE_JENKINS_INBOUND_AGENT_*_IMAGE OS-level environment variabls as job environment variable
+      # This will be available in all jobs
+      ue-jenkins-inbound-agent-images-env: |-
+        jenkins:
+          globalNodeProperties:
+            - envVars:
+                env:
+                - key: "UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE"
+                  value: "${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE}"
+                - key: "UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE"
+                  value: "${UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE}"
+
       # Add timestamps to all job logs
       timestamper: |-
         unclassified:

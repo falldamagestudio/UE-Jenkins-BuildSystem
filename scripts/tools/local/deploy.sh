@@ -14,6 +14,8 @@ CONTROLLER_IMAGE_AND_TAG=`echo $HELM_CONFIG_JSON | jq -r ".controller_image"`
 CONTROLLER_IMAGE=${CONTROLLER_IMAGE_AND_TAG%:*}
 CONTROLLER_IMAGE_TAG=${CONTROLLER_IMAGE_AND_TAG##*:}
 
+UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_inbound_agent_linux_image"`
+
 UE_JENKINS_BUILDTOOLS_LINUX_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_buildtools_linux_image"`
 
 PLASTIC=`echo $HELM_CONFIG_JSON | jq -r ".plastic"`
@@ -63,4 +65,6 @@ helm upgrade \
     --set controller.containerEnv[0].value=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \
     --set controller.containerEnv[1].name=SEED_JOB_URL \
     --set controller.containerEnv[1].value=${SEED_JOB_URL} \
+    --set controller.containerEnv[2].name=UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE \
+    --set controller.containerEnv[2].value=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE} \
     --wait
