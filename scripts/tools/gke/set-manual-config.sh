@@ -22,6 +22,16 @@ if `kubectl get secret iap-configuration > /dev/null 2>&1`; then
     kubectl delete secret iap-configuration
 fi
 
+# Set configuration for Identity-Aware Proxy
 kubectl create secret generic iap-configuration \
     --from-literal=client_id=$GOOGLE_OAUTH_CLIENT_ID \
     --from-literal=client_secret=$GOOGLE_OAUTH_CLIENT_SECRET
+
+# Create managed SSL certificate (this will be used by the load balancer)
+cat "${APPLICATION_DIR}/managed-ssl-certificate.yaml" | sed s/\<domain-name\>/${HOSTNAME}/ | kubectl apply -f -
+
+# Configure ingress to use IAP
+kubectl apply -f "${APPLICATION_DIR}/ingress-backend-config.yaml"
+
+# Configure ingress to redirect HTTP traffic to HTTPS
+kubectl apply -f "${APPLICATION_DIR}/ingress-frontend-config.yaml"
