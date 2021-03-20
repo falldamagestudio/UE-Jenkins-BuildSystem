@@ -38,7 +38,7 @@ readarray -d '' VALUES_FILES_GKE < <(find "${APPLICATION_DIR}/values/gke" -name 
 VALUES_FILES+=(${VALUES_FILES_GKE[@]})
 
 # Include Plastic-related values files, if Plastic is enabled in config
-if [[ ${PLASTIC} -eq "true" ]]; then
+if [[ ${PLASTIC} == "true" ]]; then
 
     readarray -d '' VALUES_FILES_PLASTIC < <(find "${APPLICATION_DIR}/values/plastic" -name '*.yaml' -print0)
     VALUES_FILES+=(${VALUES_FILES_PLASTIC[@]})
