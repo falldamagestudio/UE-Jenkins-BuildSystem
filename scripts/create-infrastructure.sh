@@ -9,6 +9,8 @@ fi
 
 RELATIVE_ROOT_MODULE_DIR="../../infrastructure/root_module"
 
+# Initialize Terraform
 (cd "${ENVIRONMENT_DIR}" && terraform init -backend-config="backend.hcl" "${RELATIVE_ROOT_MODULE_DIR}") || exit $?
 
+# Update infrastructure
 (cd "${ENVIRONMENT_DIR}" && terraform apply -var-file="terraform.tfvars" "${RELATIVE_ROOT_MODULE_DIR}") || exit $?
