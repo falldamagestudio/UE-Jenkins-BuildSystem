@@ -12,12 +12,16 @@ LONGTAIL_STORE_BUCKET_NAME=`kubectl get secrets jenkins-controller-from-terrafor
 
 HELM_CONFIG_JSON=`cat ${HELM_CONFIG_FILE}`
 
-CONTROLLER_IMAGE_AND_TAG=`echo $HELM_CONFIG_JSON | jq -r ".controller_image"`
+CONTROLLER_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".controller_image"`
 # Split string into image and tag sections at the last ':' in the string
-CONTROLLER_IMAGE=${CONTROLLER_IMAGE_AND_TAG%:*}
-CONTROLLER_IMAGE_TAG=${CONTROLLER_IMAGE_AND_TAG##*:}
+CONTROLLER_IMAGE_ONLY=${CONTROLLER_IMAGE%:*}
+CONTROLLER_TAG_ONLY=${CONTROLLER_IMAGE##*:}
 
 UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_inbound_agent_linux_image"`
+# Split string into image and tag sections at the last ':' in the string
+UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE_ONLY=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE%:*}
+UE_JENKINS_INBOUND_AGENT_LINUX_TAG_ONLY=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE##*:}
+
 UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_inbound_agent_windows_image"`
 
 UE_JENKINS_BUILDTOOLS_LINUX_IMAGE=`echo $HELM_CONFIG_JSON | jq -r ".ue_jenkins_buildtools_linux_image"`
@@ -72,8 +76,10 @@ helm upgrade \
     --set GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID} \
     --set GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET} \
     --set controller.ingress.annotations.kubernetes\\.io/ingress\\.global-static-ip-name=${STATIC_IP_ADDRESS_NAME} \
-    --set controller.image=${CONTROLLER_IMAGE} \
-    --set controller.tag=${CONTROLLER_IMAGE_TAG} \
+    --set controller.image=${CONTROLLER_IMAGE_ONLY} \
+    --set controller.tag=${CONTROLLER_TAG_ONLY} \
+    --set agent.image=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE_ONLY} \
+    --set agent.tag=${UE_JENKINS_INBOUND_AGENT_LINUX_TAG_ONLY} \
     --set controller.ingress.hostName=${SUBDOMAIN_NAME} \
     --set controller.containerEnv[0].name=UE_JENKINS_BUILDTOOLS_LINUX_IMAGE \
     --set controller.containerEnv[0].value=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \
