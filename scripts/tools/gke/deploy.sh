@@ -32,7 +32,11 @@ CHART_VERSION=`echo $HELM_CONFIG_JSON | jq -r ".chart_version"`
 SEED_JOB_URL=`echo $HELM_CONFIG_JSON | jq -r ".seed_job_url"`
 SEED_JOB_BRANCH=`echo $HELM_CONFIG_JSON | jq -r ".seed_job_branch"`
 
-VALUES_FILES=("${APPLICATION_DIR}/values/values.yaml" )
+VALUES_FILES=()
+
+# Include platform-independent values files
+readarray -d '' VALUES_FILES_DEFAULT < <(find "${APPLICATION_DIR}/values" -maxdepth 1 -name '*.yaml' -print0)
+VALUES_FILES+=(${VALUES_FILES_DEFAULT[@]})
 
 # Include GKE-related values files
 readarray -d '' VALUES_FILES_GKE < <(find "${APPLICATION_DIR}/values/gke" -name '*.yaml' -print0)
