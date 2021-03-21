@@ -25,6 +25,7 @@ CHART_NAME=`echo $HELM_CONFIG_JSON | jq -r ".chart_name"`
 CHART_VERSION=`echo $HELM_CONFIG_JSON | jq -r ".chart_version"`
 
 SEED_JOB_URL=`echo $HELM_CONFIG_JSON | jq -r ".seed_job_url"`
+SEED_JOB_BRANCH=`echo $HELM_CONFIG_JSON | jq -r ".seed_job_branch"`
 
 VALUES_FILES=("${APPLICATION_DIR}/values/values.yaml" )
 
@@ -67,4 +68,6 @@ helm upgrade \
     --set controller.containerEnv[1].value=${SEED_JOB_URL} \
     --set controller.containerEnv[2].name=UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE \
     --set controller.containerEnv[2].value=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE} \
+    --set controller.containerEnv[3].name=SEED_JOB_BRANCH \
+    --set controller.containerEnv[3].value=${SEED_JOB_BRANCH} \
     --wait
