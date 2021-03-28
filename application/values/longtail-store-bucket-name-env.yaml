@@ -1,0 +1,13 @@
+controller:
+  JCasC:
+    configScripts:
+
+      # Add the LONGTAIL_STORE_BUCKET_NAME OS-level environment variabls as job environment variable
+      # This will be available in all jobs
+      longtail-store-bucket-name-env: |-
+        jenkins:
+          globalNodeProperties:
+            - envVars:
+                env:
+                - key: "LONGTAIL_STORE_BUCKET_NAME"
+                  value: "${LONGTAIL_STORE_BUCKET_NAME}"

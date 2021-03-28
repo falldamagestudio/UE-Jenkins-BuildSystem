@@ -1,0 +1,17 @@
+controller:
+  JCasC:
+
+    # Disable access for anonymous users
+    authorizationStrategy: |-
+      loggedInUsersCanDoAnything:
+        allowAnonymousRead: false
+
+    # Configure google credentials provider plugin's OAuth settings
+    securityRealm: |-
+      googleOAuth2:
+        clientId: "{{ .Values.GOOGLE_OAUTH_CLIENT_ID }}"
+        clientSecret: "{{ .Values.GOOGLE_OAUTH_CLIENT_SECRET }}"
+
+# Enable the kubernetes-credentials-provider-plugin to read secrets
+rbac:
+  readSecrets: true

@@ -1,0 +1,24 @@
+controller:
+  JCasC:
+    configScripts:
+
+      # Add seed job
+      seed-job: |
+        jobs:
+          - script: >
+              job('Seed Job') {
+                scm {
+                  git {
+                    remote {
+                      url('${SEED_JOB_URL}')
+                      credentials('github-user')
+                    }
+                    branch('*/${SEED_JOB_BRANCH}')
+                  }
+                }
+                steps {
+                  jobDsl {
+                    targets "*.groovy"
+                  }
+                }
+              }
