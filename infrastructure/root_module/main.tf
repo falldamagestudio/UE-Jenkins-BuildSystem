@@ -49,6 +49,16 @@ module "kubernetes_cluster" {
   allowed_login_domain = var.allowed_login_domain
 }
 
+module "agent_vms" {
+
+  module_depends_on = [module.kubernetes_cluster.wait, module.longtail_store.wait]
+
+  source = "../services/agent_vms"
+
+  region = var.region
+  network_id = module.kubernetes_cluster.network_id
+}
+
 module "settings" {
 
   module_depends_on = [module.kubernetes_cluster.wait]
