@@ -9,7 +9,7 @@ CHART_DIR="${APPLICATION_DIR}/helm-charts/charts/jenkins"
 GOOGLE_OAUTH_CLIENT_ID=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_id}" | base64 --decode`
 GOOGLE_OAUTH_CLIENT_SECRET=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_secret}" | base64 --decode`
 SUBDOMAIN_NAME=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.hostname}" | base64 --decode`
-STATIC_IP_ADDRESS_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.ingress_static_ip_address_name}" | base64 --decode`
+STATIC_IP_ADDRESS_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.external_ingress_static_ip_address_name}" | base64 --decode`
 LONGTAIL_STORE_BUCKET_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.longtail_store_bucket_name}" | base64 --decode`
 
 HELM_CONFIG_JSON=`cat ${HELM_CONFIG_FILE}`
