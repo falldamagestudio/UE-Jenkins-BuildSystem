@@ -9,8 +9,10 @@ CHART_DIR="${APPLICATION_DIR}/helm-charts/charts/jenkins"
 GOOGLE_OAUTH_CLIENT_ID=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_id}" | base64 --decode`
 GOOGLE_OAUTH_CLIENT_SECRET=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_secret}" | base64 --decode`
 SUBDOMAIN_NAME=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.hostname}" | base64 --decode`
-STATIC_IP_ADDRESS_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.external_ingress_static_ip_address_name}" | base64 --decode`
+EXTERNAL_STATIC_IP_ADDRESS_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.external_ingress_static_ip_address_name}" | base64 --decode`
+INTERNAL_STATIC_IP_ADDRESS_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.internal_ingress_static_ip_address_name}" | base64 --decode`
 LONGTAIL_STORE_BUCKET_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.longtail_store_bucket_name}" | base64 --decode`
+AGENT_LISTENER_SERVICE_LOAD_BALANCER_IP=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.agent_listener_service_load_balancer_ip}" | base64 --decode`
 
 HELM_CONFIG_JSON=`cat ${HELM_CONFIG_FILE}`
 
@@ -74,7 +76,9 @@ helm upgrade \
     --debug \
     --set GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID} \
     --set GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET} \
-    --set controller.ingress.annotations.kubernetes\\.io/ingress\\.global-static-ip-name=${STATIC_IP_ADDRESS_NAME} \
+    --set controller.agentListenerLoadBalancerIP=${AGENT_LISTENER_SERVICE_LOAD_BALANCER_IP} \
+    --set controller.ingress.annotations.kubernetes\\.io/ingress\\.global-static-ip-name=${EXTERNAL_STATIC_IP_ADDRESS_NAME} \
+    --set controller.secondaryingress.annotations.kubernetes\\.io/ingress\\.regional-static-ip-name=${INTERNAL_STATIC_IP_ADDRESS_NAME} \
     --set controller.image=${CONTROLLER_IMAGE_ONLY} \
     --set controller.tag=${CONTROLLER_TAG_ONLY} \
     --set agent.image=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE_ONLY} \

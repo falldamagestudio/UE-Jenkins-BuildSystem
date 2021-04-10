@@ -1,0 +1,23 @@
+controller:
+  secondaryingress:
+    enabled: true
+    # Allow only incoming websocket connections
+    paths: [ "/", "/wsagents" ]
+
+    annotations:
+      # Use an internal HTTP(S) load balancer
+      # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/internal-load-balance-ingress
+      kubernetes.io/ingress.class: "gce-internal"
+
+      # Connect load balancer to a static IP address
+      # The value of the 'undefined' parameter should be provided as an extra commandline argument when calling 'helm install'
+      # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/internal-load-balance-ingress#static_ip_addressing
+      kubernetes.io/ingress.regional-static-ip-name: "undefined"
+
+#      # Enable HTTPS, using a Google-managed SSL certificate
+#      # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs
+#      networking.gke.io/managed-certificates: jenkins-ssl-cert
+
+#      # Disable HTTP
+#      # Reference: https://cloud.google.com/kubernetes-engine/docs/concepts/ingress-xlb#disabling_http
+#      kubernetes.io/ingress.allow-http: "false"

@@ -37,12 +37,12 @@ spec:
             backend:
 {{ if semverCompare ">=1.19-0" $kubeTargetVersion }}
               service:
-                name: {{ $serviceName }}
+                name: {{ $serviceName }}-secondary
                 port:
                   number: {{ $servicePort }}
             pathType: ImplementationSpecific
 {{ else }}
-              serviceName: {{ $serviceName }}
+              serviceName: {{ $serviceName }}-secondary
               servicePort: {{ $servicePort }}
 {{ end }}
         {{- end}}

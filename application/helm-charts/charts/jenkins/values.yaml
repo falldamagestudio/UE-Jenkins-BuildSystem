@@ -348,6 +348,30 @@ controller:
   # ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
   updateStrategy: {}
 
+  secondaryservice:
+    enabled: false
+
+    # Jenkins controller service annotations
+    annotations: {}
+
+    # For minikube, set this to NodePort, elsewhere use LoadBalancer
+    # Use ClusterIP if your setup includes ingress controller
+    serviceType: ClusterIP
+
+    servicePort: 8080
+
+    # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
+    # set allowed inbound rules on the security group assigned to the controller load balancer
+    loadBalancerSourceRanges:
+    - 0.0.0.0/0
+    # Optionally assign a known public LB IP
+    # loadBalancerIP: 1.2.3.4
+
+    # Optionally configure other ports to expose in the controller container
+    extraPorts: []
+    # - name: BuildInfoProxy
+    #   port: 9000
+
   ingress:
     enabled: false
     # Override for the default paths that map requests to the backend
