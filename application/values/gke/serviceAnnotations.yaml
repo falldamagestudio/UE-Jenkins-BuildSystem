@@ -1,6 +1,10 @@
 controller:
   serviceAnnotations:
-    cloud.google.com/backend-config: '{"default": "ingress-backend-config"}'
+
+    # Associate BackendConfig with the Ingress
+    # This will activte Identity-Aware Proxy for the Ingress
+    # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#associating_backendconfig_with_your_ingress
+    cloud.google.com/backend-config: '{"default": "jenkins-controller"}'
 
     # Create a Network Endpoint Group after the Ingress has been created
     # This enables Container-native load balancing for this service, which allows LBs to route
