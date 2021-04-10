@@ -1,3 +1,11 @@
 controller:
   serviceAnnotations:
     cloud.google.com/backend-config: '{"default": "ingress-backend-config"}'
+
+    # Create a Network Endpoint Group after the Ingress has been created
+    # This enables Container-native load balancing for this service, which allows LBs to route
+    #  traffic directly to pods, rather than sending it to nodes within the cluster and 
+    #  then relying on the nodes to forward it on to the appopriate pod.
+    # Reference: https://cloud.google.com/kubernetes-engine/docs/concepts/container-native-load-balancing
+    # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/container-native-load-balancing
+    cloud.google.com/neg: '{"ingress": true}'
