@@ -1,0 +1,74 @@
+suite: Network Policy
+release:
+  name: my-release
+  namespace: my-namespace
+templates:
+  - jenkins-controller-networkpolicy.yaml
+tests:
+  - it: tests defaults
+    asserts:
+    - hasDocuments:
+        count: 0
+  - it: enabled
+    set:
+      networkPolicy.enabled: true
+    asserts:
+      - hasDocuments:
+          count: 2
+      - isKind:
+          of: NetworkPolicy
+      - equal:
+          path: apiVersion
+          value: networking.k8s.io/v1
+      - equal:
+          path: metadata.namespace
+          value: my-namespace
+      - matchRegex:
+          path: metadata.labels.helm\.sh/chart
+          pattern: ^jenkins-
+      - isNull:
+          path: metadata.annotations
+      - equal:
+          path: metadata.name
+          value: my-release-jenkins-controller
+        documentIndex: 0
+      - equal:
+          path: spec
+          value:
+            ingress:
+            - ports:
+              - port: 8080
+            - from:
+              - podSelector:
+                  matchLabels:
+                    jenkins/my-release-jenkins-agent: "true"
+              ports:
+              - port: 50000
+            podSelector:
+              matchLabels:
+                app.kubernetes.io/component: jenkins-controller
+                app.kubernetes.io/instance: my-release
+        documentIndex: 0
+      - equal:
+          path: spec
+          value:
+            podSelector:
+              matchLabels:
+                jenkins/my-release-jenkins-agent: "true"
+        documentIndex: 1
+      - equal:
+          path: metadata.name
+          value: my-release-jenkins-agent
+        documentIndex: 1
+  - it: disable helm.sh label
+    set:
+      renderHelmLabels: false
+      networkPolicy.enabled: true
+    asserts:
+      - equal:
+          path: metadata.labels
+          value:
+            app.kubernetes.io/component: jenkins-controller
+            app.kubernetes.io/instance: my-release
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: jenkins
