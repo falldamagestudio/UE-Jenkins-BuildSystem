@@ -4,6 +4,8 @@ HELM_CONFIG_FILE="$1"
 
 APPLICATION_DIR="${BASH_SOURCE%/*}/../../../application"
 
+CHART_DIR="${APPLICATION_DIR}/helm-charts/charts/jenkins"
+
 GOOGLE_OAUTH_CLIENT_ID=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_id}" | base64 --decode`
 GOOGLE_OAUTH_CLIENT_SECRET=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_secret}" | base64 --decode`
 
@@ -24,8 +26,6 @@ UE_JENKINS_BUILDTOOLS_LINUX_IMAGE_AND_TAG=`echo $HELM_CONFIG_JSON | jq -r ".ue_j
 PLASTIC=`echo $HELM_CONFIG_JSON | jq -r ".plastic"`
 
 RELEASE="jenkins-controller"
-CHART_NAME=`echo $HELM_CONFIG_JSON | jq -r ".chart_name"`
-CHART_VERSION=`echo $HELM_CONFIG_JSON | jq -r ".chart_version"`
 
 SEED_JOB_URL=`echo $HELM_CONFIG_JSON | jq -r ".seed_job_url"`
 SEED_JOB_BRANCH=`echo $HELM_CONFIG_JSON | jq -r ".seed_job_branch"`
@@ -63,7 +63,8 @@ done
 helm upgrade \
     --install \
     ${VALUES[*]} \
-    --version=${CHART_VERSION} ${RELEASE} ${CHART_NAME} \
+    ${RELEASE} \
+    ${CHART_DIR} \
     --debug \
     --set controller.image=${CONTROLLER_IMAGE_ONLY} \
     --set controller.tag=${CONTROLLER_TAG_ONLY} \
