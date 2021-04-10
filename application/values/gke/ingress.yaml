@@ -9,7 +9,7 @@ controller:
     hostName: "undefined"
 
     annotations:
-      # Use an external load balancer
+      # Use an external HTTP(S) load balancer
       # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/load-balance-ingress#creating_an_ingress
       kubernetes.io/ingress.class: "gce"
 
