@@ -80,6 +80,7 @@ helm upgrade \
     --set agent.image=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE_ONLY} \
     --set agent.tag=${UE_JENKINS_INBOUND_AGENT_LINUX_TAG_ONLY} \
     --set controller.ingress.hostName=${SUBDOMAIN_NAME} \
+    --set controller.managedsslcertificate.domains[0]=${SUBDOMAIN_NAME} \
     --set controller.containerEnv[0].name=UE_JENKINS_BUILDTOOLS_LINUX_IMAGE \
     --set controller.containerEnv[0].value=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \
     --set controller.containerEnv[1].name=SEED_JOB_URL \

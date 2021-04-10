@@ -1,0 +1,9 @@
+controller:
+  managedsslcertificate:
+    enabled: true
+
+    name: jenkins-controller
+
+    domains:
+      # This variable should be set explicitly during install: --set controller.managedsslcertificate.domains[0]=<hostname>
+      - "undefined"

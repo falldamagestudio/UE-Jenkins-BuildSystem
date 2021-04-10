@@ -410,6 +410,17 @@ controller:
     annotations: {}
     spec: {}
 
+  # If you're running on GKE and want a managed SSL certificate for terminating
+  # to finish ingress setup, use the following values.
+  # Docs: https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs
+  managedsslcertificate:
+    enabled: false
+    apiVersion: "networking.gke.io/v1"
+    name:
+    labels: {}
+    annotations: {}
+    domains:
+
   # Openshift route
   route:
     enabled: false
