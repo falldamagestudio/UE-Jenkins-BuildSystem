@@ -1,0 +1,12 @@
+controller:
+  frontendconfig:
+    enabled: true
+
+    name: jenkins-controller
+
+    # Redirect HTTP to HTTPS
+    # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#https_redirect
+    spec:
+      redirectToHttps:
+        enabled: true
+        responseCodeName: "301"

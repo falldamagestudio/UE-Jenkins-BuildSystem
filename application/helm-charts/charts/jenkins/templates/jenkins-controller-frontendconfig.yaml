@@ -1,0 +1,24 @@
+{{- if .Values.controller.frontendconfig.enabled }}
+apiVersion: {{ .Values.controller.frontendconfig.apiVersion }}
+kind: FrontendConfig
+metadata:
+  name: {{ .Values.controller.frontendconfig.name }}
+  namespace: {{ template "jenkins.namespace" . }}
+  labels:
+    "app.kubernetes.io/name": '{{ template "jenkins.name" .}}'
+    {{- if .Values.renderHelmLabels }}
+    "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    {{- end }}
+    "app.kubernetes.io/managed-by": "{{ .Release.Service }}"
+    "app.kubernetes.io/instance": "{{ .Release.Name }}"
+    "app.kubernetes.io/component": "{{ .Values.controller.componentName }}"
+{{- if .Values.controller.frontendconfig.labels }}
+{{ toYaml .Values.controller.frontendconfig.labels | indent 4 }}
+{{- end }}
+{{- if .Values.controller.frontendconfig.annotations }}
+  annotations:
+{{ toYaml .Values.controller.frontendconfig.annotations | indent 4 }}
+{{- end }}
+spec:
+{{ toYaml .Values.controller.frontendconfig.spec | indent 2 }}
+{{- end }}

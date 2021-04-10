@@ -20,7 +20,7 @@ controller:
 
       # Redirect HTTP to HTTPS using a frontend config
       # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#https_redirect
-      networking.gke.io/v1beta1.FrontendConfig: "ingress-frontend-config"
+      networking.gke.io/v1beta1.FrontendConfig: "jenkins-controller"
 
       # Enable HTTPS, using a Google-managed SSL certificate
       # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs

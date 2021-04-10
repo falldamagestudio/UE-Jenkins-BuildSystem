@@ -410,6 +410,17 @@ controller:
     annotations: {}
     spec: {}
 
+  # If you're running on GKE and need to configure a frontendconfig
+  # to finish ingress setup, use the following values.
+  # Docs: https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#configuring_ingress_features_through_frontendconfig_parameters
+  frontendconfig:
+    enabled: false
+    apiVersion: "networking.gke.io/v1beta1"
+    name:
+    labels: {}
+    annotations: {}
+    spec: {}
+
   # If you're running on GKE and want a managed SSL certificate for terminating
   # to finish ingress setup, use the following values.
   # Docs: https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs
