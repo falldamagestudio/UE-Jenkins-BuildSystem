@@ -1,0 +1,82 @@
+suite: Controller Prometheus ServiceMonitor
+release:
+  name: my-release
+  namespace: my-namespace
+templates:
+  - jenkins-controller-servicemonitor.yaml
+tests:
+  - it: defaults
+    asserts:
+    - hasDocuments:
+        count: 0
+  - it: enabled
+    set:
+      controller.prometheus.enabled: true
+    asserts:
+      - isKind:
+          of: ServiceMonitor
+      - equal:
+          path: apiVersion
+          value: monitoring.coreos.com/v1
+      - equal:
+          path: metadata.name
+          value: my-release-jenkins
+      - equal:
+          path: metadata.namespace
+          value: my-namespace
+      - matchRegex:
+          path: metadata.labels.helm\.sh/chart
+          pattern: ^jenkins-
+      - equal:
+          path: spec
+          value:
+            endpoints:
+            - interval: 60s
+              port: http
+              path: /prometheus
+            jobLabel: my-release-jenkins
+            namespaceSelector:
+              matchNames:
+              - "my-namespace"
+            selector:
+              matchLabels:
+                "app.kubernetes.io/instance": "my-release"
+                "app.kubernetes.io/component": "jenkins-controller"
+  - it: custom values
+    set:
+      controller:
+        jenkinsUriPrefix: /prefix
+        prometheus:
+          enabled: true
+          scrapeInterval: 120s
+          scrapeEndpoint: /monitoring
+    asserts:
+      - equal:
+          path: spec
+          value:
+            endpoints:
+            - interval: 120s
+              port: http
+              path: /prefix/monitoring
+            jobLabel: my-release-jenkins
+            namespaceSelector:
+              matchNames:
+              - "my-namespace"
+            selector:
+              matchLabels:
+                "app.kubernetes.io/instance": "my-release"
+                "app.kubernetes.io/component": "jenkins-controller"
+  - it: disable helm.sh label
+    set:
+      renderHelmLabels: false
+      controller:
+        prometheus:
+          enabled: true
+    asserts:
+      - equal:
+          path: metadata.labels
+          value:
+            app.kubernetes.io/component: jenkins-controller
+            app.kubernetes.io/instance: my-release
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: jenkins
