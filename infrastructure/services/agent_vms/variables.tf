@@ -11,3 +11,11 @@ variable "region" {
 variable "network_id" {
   type = string
 }
+
+variable "longtail_store_bucket_id" {
+  type = string
+}
+
+variable "kubernetes_network_id" {
+  type = string
+}

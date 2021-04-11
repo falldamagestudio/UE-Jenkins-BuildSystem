@@ -2,39 +2,60 @@ locals {
   wait = length(module.kubernetes_cluster.endpoint
     ) + length(google_compute_network.kubernetes_network.id
     ) + length(google_compute_subnetwork.kubernetes_subnetwork.id
+    ) + length(google_compute_subnetwork.internal_lb_subnetwork.id
     ) + length(google_service_account.agent_service_account.id
     ) + length(google_project_iam_member.agent_build_artifact_downloader_access.id
     ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
     ) + length(google_service_account.controller_service_account.id
     ) + length(google_project_iam_member.controller_build_artifact_downloader_access.id
     ) + length(google_compute_global_address.external_ip_address.id
+    ) + length(google_compute_address.internal_ip_address.id
     ) + length(google_iap_web_iam_member.access_iap_policy.id)
 }
 
 resource "google_compute_network" "kubernetes_network" {
+  depends_on = [ var.module_depends_on ]
+
   name = "kubernetes-network"
   auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "kubernetes_subnetwork" {
+  depends_on = [ var.module_depends_on ]
+
   name          = "kubernetes-subnetwork"
-  ip_cidr_range = "10.132.0.0/20"
+  ip_cidr_range = "10.132.0.0/20" // TODO: parameterize
   region        = var.region
   network       = google_compute_network.kubernetes_network.id
 
   secondary_ip_range = [
     {
       range_name    = "kubernetes-subnetwork-pods"
-      ip_cidr_range = "10.24.0.0/14"
+      ip_cidr_range = "10.24.0.0/14" // TODO: parameterize
     },
     {
       range_name    = "kubernetes-subnetwork-services"
-      ip_cidr_range = "10.28.0.0/20"
+      ip_cidr_range = "10.28.0.0/20" // TODO: parameterize
     }
   ]
 }
 
+resource "google_compute_subnetwork" "internal_lb_subnetwork" {
+  depends_on = [ var.module_depends_on ]
+
+  provider = google-beta
+
+  name          = "internal-lb-subnetwork"
+  purpose       = "INTERNAL_HTTPS_LOAD_BALANCER"
+  role          = "ACTIVE"
+  ip_cidr_range = "10.134.0.0/24" // TODO: parameterize
+  region        = var.region
+  network       = google_compute_network.kubernetes_network.id
+}
+
 resource "google_compute_firewall" "kubernetes_allow_internal_traffic" {
+  depends_on = [ var.module_depends_on ]
+
   name = "kubernetes-allow-internal-traffic"
   
   network = google_compute_network.kubernetes_network.name
@@ -55,7 +76,7 @@ resource "google_compute_firewall" "kubernetes_allow_internal_traffic" {
     ports = [ "0-65535" ]
   }
 
-  source_ranges = [ "10.132.0.0/20" ]
+  source_ranges = [ "10.132.0.0/20", "10.134.0.0/24" ] // TODO: use parameterized values
 }
 
 module "kubernetes_cluster" {
@@ -282,7 +303,19 @@ resource "google_compute_global_address" "external_ip_address" {
   name = var.external_ip_address_name
 }
 
+resource "google_compute_address" "internal_ip_address" {
+  depends_on = [ var.module_depends_on ]
+
+  name = var.internal_ip_address_name
+  subnetwork = google_compute_subnetwork.kubernetes_subnetwork.id
+  address_type = "INTERNAL"
+  address = "10.132.15.250" // TODO: parameterize
+  purpose = "GCE_ENDPOINT"
+}
+
 resource "google_iap_web_iam_member" "access_iap_policy" {
+  depends_on = [ var.module_depends_on ]
+
   provider  = google-beta
 
   role      = "roles/iap.httpsResourceAccessor"

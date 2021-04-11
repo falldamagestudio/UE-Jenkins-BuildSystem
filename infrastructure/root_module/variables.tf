@@ -27,6 +27,10 @@ variable "external_ip_address_name" {
   type = string
 }
 
+variable "internal_ip_address_name" {
+  type = string
+}
+
 variable "longtail_store_bucket_name" {
   type = string
 }

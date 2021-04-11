@@ -43,6 +43,7 @@ module "kubernetes_cluster" {
   zone = var.zone
 
   external_ip_address_name = var.external_ip_address_name
+  internal_ip_address_name = var.internal_ip_address_name
 
   longtail_store_bucket_id = var.longtail_store_bucket_name
 
@@ -57,6 +58,8 @@ module "agent_vms" {
 
   region = var.region
   network_id = module.kubernetes_cluster.network_id
+  longtail_store_bucket_id = var.longtail_store_bucket_name
+  kubernetes_network_id = module.kubernetes_cluster.network_id
 }
 
 module "settings" {
@@ -73,6 +76,7 @@ module "settings" {
   project_id = var.project_id
   region = var.region
   external_ip_address_name = var.external_ip_address_name
+  internal_ip_address_name = var.internal_ip_address_name
 
   longtail_store_bucket_name = var.longtail_store_bucket_name
 }

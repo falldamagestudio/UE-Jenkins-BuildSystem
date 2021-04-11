@@ -6,6 +6,7 @@ zone       = "europe-west1-b"
 build_artifacts_location = "europe-west1"
 
 external_ip_address_name = "jenkins-controller-external-ip-address"
+internal_ip_address_name = "jenkins-controller-internal-ip-address"
 
 longtail_store_bucket_name = "kalms-ue4-jenkins-longtail"
 longtail_store_location = "europe-west1"
