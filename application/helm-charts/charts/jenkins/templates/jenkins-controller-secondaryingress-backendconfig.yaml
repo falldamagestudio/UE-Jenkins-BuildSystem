@@ -1,0 +1,24 @@
+{{- if .Values.controller.secondaryingress_backendconfig.enabled }}
+apiVersion: {{ .Values.controller.secondaryingress_backendconfig.apiVersion }}
+kind: BackendConfig
+metadata:
+  name: {{ .Values.controller.secondaryingress_backendconfig.name }}
+  namespace: {{ template "jenkins.namespace" . }}
+  labels:
+    "app.kubernetes.io/name": '{{ template "jenkins.name" .}}'
+    {{- if .Values.renderHelmLabels }}
+    "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    {{- end }}
+    "app.kubernetes.io/managed-by": "{{ .Release.Service }}"
+    "app.kubernetes.io/instance": "{{ .Release.Name }}"
+    "app.kubernetes.io/component": "{{ .Values.controller.componentName }}"
+{{- if .Values.controller.secondaryingress_backendconfig.labels }}
+{{ toYaml .Values.controller.secondaryingress_backendconfig.labels | indent 4 }}
+{{- end }}
+{{- if .Values.controller.secondaryingress_backendconfig.annotations }}
+  annotations:
+{{ toYaml .Values.controller.secondaryingress_backendconfig.annotations | indent 4 }}
+{{- end }}
+spec:
+{{ toYaml .Values.controller.secondaryingress_backendconfig.spec | indent 2 }}
+{{- end }}

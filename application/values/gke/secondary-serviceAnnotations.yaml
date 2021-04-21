@@ -2,6 +2,11 @@ controller:
   secondaryservice:
     annotations:
 
+      # Increase HTTP timeout to allow long-running WebSocket connections
+      # Reference: https://cloud.google.com/load-balancing/docs/backend-service#timeout-setting
+      # Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#timeout
+      cloud.google.com/backend-config: '{"default": "jenkins-controller-secondary-ingress"}'
+
       # Create a Network Endpoint Group after the Ingress has been created
       # This enables Container-native load balancing for this service, which allows LBs to route
       #  traffic directly to pods, rather than sending it to nodes within the cluster and 
