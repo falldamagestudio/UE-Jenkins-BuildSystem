@@ -117,7 +117,7 @@ module "kubernetes_cluster" {
       min_count          = 1
       max_count          = 1
       local_ssd_count    = 0
-      disk_size_gb       = 10
+      disk_size_gb       = 50
       disk_type          = "pd-standard"
       image_type         = "COS"
       auto_repair        = true
