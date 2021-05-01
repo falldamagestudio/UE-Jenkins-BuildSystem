@@ -10,6 +10,10 @@ locals {
     ) + length(google_project_iam_member.controller_build_artifact_downloader_access.id
     ) + length(google_compute_global_address.external_ip_address.id
     ) + length(google_compute_address.internal_ip_address.id
+    ) + length(google_service_account.build_job_service_account.id
+    ) + length(google_storage_bucket_iam_member.build_job_longtail_store_admin_access.id
+    ) + length(google_service_account_key.build_job_service_account_key.id
+    ) + length(kubernetes_secret.build_job_gcp_service_account_key.id
     ) + length(google_iap_web_iam_member.access_iap_policy.id)
 }
 
@@ -322,4 +326,71 @@ resource "google_iap_web_iam_member" "access_iap_policy" {
   # Configure which users/groups/domains will be accepted by Identity-Aware Proxy
   # Reference: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iap_web_iam#argument-reference
   member    = "domain:${var.allowed_login_domain}"
+}
+
+///////////////////////////////////////////////////////////////////
+
+resource "google_service_account" "build_job_service_account" {
+  depends_on = [ var.module_depends_on ]
+
+  account_id   = "ue4-jenkins-build-job"
+  display_name = "UE4 Jenkins build job"
+}
+
+# Allow build jobs to manage content in Longtail store
+resource "google_storage_bucket_iam_member" "build_job_longtail_store_admin_access" {
+  depends_on = [ var.module_depends_on ]
+
+  bucket   = var.longtail_store_bucket_id
+  role     = "roles/storage.admin"
+  member = "serviceAccount:${google_service_account.build_job_service_account.email}"
+}
+
+resource "google_service_account_key" "build_job_service_account_key" {
+  depends_on = [ var.module_depends_on ]
+
+  service_account_id = google_service_account.build_job_service_account.name
+}
+
+# Make service account key available within Jenkins jobs
+# This will be picked up by the Kubernetes Credentials Provider plugin
+#  and be visible in the Credentials manager in Jenkins
+#
+# This allows build jobs to use the following construct:
+#
+#     withCredentials([[$class: 'FileBinding',
+#                       credentialsId: 'build-job-gcp-service-account-key',
+#                       variable: 'GOOGLE_APPLICATION_CREDENTIALS']]) { ... }
+#
+#   and any applications invoked within the scope that use the GCP Client Library
+#   will use the service account as identity when interacting with GCP
+#
+# Reference: https://github.com/jenkinsci/google-oauth-plugin/issues/6#issuecomment-431424049
+# Reference: https://cloud.google.com/docs/authentication/production#automatically
+# Reference: https://jenkinsci.github.io/kubernetes-credentials-provider-plugin/examples/
+# Reference: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_service_account_key
+
+resource "kubernetes_secret" "build_job_gcp_service_account_key" {
+  depends_on = [ var.module_depends_on ]
+
+  metadata {
+    # Credential name is the identifier used in the withCredentials() call
+    name = "build-job-gcp-service-account-key"
+    labels = {
+      "jenkins.io/credentials-type" = "secretFile"
+    }
+    annotations = {
+      "jenkins.io/credentials-description" : "Service Account used by build jobs to access GCP resources"
+    }
+  }
+
+  type = "Opaque"
+
+  data = {
+    # Private key file (JSON format) for a service account in GCP
+    "data" = base64decode(google_service_account_key.build_job_service_account_key.private_key)
+
+    # File name is not used in practice, but required by Jenkins nevertheless
+    "filename" = "build-job-gcp-service-account-key.json"
+  }
 }
