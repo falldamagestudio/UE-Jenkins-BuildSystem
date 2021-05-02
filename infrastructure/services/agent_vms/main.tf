@@ -2,6 +2,7 @@ locals {
   wait = length(google_compute_network.agent_vms.id
   ) + length(google_compute_subnetwork.agent_vms.id
   ) + length(google_compute_firewall.agent_vms_allow_winrm.id
+  ) + length(google_compute_firewall.agent_vms_allow_ssh.id
   ) + length(google_project_iam_member.agent_build_artifact_downloader_access.id
   ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
   ) + length(google_project_iam_member.agent_cloud_logging_write_access.id
@@ -38,6 +39,23 @@ resource "google_compute_firewall" "agent_vms_allow_winrm" {
   allow {
     protocol = "tcp"
     ports = [ "5985","5986" ]
+  }
+
+  source_ranges = [ "0.0.0.0/0" ]
+}
+
+resource "google_compute_firewall" "agent_vms_allow_ssh" {
+  depends_on = [ var.module_depends_on ]
+
+  name = "agent-vms-allow-ssh"
+  
+  network = google_compute_network.agent_vms.name
+
+  description = "Allow SSH to agent VMs"
+
+  allow {
+    protocol = "tcp"
+    ports = [ "22" ]
   }
 
   source_ranges = [ "0.0.0.0/0" ]
