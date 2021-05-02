@@ -7,8 +7,7 @@ locals {
   ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
   ) + length(google_project_iam_member.agent_cloud_logging_write_access.id
   ) + length(google_compute_network_peering.kubernetes_network_agent_vms_peering.id
-  ) + length(google_compute_network_peering.agent_vms_kubernetes_network_peering.id
-  ) + length(google_compute_instance.engine_win64_agent.id)
+  ) + length(google_compute_network_peering.agent_vms_kubernetes_network_peering.id)
 }
 
 resource "google_compute_network" "agent_vms" {
