@@ -2,7 +2,7 @@
 	"controller_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-controller:commit-185b0b1",
 	"ue_jenkins_inbound_agent_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-inbound-agent:commit-64ef6b4-linux",
 	"ue_jenkins_inbound_agent_windows_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-inbound-agent:commit-64ef6b4-windows",
-	"ue_jenkins_buildtools_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-buildtools:commit-64ef6b4-linux",
+	"ue_jenkins_buildtools_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-buildtools:commit-4b66f11-linux",
 	"ue_jenkins_buildtools_windows_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-buildtools:commit-64ef6b4-windows",
 	"seed_job_url": "https://github.com/Kalmalyzer/UE-Jenkins-Jobs",
 	"seed_job_branch": "main",
