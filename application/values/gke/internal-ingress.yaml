@@ -1,8 +1,20 @@
 controller:
   secondaryingress:
     enabled: true
-    # Allow only incoming websocket connections
-    paths: [ "/", "/wsagents/" ]
+
+    # Allow only the URLs necessary for the inbound agent in WebSocket mode
+    paths: [
+
+        # TODO: Does this URL really need to be exposed?
+        "/", 
+
+        # WebSocket agents will connect to this URL when establishing the WebSocket connection
+        "/wsagents/",
+
+        # If a a websocket agent loses connection and wants to reconnect, it will repeatedly poll this URL until there is a 200 response;
+        #   then it attempts to re-establish a WebSocket connection again
+        "/login"
+      ]
 
     annotations:
       # Use an internal HTTP(S) load balancer
