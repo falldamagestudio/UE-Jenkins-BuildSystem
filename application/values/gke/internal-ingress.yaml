@@ -8,6 +8,13 @@ controller:
         # TODO: Does this URL really need to be exposed?
         "/", 
 
+        # Swarm agents will connect to these URLs to fetch the Jenkins version
+        "/api",
+        "/api/",
+        "/crumbIssuer/api/xml",
+        "/plugin/swarm/createSlave",
+        "/computer/*",
+
         # WebSocket agents will connect to this URL when establishing the WebSocket connection
         "/wsagents/",
 
