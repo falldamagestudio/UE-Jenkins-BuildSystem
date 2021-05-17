@@ -14,6 +14,8 @@ data "http" "linux_cloud_config" {
 
 resource "google_compute_instance" "linux_build_agent" {
 
+    depends_on = [ var.module_depends_on ]
+
     for_each = var.linux_build_agents
 
     name = each.key
@@ -59,6 +61,8 @@ resource "google_compute_instance" "linux_build_agent" {
 
 resource "google_compute_disk" "linux_build_agent_pd" {
  
+    depends_on = [ var.module_depends_on ]
+
     for_each = var.linux_build_agents
     name  = "${each.key}-pd"
     size =  each.value.persistent_disk_size
@@ -66,6 +70,8 @@ resource "google_compute_disk" "linux_build_agent_pd" {
 }
 
 resource "google_compute_instance" "windows_build_agent" {
+
+    depends_on = [ var.module_depends_on ]
 
     for_each = var.windows_build_agents
 
