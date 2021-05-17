@@ -12,13 +12,25 @@ module "docker_build_artifacts" {
   location = var.build_artifacts_location
 }
 
-module "image_builder" {
+module "cloud_config_store" {
+
   module_depends_on = [module.google_apis.wait]
+
+  source = "../services/cloud_config_store"
+
+  bucket_name = var.cloud_config_store_bucket_name
+  location = var.cloud_config_store_location
+}
+
+module "image_builder" {
+
+  module_depends_on = [module.google_apis.wait, module.cloud_config_store.wait]
 
   source = "../services/image_builder"
 
   region = var.region
   build_artifact_uploader_service_account_name = module.docker_build_artifacts.build_artifact_uploader_service_account_name
+  cloud_config_store_bucket_id = var.cloud_config_store_bucket_name
 }
 
 module "longtail_store" {
@@ -52,12 +64,15 @@ module "kubernetes_cluster" {
 
 module "agent_vms" {
 
-  module_depends_on = [module.kubernetes_cluster.wait, module.longtail_store.wait]
+  module_depends_on = [module.kubernetes_cluster.wait, module.cloud_config_store.wait, module.longtail_store.wait]
 
   source = "../services/agent_vms"
 
   region = var.region
+  linux_cloud_config_url = var.linux_swarm_agent_cloud_config_url
+  windows_image = var.windows_swarm_agent_image
   network_id = module.kubernetes_cluster.network_id
+  cloud_config_store_bucket_id = var.cloud_config_store_bucket_name
   longtail_store_bucket_id = var.longtail_store_bucket_name
   kubernetes_network_id = module.kubernetes_cluster.network_id
 }

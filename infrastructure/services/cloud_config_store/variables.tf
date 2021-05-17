@@ -4,14 +4,10 @@ variable "module_depends_on" {
   default     = []
 }
 
-variable "region" {
-  type = string
+variable "location" {
+  type        = string
 }
 
-variable "build_artifact_uploader_service_account_name" {
-  type = string
-}
-
-variable "cloud_config_store_bucket_id" {
+variable "bucket_name" {
   type = string
 }

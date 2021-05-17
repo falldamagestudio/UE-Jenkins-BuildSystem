@@ -39,6 +39,22 @@ variable "longtail_store_location" {
   type = string
 }
 
+variable "cloud_config_store_bucket_name" {
+  type = string
+}
+
+variable "cloud_config_store_location" {
+  type = string
+}
+
 variable "allowed_login_domain" {
+  type = string
+}
+
+variable "linux_swarm_agent_cloud_config_url" {
+  type = string
+}
+
+variable "windows_swarm_agent_image" {
   type = string
 }

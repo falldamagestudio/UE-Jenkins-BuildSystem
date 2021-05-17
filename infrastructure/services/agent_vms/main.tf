@@ -3,6 +3,7 @@ locals {
   ) + length(google_compute_subnetwork.agent_vms.id
   ) + length(google_compute_firewall.agent_vms_allow_winrm.id
   ) + length(google_compute_firewall.agent_vms_allow_ssh.id
+  ) + length(google_storage_bucket_iam_member.agent_cloud_config_downloader_access.id
   ) + length(google_project_iam_member.agent_build_artifact_downloader_access.id
   ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
   ) + length(google_project_iam_member.agent_cloud_logging_write_access.id
@@ -65,6 +66,15 @@ resource "google_service_account" "agent_service_account" {
 
   account_id   = "ue4-jenkins-agent-vm"
   display_name = "UE4 Jenkins Agent VM"
+}
+
+// Allow agent VMs to read config files from the cloud-config store
+resource "google_storage_bucket_iam_member" "agent_cloud_config_downloader_access" {
+  depends_on = [ var.module_depends_on ]
+
+  bucket   = var.cloud_config_store_bucket_id
+  role     = "roles/storage.admin"
+  member = "serviceAccount:${google_service_account.agent_service_account.email}"
 }
 
 # Allow agent VMs to download artifacts from all repositories in project

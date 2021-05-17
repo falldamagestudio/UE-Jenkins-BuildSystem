@@ -1,4 +1,3 @@
-
 locals {
 
     windows_build_agents = {
@@ -20,8 +19,6 @@ locals {
         }
 */
     }
-
-    linux_build_agent_cloud_init = file("../../../UE-Jenkins-Images/ue-jenkins-agent-vms/linux-gce-cos/ue-jenkins-swarm-agent-vm-cloud-config.yaml")
 }
 
 resource "google_compute_instance" "linux_build_agent" {
@@ -65,7 +62,7 @@ resource "google_compute_instance" "linux_build_agent" {
 
     metadata = {
         google-logging-enabled = "true"
-        user-data = local.linux_build_agent_cloud_init
+        user-data = var.linux_cloud_config_url
     }
 }
 
@@ -90,7 +87,7 @@ resource "google_compute_instance" "windows_build_agent" {
         initialize_params {
             size = each.value.boot_disk_size
             type = "pd-ssd"
-            image = "projects/kalms-ue4-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-00b4ffb-windows" // TODO: Move to config
+            image = var.windows_image
         }
 
     }
