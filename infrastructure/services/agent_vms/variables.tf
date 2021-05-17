@@ -28,6 +28,10 @@ variable "linux_cloud_config_url" {
   type = string
 }
 
+variable "linux_image" {
+  type = string
+}
+
 variable "windows_image" {
   type = string
 }

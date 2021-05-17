@@ -21,6 +21,20 @@ locals {
     }
 }
 
+// Access the Google provider's configuration (we will use this to get access tokens)
+data "google_client_config" "default" {
+}
+
+// Fetch the contents of a cloud-config file from a GCS bucket
+data "http" "linux_cloud_config" {
+  url = var.linux_cloud_config_url
+
+  request_headers = {
+      Authorization = "Bearer ${data.google_client_config.default.access_token}"
+  }
+}
+
+
 resource "google_compute_instance" "linux_build_agent" {
 
     for_each = local.linux_build_agents
@@ -34,7 +48,7 @@ resource "google_compute_instance" "linux_build_agent" {
         initialize_params {
             size = each.value.boot_disk_size
             type = "pd-ssd"
-            image = "projects/cos-cloud/global/images/cos-89-16108-403-26" // TODO: Move to config
+            image = var.linux_image
         }
 
     }
@@ -62,7 +76,7 @@ resource "google_compute_instance" "linux_build_agent" {
 
     metadata = {
         google-logging-enabled = "true"
-        user-data = var.linux_cloud_config_url
+        user-data = data.http.linux_cloud_config.body
     }
 }
 

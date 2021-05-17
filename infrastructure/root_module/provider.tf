@@ -27,3 +27,7 @@ provider "null" {
 provider "random" {
   version = "~> 3.0.0"
 }
+
+provider "http" {
+  version = "~> 2.1"
+}

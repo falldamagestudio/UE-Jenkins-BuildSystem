@@ -16,5 +16,6 @@ cloud_config_store_location = "europe-west1"
 
 allowed_login_domain = "falldamagestudio.com"
 
-linux_swarm_agent_cloud_config_url = ""
+linux_swarm_agent_image = "projects/cos-cloud/global/images/cos-89-16108-403-26"
+linux_swarm_agent_cloud_config_url = "https://storage.googleapis.com/kalms-ue4-jenkins-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-00b4ffb.yaml"
 windows_swarm_agent_image = "projects/kalms-ue4-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-00b4ffb-windows"

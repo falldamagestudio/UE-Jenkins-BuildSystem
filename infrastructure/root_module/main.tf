@@ -69,6 +69,7 @@ module "agent_vms" {
   source = "../services/agent_vms"
 
   region = var.region
+  linux_image = var.linux_swarm_agent_image
   linux_cloud_config_url = var.linux_swarm_agent_cloud_config_url
   windows_image = var.windows_swarm_agent_image
   network_id = module.kubernetes_cluster.network_id
