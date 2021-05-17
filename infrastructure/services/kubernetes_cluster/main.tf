@@ -313,7 +313,7 @@ resource "google_compute_address" "internal_ip_address" {
   name = var.internal_ip_address_name
   subnetwork = google_compute_subnetwork.kubernetes_subnetwork.id
   address_type = "INTERNAL"
-  address = "10.132.15.250" // TODO: parameterize
+  address = var.internal_ip_address
   purpose = "GCE_ENDPOINT"
 }
 

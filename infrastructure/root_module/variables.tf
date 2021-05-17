@@ -9,7 +9,7 @@ variable "project_number" {
 }
 
 variable "build_artifacts_location" {
-  description = "Docker build artifact registry region/multi-region."
+  description = "Docker build artifact registry region/multi_region."
   type        = string
 }
 
@@ -28,6 +28,10 @@ variable "external_ip_address_name" {
 }
 
 variable "internal_ip_address_name" {
+  type = string
+}
+
+variable "internal_ip_address" {
   type = string
 }
 
@@ -69,4 +73,12 @@ variable "windows_build_agents" {
 
 variable "linux_build_agents" {
   type = map
+}
+
+variable "swarm_agent_image_url_linux" {
+  type = string
+}
+
+variable "swarm_agent_image_url_windows" {
+  type = string
 }

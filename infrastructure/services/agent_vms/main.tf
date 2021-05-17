@@ -3,12 +3,16 @@ locals {
   ) + length(google_compute_subnetwork.agent_vms.id
   ) + length(google_compute_firewall.agent_vms_allow_winrm.id
   ) + length(google_compute_firewall.agent_vms_allow_ssh.id
+  ) + length(google_service_account.agent_service_account.id
+  ) + length(google_service_account_key.agent_service_account_key.id
   ) + length(google_storage_bucket_iam_member.agent_cloud_config_downloader_access.id
   ) + length(google_project_iam_member.agent_build_artifact_downloader_access.id
   ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
   ) + length(google_project_iam_member.agent_cloud_logging_write_access.id
   ) + length(google_compute_network_peering.kubernetes_network_agent_vms_peering.id
   ) + length(google_compute_network_peering.agent_vms_kubernetes_network_peering.id)
+  // TODO: include secrets
+  // TODO: include builder VMs
 }
 
 resource "google_compute_network" "agent_vms" {
@@ -66,6 +70,12 @@ resource "google_service_account" "agent_service_account" {
 
   account_id   = "ue4-jenkins-agent-vm"
   display_name = "UE4 Jenkins Agent VM"
+}
+
+resource "google_service_account_key" "agent_service_account_key" {
+  depends_on = [ var.module_depends_on ]
+
+  service_account_id = google_service_account.agent_service_account.name
 }
 
 // Allow agent VMs to read config files from the cloud-config store

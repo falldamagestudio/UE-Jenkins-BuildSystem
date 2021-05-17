@@ -56,6 +56,7 @@ module "kubernetes_cluster" {
 
   external_ip_address_name = var.external_ip_address_name
   internal_ip_address_name = var.internal_ip_address_name
+  internal_ip_address = var.internal_ip_address
 
   longtail_store_bucket_id = var.longtail_store_bucket_name
 
@@ -78,6 +79,11 @@ module "agent_vms" {
   cloud_config_store_bucket_id = var.cloud_config_store_bucket_name
   longtail_store_bucket_id = var.longtail_store_bucket_name
   kubernetes_network_id = module.kubernetes_cluster.network_id
+  settings = {
+    jenkins-url = "http://${var.internal_ip_address}"
+    swarm-agent-image-url-linux = var.swarm_agent_image_url_linux
+    swarm-agent-image-url-windows = var.swarm_agent_image_url_windows
+  }
 }
 
 module "settings" {
