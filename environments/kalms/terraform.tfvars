@@ -25,21 +25,45 @@ swarm_agent_image_url_linux = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-bui
 swarm_agent_image_url_windows = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-00b4ffb-windows"
 
 windows_build_agents = {
-/*
-    "build-game-windows-git-docker2" = {
-        "machine_type" = "n1-standard-8"
+
+    "build-engine-windows-git-docker" = {
+        "machine_type" = "n1-standard-32"
         "boot_disk_size" = 50
         "persistent_disk_size" = 200
     }
-*/
+
+    "build-game-windows-git-docker" = {
+        "machine_type" = "n1-standard-4"
+        "boot_disk_size" = 50
+        "persistent_disk_size" = 200
+    }
+
+    "build-game-windows-plastic-docker" = {
+        "machine_type" = "n1-standard-4"
+        "boot_disk_size" = 50
+        "persistent_disk_size" = 200
+    }
+
 }
 
 linux_build_agents = {
-/*
-    "build-game-linux-git-docker2" = {
+
+    "build-engine-linux-git-docker" = {
+        "machine_type" = "n1-standard-32"
+        "boot_disk_size" = 50
+        "persistent_disk_size" = 200
+    }
+
+    "build-game-linux-git-docker" = {
         "machine_type" = "n1-standard-8"
         "boot_disk_size" = 50
         "persistent_disk_size" = 200
     }
-*/
+
+    "build-game-linux-plastic-docker" = {
+        "machine_type" = "n1-standard-8"
+        "boot_disk_size" = 50
+        "persistent_disk_size" = 200
+    }
+
 }
