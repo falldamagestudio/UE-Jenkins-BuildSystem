@@ -35,3 +35,11 @@ variable "linux_image" {
 variable "windows_image" {
   type = string
 }
+
+variable "windows_build_agents" {
+  type = map
+}
+
+variable "linux_build_agents" {
+  type = map
+}

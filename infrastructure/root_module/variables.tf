@@ -62,3 +62,11 @@ variable "linux_swarm_agent_cloud_config_url" {
 variable "windows_swarm_agent_image" {
   type = string
 }
+
+variable "windows_build_agents" {
+  type = map
+}
+
+variable "linux_build_agents" {
+  type = map
+}

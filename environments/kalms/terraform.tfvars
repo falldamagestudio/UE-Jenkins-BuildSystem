@@ -19,3 +19,23 @@ allowed_login_domain = "falldamagestudio.com"
 linux_swarm_agent_image = "projects/cos-cloud/global/images/cos-89-16108-403-26"
 linux_swarm_agent_cloud_config_url = "https://storage.googleapis.com/kalms-ue4-jenkins-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-00b4ffb.yaml"
 windows_swarm_agent_image = "projects/kalms-ue4-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-00b4ffb-windows"
+
+windows_build_agents = {
+/*
+    "build-game-windows-git-docker2" = {
+        "machine_type" = "n1-standard-8"
+        "boot_disk_size" = 50
+        "persistent_disk_size" = 200
+    }
+*/
+}
+
+linux_build_agents = {
+/*
+    "build-game-linux-git-docker2" = {
+        "machine_type" = "n1-standard-8"
+        "boot_disk_size" = 50
+        "persistent_disk_size" = 200
+    }
+*/
+}

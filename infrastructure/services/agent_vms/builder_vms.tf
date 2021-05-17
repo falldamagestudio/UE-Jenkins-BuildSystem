@@ -1,26 +1,3 @@
-locals {
-
-    windows_build_agents = {
-/*
-        "build-game-windows-git-docker2" = {
-            "machine_type" = "n1-standard-8"
-            "boot_disk_size" = 50
-            "persistent_disk_size" = 200
-        }
-*/
-    }
-
-    linux_build_agents = {
-/*
-        "build-game-linux-git-docker2" = {
-            "machine_type" = "n1-standard-8"
-            "boot_disk_size" = 50
-            "persistent_disk_size" = 200
-        }
-*/
-    }
-}
-
 // Access the Google provider's configuration (we will use this to get access tokens)
 data "google_client_config" "default" {
 }
@@ -37,7 +14,7 @@ data "http" "linux_cloud_config" {
 
 resource "google_compute_instance" "linux_build_agent" {
 
-    for_each = local.linux_build_agents
+    for_each = var.linux_build_agents
 
     name = each.key
 
@@ -82,7 +59,7 @@ resource "google_compute_instance" "linux_build_agent" {
 
 resource "google_compute_disk" "linux_build_agent_pd" {
  
-    for_each = local.linux_build_agents
+    for_each = var.linux_build_agents
     name  = "${each.key}-pd"
     size =  each.value.persistent_disk_size
     type  = "pd-ssd"
@@ -90,7 +67,7 @@ resource "google_compute_disk" "linux_build_agent_pd" {
 
 resource "google_compute_instance" "windows_build_agent" {
 
-    for_each = local.windows_build_agents
+    for_each = var.windows_build_agents
 
     name = each.key
 

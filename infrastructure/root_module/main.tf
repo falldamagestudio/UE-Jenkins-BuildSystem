@@ -72,6 +72,8 @@ module "agent_vms" {
   linux_image = var.linux_swarm_agent_image
   linux_cloud_config_url = var.linux_swarm_agent_cloud_config_url
   windows_image = var.windows_swarm_agent_image
+  windows_build_agents = var.windows_build_agents
+  linux_build_agents = var.linux_build_agents
   network_id = module.kubernetes_cluster.network_id
   cloud_config_store_bucket_id = var.cloud_config_store_bucket_name
   longtail_store_bucket_id = var.longtail_store_bucket_name
