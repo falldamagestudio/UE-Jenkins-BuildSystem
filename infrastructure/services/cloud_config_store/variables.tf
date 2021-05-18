@@ -11,3 +11,7 @@ variable "location" {
 variable "bucket_name" {
   type = string
 }
+
+variable "build_artifact_uploader_email" {
+  type = string
+}
