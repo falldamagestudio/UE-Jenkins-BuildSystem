@@ -20,6 +20,7 @@ module "cloud_config_store" {
 
   bucket_name = var.cloud_config_store_bucket_name
   location = var.cloud_config_store_location
+  build_artifact_uploader_email = module.docker_build_artifacts.build_artifact_uploader_email
 }
 
 module "image_builder" {

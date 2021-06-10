@@ -5,8 +5,7 @@ locals {
     ) + length(google_service_account.image_builder_instance_controller.id
     ) + length(google_project_iam_member.image_builder_instance_controller_compute_admin.etag
     ) + length(google_project_iam_member.image_builder_instance_controller_compute_instance_admin_v1.etag
-    ) + length(google_service_account_iam_member.image_builder_instance_controller_service_account_user.etag
-    ) + length(google_storage_bucket_iam_member.image_builder_instance_controller_cloud_config_store_admin_access.id)
+    ) + length(google_service_account_iam_member.image_builder_instance_controller_service_account_user.etag)
 }
 
 resource "google_compute_network" "image_builder_network" {
@@ -72,14 +71,5 @@ resource "google_service_account_iam_member" "image_builder_instance_controller_
   // Grant the Service Account User role
   // Reference: https://cloud.google.com/compute/docs/access/iam#iam.serviceAccountUser
   role   = "roles/iam.serviceAccountUser"
-  member = "serviceAccount:${google_service_account.image_builder_instance_controller.email}"
-}
-
-// Allow the instance controller account to manage content in cloud-config store
-resource "google_storage_bucket_iam_member" "image_builder_instance_controller_cloud_config_store_admin_access" {
-  depends_on = [ var.module_depends_on ]
-
-  bucket   = var.cloud_config_store_bucket_id
-  role     = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.image_builder_instance_controller.email}"
 }
