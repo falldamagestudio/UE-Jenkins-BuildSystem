@@ -13,6 +13,7 @@ locals {
   ) + length(google_compute_network_peering.agent_vms_kubernetes_network_peering.id)
   // TODO: include secrets
   // TODO: include builder VMs
+  // TODO: include builder VM templates
 }
 
 resource "google_compute_network" "agent_vms" {

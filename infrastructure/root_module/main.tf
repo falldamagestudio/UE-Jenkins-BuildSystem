@@ -75,12 +75,14 @@ module "agent_vms" {
   windows_image = var.windows_swarm_agent_image
   windows_build_agents = var.windows_build_agents
   linux_build_agents = var.linux_build_agents
+  linux_build_agent_templates = var.linux_build_agent_templates
   network_id = module.kubernetes_cluster.network_id
   cloud_config_store_bucket_id = var.cloud_config_store_bucket_name
   longtail_store_bucket_id = var.longtail_store_bucket_name
   kubernetes_network_id = module.kubernetes_cluster.network_id
   settings = {
     jenkins-url = "http://${var.internal_ip_address}"
+    ssh-agent-image-url-linux = var.ssh_agent_image_url_linux
     swarm-agent-image-url-linux = var.swarm_agent_image_url_linux
     swarm-agent-image-url-windows = var.swarm_agent_image_url_windows
   }

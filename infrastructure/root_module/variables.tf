@@ -75,6 +75,14 @@ variable "linux_build_agents" {
   type = map
 }
 
+variable "linux_build_agent_templates" {
+  type = map
+}
+
+variable "ssh_agent_image_url_linux" {
+  type = string
+}
+
 variable "swarm_agent_image_url_linux" {
   type = string
 }

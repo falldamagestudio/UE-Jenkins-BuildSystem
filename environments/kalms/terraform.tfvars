@@ -21,11 +21,13 @@ linux_swarm_agent_image = "projects/cos-cloud/global/images/cos-89-16108-403-26"
 linux_swarm_agent_cloud_config_url = "https://storage.googleapis.com/kalms-ue4-jenkins-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-00b4ffb.yaml"
 windows_swarm_agent_image = "projects/kalms-ue4-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-00b4ffb-windows"
 
+ssh_agent_image_url_linux = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:test"
+
 swarm_agent_image_url_linux = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-00b4ffb-linux"
 swarm_agent_image_url_windows = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-00b4ffb-windows"
 
 windows_build_agents = {
-
+/*
     "build-engine-windows-git-docker" = {
         "machine_type" = "n1-standard-32"
         "boot_disk_size" = 50
@@ -43,11 +45,11 @@ windows_build_agents = {
         "boot_disk_size" = 50
         "persistent_disk_size" = 200
     }
-
+*/
 }
 
 linux_build_agents = {
-
+/*
     "build-engine-linux-git-docker" = {
         "machine_type" = "n1-standard-32"
         "boot_disk_size" = 50
@@ -61,6 +63,22 @@ linux_build_agents = {
     }
 
     "build-game-linux-plastic-docker" = {
+        "machine_type" = "n1-standard-8"
+        "boot_disk_size" = 50
+        "persistent_disk_size" = 200
+    }
+*/
+}
+
+linux_build_agent_templates = {
+/*
+    "build-engine-linux" = {
+        "machine_type" = "n1-standard-32"
+        "boot_disk_size" = 50
+        "persistent_disk_size" = 200
+    }
+*/
+    "build-game-linux" = {
         "machine_type" = "n1-standard-8"
         "boot_disk_size" = 50
         "persistent_disk_size" = 200

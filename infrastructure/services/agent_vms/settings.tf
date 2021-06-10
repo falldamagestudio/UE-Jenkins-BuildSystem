@@ -10,6 +10,10 @@ locals {
           version = base64decode(google_service_account_key.agent_service_account_key.private_key)
         }
 
+        ssh-agent-image-url-linux = {
+          version = var.settings.ssh-agent-image-url-linux
+        }
+
         swarm-agent-image-url-linux = {
           version = var.settings.swarm-agent-image-url-linux
         }

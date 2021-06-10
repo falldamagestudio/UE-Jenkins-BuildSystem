@@ -44,9 +44,14 @@ variable "linux_build_agents" {
   type = map
 }
 
+variable "linux_build_agent_templates" {
+  type = map
+}
+
 variable "settings" {
   type = object({
     jenkins-url = string
+    ssh-agent-image-url-linux = string
     swarm-agent-image-url-linux = string
     swarm-agent-image-url-windows = string
   })
