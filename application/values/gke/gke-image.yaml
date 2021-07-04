@@ -1,5 +1,5 @@
 controller:
   image: "undefined"
   tag: "undefined"
-  imagePullPolicy: "IfNotPresent"
+  imagePullPolicy: "Always"
   installPlugins: []
