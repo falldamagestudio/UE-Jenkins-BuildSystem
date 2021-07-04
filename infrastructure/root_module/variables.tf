@@ -55,23 +55,23 @@ variable "allowed_login_domain" {
   type = string
 }
 
-variable "linux_ssh_agent_image" {
+variable "ssh_agent_vm_image_linux" {
   type = string
 }
 
-variable "linux_ssh_agent_cloud_config_url" {
+variable "ssh_agent_vm_cloud_config_url_linux" {
   type = string
 }
 
-variable "linux_swarm_agent_image" {
+variable "swarm_agent_vm_image_linux" {
   type = string
 }
 
-variable "linux_swarm_agent_cloud_config_url" {
+variable "swarm_agent_cloud_config_url_linux" {
   type = string
 }
 
-variable "windows_swarm_agent_image" {
+variable "swarm_agent_vm_image_windows" {
   type = string
 }
 
@@ -87,14 +87,14 @@ variable "linux_build_agent_templates" {
   type = map
 }
 
-variable "ssh_agent_image_url_linux" {
+variable "ssh_agent_docker_image_url_linux" {
   type = string
 }
 
-variable "swarm_agent_image_url_linux" {
+variable "swarm_agent_docker_image_url_linux" {
   type = string
 }
 
-variable "swarm_agent_image_url_windows" {
+variable "swarm_agent_docker_image_url_windows" {
   type = string
 }

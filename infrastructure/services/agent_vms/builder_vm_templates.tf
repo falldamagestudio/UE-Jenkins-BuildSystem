@@ -6,7 +6,7 @@
 
 // Fetch the contents of a cloud-config file from a GCS bucket
 data "http" "linux_ssh_agent_cloud_config" {
-  url = var.linux_ssh_agent_cloud_config_url
+  url = var.ssh_agent_vm_cloud_config_url_linux
 
   request_headers = {
       Authorization = "Bearer ${data.google_client_config.default.access_token}"
@@ -26,7 +26,7 @@ resource "google_compute_instance_template" "linux_build_agent_template" {
     // Add boot disk
 
     disk {
-        source_image = var.linux_ssh_agent_image
+        source_image = var.ssh_agent_vm_image_linux
 
         auto_delete = true
         boot = true

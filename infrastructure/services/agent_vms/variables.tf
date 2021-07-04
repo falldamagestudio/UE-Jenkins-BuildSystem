@@ -24,23 +24,23 @@ variable "kubernetes_network_id" {
   type = string
 }
 
-variable "linux_ssh_agent_image" {
+variable "ssh_agent_vm_image_linux" {
   type = string
 }
 
-variable "linux_ssh_agent_cloud_config_url" {
+variable "ssh_agent_vm_cloud_config_url_linux" {
   type = string
 }
 
-variable "linux_swarm_agent_image" {
+variable "swarm_agent_vm_image_linux" {
   type = string
 }
 
-variable "linux_swarm_agent_cloud_config_url" {
+variable "swarm_agent_cloud_config_url_linux" {
   type = string
 }
 
-variable "windows_image" {
+variable "swarm_agent_vm_image_windows" {
   type = string
 }
 

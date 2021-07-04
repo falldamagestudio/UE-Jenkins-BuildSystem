@@ -71,11 +71,11 @@ module "agent_vms" {
   source = "../services/agent_vms"
 
   region = var.region
-  linux_ssh_agent_image = var.linux_ssh_agent_image
-  linux_ssh_agent_cloud_config_url = var.linux_ssh_agent_cloud_config_url
-  linux_swarm_agent_image = var.linux_swarm_agent_image
-  linux_swarm_agent_cloud_config_url = var.linux_swarm_agent_cloud_config_url
-  windows_image = var.windows_swarm_agent_image
+  ssh_agent_vm_image_linux = var.ssh_agent_vm_image_linux
+  ssh_agent_vm_cloud_config_url_linux = var.ssh_agent_vm_cloud_config_url_linux
+  swarm_agent_vm_image_linux = var.swarm_agent_vm_image_linux
+  swarm_agent_cloud_config_url_linux = var.swarm_agent_cloud_config_url_linux
+  swarm_agent_vm_image_windows = var.swarm_agent_vm_image_windows
   windows_build_agents = var.windows_build_agents
   linux_build_agents = var.linux_build_agents
   linux_build_agent_templates = var.linux_build_agent_templates
@@ -85,9 +85,9 @@ module "agent_vms" {
   kubernetes_network_id = module.kubernetes_cluster.network_id
   settings = {
     jenkins-url = "http://${var.internal_ip_address}"
-    ssh-agent-image-url-linux = var.ssh_agent_image_url_linux
-    swarm-agent-image-url-linux = var.swarm_agent_image_url_linux
-    swarm-agent-image-url-windows = var.swarm_agent_image_url_windows
+    ssh-agent-image-url-linux = var.ssh_agent_docker_image_url_linux
+    swarm-agent-image-url-linux = var.swarm_agent_docker_image_url_linux
+    swarm-agent-image-url-windows = var.swarm_agent_docker_image_url_windows
   }
 }
 

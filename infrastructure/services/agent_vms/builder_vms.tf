@@ -4,7 +4,7 @@ data "google_client_config" "default" {
 
 // Fetch the contents of a cloud-config file from a GCS bucket
 data "http" "linux_swarm_agent_cloud_config" {
-  url = var.linux_swarm_agent_cloud_config_url
+  url = var.swarm_agent_cloud_config_url_linux
 
   request_headers = {
       Authorization = "Bearer ${data.google_client_config.default.access_token}"
@@ -27,7 +27,7 @@ resource "google_compute_instance" "linux_build_agent" {
         initialize_params {
             size = each.value.boot_disk_size
             type = "pd-ssd"
-            image = var.linux_swarm_agent_image
+            image = var.swarm_agent_vm_image_linux
         }
 
     }
@@ -84,7 +84,7 @@ resource "google_compute_instance" "windows_build_agent" {
         initialize_params {
             size = each.value.boot_disk_size
             type = "pd-ssd"
-            image = var.windows_image
+            image = var.swarm_agent_vm_image_windows
         }
 
     }
