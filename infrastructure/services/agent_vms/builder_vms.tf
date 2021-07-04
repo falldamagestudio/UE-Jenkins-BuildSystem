@@ -3,8 +3,8 @@ data "google_client_config" "default" {
 }
 
 // Fetch the contents of a cloud-config file from a GCS bucket
-data "http" "linux_cloud_config" {
-  url = var.linux_cloud_config_url
+data "http" "linux_swarm_agent_cloud_config" {
+  url = var.linux_swarm_agent_cloud_config_url
 
   request_headers = {
       Authorization = "Bearer ${data.google_client_config.default.access_token}"
@@ -27,7 +27,7 @@ resource "google_compute_instance" "linux_build_agent" {
         initialize_params {
             size = each.value.boot_disk_size
             type = "pd-ssd"
-            image = var.linux_image
+            image = var.linux_swarm_agent_image
         }
 
     }
@@ -55,7 +55,7 @@ resource "google_compute_instance" "linux_build_agent" {
 
     metadata = {
         google-logging-enabled = "true"
-        user-data = data.http.linux_cloud_config.body
+        user-data = data.http.linux_swarm_agent_cloud_config.body
     }
 }
 

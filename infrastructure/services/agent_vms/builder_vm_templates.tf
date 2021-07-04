@@ -1,9 +1,17 @@
 
 // Fetch the contents of a cloud-config file from a GCS bucket
-data "local_file" "linux_cloud_config" {
-  filename = "../../../UE-Jenkins-Images/ue-jenkins-agent-vms/linux-gce-cos/ue-jenkins-ssh-agent-vm-cloud-config.yaml"
-}
+//data "local_file" "linux_ssh_agent_cloud_config" {
+//  filename = "../../../UE-Jenkins-Images/ue-jenkins-agent-vms/linux-gce-cos/ue-jenkins-ssh-agent-vm-cloud-config.yaml"
+//}
 
+// Fetch the contents of a cloud-config file from a GCS bucket
+data "http" "linux_ssh_agent_cloud_config" {
+  url = var.linux_ssh_agent_cloud_config_url
+
+  request_headers = {
+      Authorization = "Bearer ${data.google_client_config.default.access_token}"
+  }
+}
 
 resource "google_compute_instance_template" "linux_build_agent_template" {
 
@@ -18,7 +26,7 @@ resource "google_compute_instance_template" "linux_build_agent_template" {
     // Add boot disk
 
     disk {
-        source_image = var.linux_image
+        source_image = var.linux_ssh_agent_image
 
         auto_delete = true
         boot = true
@@ -56,7 +64,7 @@ resource "google_compute_instance_template" "linux_build_agent_template" {
 
     metadata = {
         google-logging-enabled = "true"
-        // TODO: switch back to data.http.linux_cloud_config.body when done
-        user-data = data.local_file.linux_cloud_config.content
+        //user-data = data.local_file.linux_ssh_agent_cloud_config.content
+        user-data = data.http.linux_ssh_agent_cloud_config.body
     }
 }

@@ -71,8 +71,10 @@ module "agent_vms" {
   source = "../services/agent_vms"
 
   region = var.region
-  linux_image = var.linux_swarm_agent_image
-  linux_cloud_config_url = var.linux_swarm_agent_cloud_config_url
+  linux_ssh_agent_image = var.linux_ssh_agent_image
+  linux_ssh_agent_cloud_config_url = var.linux_ssh_agent_cloud_config_url
+  linux_swarm_agent_image = var.linux_swarm_agent_image
+  linux_swarm_agent_cloud_config_url = var.linux_swarm_agent_cloud_config_url
   windows_image = var.windows_swarm_agent_image
   windows_build_agents = var.windows_build_agents
   linux_build_agents = var.linux_build_agents

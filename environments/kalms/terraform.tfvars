@@ -17,14 +17,17 @@ cloud_config_store_location = "europe-west1"
 
 allowed_login_domain = "falldamagestudio.com"
 
+linux_ssh_agent_image = "projects/cos-cloud/global/images/cos-89-16108-403-26"
+linux_ssh_agent_cloud_config_url = "https://storage.googleapis.com/kalms-ue4-jenkins-cloud-config/ue-jenkins-ssh-agent-vm/cloud-config-commit-c7e17b6.yaml"
+
 linux_swarm_agent_image = "projects/cos-cloud/global/images/cos-89-16108-403-26"
-linux_swarm_agent_cloud_config_url = "https://storage.googleapis.com/kalms-ue4-jenkins-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-00b4ffb.yaml"
-windows_swarm_agent_image = "projects/kalms-ue4-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-00b4ffb-windows"
+linux_swarm_agent_cloud_config_url = "https://storage.googleapis.com/kalms-ue4-jenkins-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-c7e17b6.yaml"
+windows_swarm_agent_image = "projects/kalms-ue4-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-c7e17b6-windows"
 
-ssh_agent_image_url_linux = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:test"
+ssh_agent_image_url_linux = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-c7e17b6-linux"
 
-swarm_agent_image_url_linux = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-00b4ffb-linux"
-swarm_agent_image_url_windows = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-00b4ffb-windows"
+swarm_agent_image_url_linux = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-c7e17b6-linux"
+swarm_agent_image_url_windows = "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-c7e17b6-windows"
 
 windows_build_agents = {
 /*
