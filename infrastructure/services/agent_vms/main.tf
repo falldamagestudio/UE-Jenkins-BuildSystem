@@ -10,7 +10,13 @@ locals {
   ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
   ) + length(google_project_iam_member.agent_cloud_logging_write_access.id
   ) + length(google_compute_network_peering.kubernetes_network_agent_vms_peering.id
-  ) + length(google_compute_network_peering.agent_vms_kubernetes_network_peering.id)
+  ) + length(google_compute_network_peering.agent_vms_kubernetes_network_peering.id
+  ) + length(google_service_account.gce_plugin_service_account.id
+  ) + length(google_project_iam_member.gce_plugin_compute_instance_admin.id
+  ) + length(google_project_iam_member.gce_plugin_compute_network_admin.id
+  ) + length(google_project_iam_member.gce_plugin_iam_service_account_user.id
+  ) + length(google_service_account_key.gce_plugin_service_account_key.id)
+  //) + length(kubernetes_secret.gce_plugin_service_account_key.id)
   // TODO: include secrets
   // TODO: include builder VMs
   // TODO: include builder VM templates
