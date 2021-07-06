@@ -1,0 +1,7 @@
+controller:
+  # Do not install any plugins automatically
+  installPlugins: false
+
+  # Overwrite installed plugins on start
+  # This will remove all plugins that exist in the PersistentVolume, and then copy over a new fresh set from the Docker image
+  overwritePlugins: true
