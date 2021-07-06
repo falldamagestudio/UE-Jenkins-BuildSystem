@@ -1,0 +1,31 @@
+controller:
+  JCasC:
+    configScripts:
+
+      gce-config: |-
+        jenkins:
+          clouds:
+            - computeEngine:
+                cloudName: GCE
+                projectId: kalms-ue4-jenkins-buildsystem
+                instanceCapStr: 10
+                credentialsId: kalms-ue4-jenkins-buildsystem
+                noDelayProvisioning: false
+                configurations:
+                  - namePrefix:         build-game-linux-git-docker
+                    description:        Build game Linux Git Docker
+                    maxNumInstancesToCreateStr: 3
+                    maxNumInstancesToPersistStr: 1
+                    launchTimeoutSecondsStr: 300
+                    retentionTimeMinutesStr: 6
+                    mode:               EXCLUSIVE
+                    labelString:        build-game-linux-git-docker
+                    numExecutorsStr:    1
+                    runAsUser:          jenkins-ssh
+                    remoteFs:           /mnt/disks/persistent-disk
+                    javaExecPath:       /run/jenkins-agent-wrapper.sh
+                    oneShot:            false
+                    createSnapshot:     false
+                    region:             "https://www.googleapis.com/compute/v1/projects/kalms-ue4-jenkins-buildsystem/regions/europe-west1"
+                    zone:               "https://www.googleapis.com/compute/v1/projects/kalms-ue4-jenkins-buildsystem/zones/europe-west1-b"
+                    template:           "https://www.googleapis.com/compute/v1/projects/kalms-ue4-jenkins-buildsystem/global/instanceTemplates/build-game-linux"
