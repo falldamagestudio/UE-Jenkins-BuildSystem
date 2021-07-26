@@ -1,9 +1,9 @@
 {
-	"controller_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-controller:commit-057635b",
-	"ue_jenkins_inbound_agent_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-inbound-agent:commit-c7e17b6-linux",
-	"ue_jenkins_inbound_agent_windows_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-inbound-agent:commit-c7e17b6-windows",
-	"ue_jenkins_buildtools_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-buildtools:commit-c7e17b6-linux",
-	"ue_jenkins_buildtools_windows_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-buildtools:commit-c7e17b6-windows",
+	"controller_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-controller:commit-652e456",
+	"ue_jenkins_inbound_agent_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-inbound-agent:commit-652e456-linux",
+	"ue_jenkins_inbound_agent_windows_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-inbound-agent:commit-652e456-windows",
+	"ue_jenkins_buildtools_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-buildtools:commit-652e456-linux",
+	"ue_jenkins_buildtools_windows_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-buildtools:commit-652e456-windows",
 	"seed_job_url": "https://github.com/Kalmalyzer/UE-Jenkins-Jobs",
 	"seed_job_branch": "main",
 	"plastic": "true"
