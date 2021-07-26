@@ -30,14 +30,14 @@ controller:
                     zone:               "https://www.googleapis.com/compute/v1/projects/kalms-ue4-jenkins-buildsystem/zones/europe-west1-b"
                     template:           "https://www.googleapis.com/compute/v1/projects/kalms-ue4-jenkins-buildsystem/global/instanceTemplates/build-game-linux"
 
-                  - namePrefix:         build-game-windows-git-docker
-                    description:        Build game Windows Git Docker
+                  - namePrefix:         build-game-win64-git-docker
+                    description:        Build game Win64 Git Docker
                     maxNumInstancesToCreateStr: 3
                     maxNumInstancesToPersistStr: 1
                     launchTimeoutSecondsStr: 300
                     retentionTimeMinutesStr: 6
                     mode:               EXCLUSIVE
-                    labelString:        build-game-windows-git-docker
+                    labelString:        build-game-win64-git-docker
                     numExecutorsStr:    1
                     runAsUser:          jenkins
                     remoteFs:           C:\W
