@@ -42,3 +42,7 @@ variable "internal_ip_address_name" {
 variable "longtail_store_bucket_name" {
   type = string
 }
+
+variable "ssh_vm_private_key_windows" {
+  type = string
+}

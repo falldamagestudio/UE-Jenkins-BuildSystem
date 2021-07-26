@@ -1,5 +1,5 @@
 {
-	"controller_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-controller:commit-11ddebe",
+	"controller_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-controller:commit-057635b",
 	"ue_jenkins_inbound_agent_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-inbound-agent:commit-c7e17b6-linux",
 	"ue_jenkins_inbound_agent_windows_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-inbound-agent:commit-c7e17b6-windows",
 	"ue_jenkins_buildtools_linux_image": "europe-west1-docker.pkg.dev/kalms-ue4-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-buildtools:commit-c7e17b6-linux",

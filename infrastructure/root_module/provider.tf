@@ -31,3 +31,7 @@ provider "random" {
 provider "http" {
   version = "~> 2.1"
 }
+
+provider "tls" {
+  version = "~> 3.1"
+}

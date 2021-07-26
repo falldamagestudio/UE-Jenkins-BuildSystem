@@ -68,3 +68,43 @@ resource "google_compute_instance_template" "linux_build_agent_template" {
         user-data = data.http.linux_ssh_agent_cloud_config.body
     }
 }
+
+resource "google_compute_instance_template" "windows_build_agent_template" {
+
+    depends_on = [ var.module_depends_on ]
+
+    for_each = var.windows_build_agent_templates
+
+    name = each.key
+
+    machine_type = each.value.machine_type
+
+    // Add boot disk
+
+    disk {
+        source_image = var.ssh_agent_vm_image_windows
+
+        auto_delete = true
+        boot = true
+
+        disk_size_gb = each.value.boot_disk_size
+        disk_type = "pd-ssd"
+    }
+
+    network_interface {
+
+        network = google_compute_network.agent_vms.name
+        subnetwork = google_compute_subnetwork.agent_vms.name
+
+        access_config {
+
+            // Auto-generate external IP
+
+        }
+    }
+
+    service_account {
+        email = google_service_account.agent_service_account.email
+        scopes = [ "cloud-platform" ]
+    }
+}

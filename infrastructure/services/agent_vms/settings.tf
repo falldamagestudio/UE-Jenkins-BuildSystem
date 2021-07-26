@@ -14,12 +14,20 @@ locals {
           version = var.settings.ssh-agent-image-url-linux
         }
 
+        ssh-agent-image-url-windows = {
+          version = var.settings.ssh-agent-image-url-windows
+        }
+
         swarm-agent-image-url-linux = {
           version = var.settings.swarm-agent-image-url-linux
         }
 
         swarm-agent-image-url-windows = {
           version = var.settings.swarm-agent-image-url-windows
+        }
+
+        ssh-vm-public-key-windows = {
+          version = tls_private_key.ssh_vm_key.public_key_openssh
         }
     }
 }
