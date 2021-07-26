@@ -10,4 +10,4 @@ controller:
             - envVars:
                 env:
                 - key: "LONGTAIL_STORE_BUCKET_NAME"
-                  value: "${LONGTAIL_STORE_BUCKET_NAME}"
+                  value: "{{ .Values.LONGTAIL_STORE_BUCKET_NAME }}"

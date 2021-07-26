@@ -12,10 +12,10 @@ controller:
                 scm {
                   git {
                     remote {
-                      url('${SEED_JOB_URL}')
+                      url('{{ .Values.SEED_JOB_URL }}')
                       credentials('github-user')
                     }
-                    branch('*/${SEED_JOB_BRANCH}')
+                    branch('*/{{ .Values.SEED_JOB_BRANCH }}')
                   }
                 }
 

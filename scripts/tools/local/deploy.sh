@@ -72,12 +72,8 @@ helm upgrade \
     --set agent.tag=${UE_JENKINS_INBOUND_AGENT_LINUX_TAG_ONLY} \
     --set GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID} \
     --set GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET} \
-    --set controller.containerEnv[0].name=UE_JENKINS_BUILDTOOLS_LINUX_IMAGE \
-    --set controller.containerEnv[0].value=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \
-    --set controller.containerEnv[1].name=SEED_JOB_URL \
-    --set controller.containerEnv[1].value=${SEED_JOB_URL} \
-    --set controller.containerEnv[2].name=UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE \
-    --set controller.containerEnv[2].value=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE} \
-    --set controller.containerEnv[3].name=SEED_JOB_BRANCH \
-    --set controller.containerEnv[3].value=${SEED_JOB_BRANCH} \
+    --set UE_JENKINS_BUILDTOOLS_LINUX_IMAGE=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \
+    --set UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE} \
+    --set SEED_JOB_URL=${SEED_JOB_URL} \
+    --set SEED_JOB_BRANCH=${SEED_JOB_BRANCH} \
     --wait

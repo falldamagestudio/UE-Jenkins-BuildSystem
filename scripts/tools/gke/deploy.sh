@@ -74,8 +74,6 @@ helm upgrade \
     ${RELEASE} \
     ${CHART_DIR} \
     --debug \
-    --set GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID} \
-    --set GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET} \
     --set controller.agentListenerLoadBalancerIP=${AGENT_LISTENER_SERVICE_LOAD_BALANCER_IP} \
     --set controller.ingress.annotations.kubernetes\\.io/ingress\\.global-static-ip-name=${EXTERNAL_STATIC_IP_ADDRESS_NAME} \
     --set controller.secondaryingress.annotations.kubernetes\\.io/ingress\\.regional-static-ip-name=${INTERNAL_STATIC_IP_ADDRESS_NAME} \
@@ -85,18 +83,13 @@ helm upgrade \
     --set agent.tag=${UE_JENKINS_INBOUND_AGENT_LINUX_TAG_ONLY} \
     --set controller.ingress.hostName=${SUBDOMAIN_NAME} \
     --set controller.managedsslcertificate.domains[0]=${SUBDOMAIN_NAME} \
-    --set controller.containerEnv[0].name=UE_JENKINS_BUILDTOOLS_LINUX_IMAGE \
-    --set controller.containerEnv[0].value=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \
-    --set controller.containerEnv[1].name=SEED_JOB_URL \
-    --set controller.containerEnv[1].value=${SEED_JOB_URL} \
-    --set controller.containerEnv[2].name=UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE \
-    --set controller.containerEnv[2].value=${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE} \
-    --set controller.containerEnv[3].name=LONGTAIL_STORE_BUCKET_NAME \
-    --set controller.containerEnv[3].value=${LONGTAIL_STORE_BUCKET_NAME} \
-    --set controller.containerEnv[4].name=UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE \
-    --set controller.containerEnv[4].value=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE} \
-    --set controller.containerEnv[5].name=UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE \
-    --set controller.containerEnv[5].value=${UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE} \
-    --set controller.containerEnv[6].name=SEED_JOB_BRANCH \
-    --set controller.containerEnv[6].value=${SEED_JOB_BRANCH} \
+    --set GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID} \
+    --set GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET} \
+    --set UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE} \
+    --set UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE=${UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE} \
+    --set UE_JENKINS_BUILDTOOLS_LINUX_IMAGE=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \
+    --set UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE=${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE} \
+    --set LONGTAIL_STORE_BUCKET_NAME=${LONGTAIL_STORE_BUCKET_NAME} \
+    --set SEED_JOB_URL=${SEED_JOB_URL} \
+    --set SEED_JOB_BRANCH=${SEED_JOB_BRANCH} \
     --wait
