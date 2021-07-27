@@ -60,4 +60,5 @@ output "ssh_vm_public_key_windows" {
 
 output "ssh_vm_private_key_windows" {
   value = module.core.ssh_vm_private_key_windows
+  sensitive = true
 }
