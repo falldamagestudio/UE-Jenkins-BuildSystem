@@ -5,7 +5,6 @@
 # Reference: https://jenkinsci.github.io/kubernetes-credentials-provider-plugin/examples/
 
 resource "kubernetes_secret" "gce_plugin_windows_vm_ssh_private_key" {
-  depends_on = [ var.module_depends_on ]
 
   metadata {
     # Credential name is the identifier used in the withCredentials() call

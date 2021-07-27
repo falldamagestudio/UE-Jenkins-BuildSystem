@@ -9,7 +9,6 @@
 ## Reference: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_service_account_key
 #
 #resource "kubernetes_secret" "gce_plugin_service_account_key" {
-#  depends_on = [ var.module_depends_on ]
 #
 #  metadata {
 #    # Credential name is the identifier used in the withCredentials() call

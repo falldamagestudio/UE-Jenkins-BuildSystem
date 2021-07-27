@@ -24,7 +24,7 @@ module "kubernetes_secrets_from_terraform" {
 
   source = "./kubernetes_secrets_from_terraform"
 
-  module_depends_on = [ module.kubernetes_cluster.endpoint ]
+  depends_on = [ module.kubernetes_cluster.endpoint ]
 
   project_id = var.project_id
   region = var.region

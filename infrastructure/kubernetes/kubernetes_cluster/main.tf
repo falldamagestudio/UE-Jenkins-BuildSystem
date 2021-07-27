@@ -1,19 +1,3 @@
-locals {
-  wait = length(module.kubernetes_cluster.endpoint
-    ) + length(google_service_account.agent_service_account.id
-    ) + length(google_project_iam_member.agent_build_artifact_downloader_access.id
-    ) + length(google_storage_bucket_iam_member.agent_longtail_store_admin_access.id
-    ) + length(google_service_account.controller_service_account.id
-    ) + length(google_project_iam_member.controller_build_artifact_downloader_access.id
-    ) + length(google_compute_global_address.external_ip_address.id
-    ) + length(google_compute_address.internal_ip_address.id
-    ) + length(google_service_account.build_job_service_account.id
-    ) + length(google_storage_bucket_iam_member.build_job_longtail_store_admin_access.id
-    ) + length(google_service_account_key.build_job_service_account_key.id
-    ) + length(kubernetes_secret.build_job_gcp_service_account_key.id
-    ) + length(google_iap_web_iam_member.access_iap_policy.id)
-}
-
 module "kubernetes_cluster" {
 
   source                     = "terraform-google-modules/kubernetes-engine/google"
@@ -193,7 +177,6 @@ module "kubernetes_cluster" {
 }
 
 resource "google_service_account" "agent_service_account" {
-  depends_on = [ var.module_depends_on ]
 
   account_id   = "ue4-jenkins-agent-node"
   display_name = "UE4 Jenkins Agent Node"
@@ -201,7 +184,6 @@ resource "google_service_account" "agent_service_account" {
 
 # Allow agent nodes to download artifacts from all repositories in project
 resource "google_project_iam_member" "agent_build_artifact_downloader_access" {
-  depends_on = [ var.module_depends_on ]
 
   role   = "roles/artifactregistry.reader"
   member = "serviceAccount:${google_service_account.agent_service_account.email}"
@@ -209,7 +191,6 @@ resource "google_project_iam_member" "agent_build_artifact_downloader_access" {
 
 # Allow agent nodes to manage content in Longtail store
 resource "google_storage_bucket_iam_member" "agent_longtail_store_admin_access" {
-  depends_on = [ var.module_depends_on ]
 
   bucket   = var.longtail_store_bucket_id
   role     = "roles/storage.admin"
@@ -217,7 +198,6 @@ resource "google_storage_bucket_iam_member" "agent_longtail_store_admin_access" 
 }
 
 resource "google_service_account" "controller_service_account" {
-  depends_on = [ var.module_depends_on ]
 
   account_id   = "ue4-jenkins-controller-node"
   display_name = "UE4 Jenkins Controller Node"
@@ -225,20 +205,17 @@ resource "google_service_account" "controller_service_account" {
 
 # Allow controller node to download artifacts from all repositories in project
 resource "google_project_iam_member" "controller_build_artifact_downloader_access" {
-  depends_on = [ var.module_depends_on ]
 
   role   = "roles/artifactregistry.reader"
   member = "serviceAccount:${google_service_account.controller_service_account.email}"
 }
 
 resource "google_compute_global_address" "external_ip_address" {
-  depends_on = [ var.module_depends_on ]
 
   name = var.external_ip_address_name
 }
 
 resource "google_compute_address" "internal_ip_address" {
-  depends_on = [ var.module_depends_on ]
 
   name = var.internal_ip_address_name
   subnetwork = var.kubernetes_subnetwork_id
@@ -248,7 +225,6 @@ resource "google_compute_address" "internal_ip_address" {
 }
 
 resource "google_iap_web_iam_member" "access_iap_policy" {
-  depends_on = [ var.module_depends_on ]
 
   role      = "roles/iap.httpsResourceAccessor"
   # Configure which users/groups/domains will be accepted by Identity-Aware Proxy
@@ -259,7 +235,6 @@ resource "google_iap_web_iam_member" "access_iap_policy" {
 ///////////////////////////////////////////////////////////////////
 
 resource "google_service_account" "build_job_service_account" {
-  depends_on = [ var.module_depends_on ]
 
   account_id   = "ue4-jenkins-build-job"
   display_name = "UE4 Jenkins build job"
@@ -267,7 +242,6 @@ resource "google_service_account" "build_job_service_account" {
 
 # Allow build jobs to manage content in Longtail store
 resource "google_storage_bucket_iam_member" "build_job_longtail_store_admin_access" {
-  depends_on = [ var.module_depends_on ]
 
   bucket   = var.longtail_store_bucket_id
   role     = "roles/storage.admin"
@@ -275,7 +249,6 @@ resource "google_storage_bucket_iam_member" "build_job_longtail_store_admin_acce
 }
 
 resource "google_service_account_key" "build_job_service_account_key" {
-  depends_on = [ var.module_depends_on ]
 
   service_account_id = google_service_account.build_job_service_account.name
 }
@@ -299,7 +272,6 @@ resource "google_service_account_key" "build_job_service_account_key" {
 # Reference: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_service_account_key
 
 resource "kubernetes_secret" "build_job_gcp_service_account_key" {
-  depends_on = [ var.module_depends_on ]
 
   metadata {
     # Credential name is the identifier used in the withCredentials() call

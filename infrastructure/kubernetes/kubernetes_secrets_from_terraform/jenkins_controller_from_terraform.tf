@@ -1,7 +1,5 @@
 resource "kubernetes_secret" "jenkins-controller-from-terraform" {
 
-  depends_on = [ var.module_depends_on ]
-
   metadata {
     name = "jenkins-controller-from-terraform"
   }
