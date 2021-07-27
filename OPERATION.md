@@ -106,7 +106,7 @@ First, make sure you have created a repository & GitHub user for your organizati
 
 ### Provide manual cluster configuration
 
-* Perform `./scripts/set-githut-pat.sh environments/<env>/ <GitHub PAT>`.
+* Perform `./scripts/set-github-pat.sh environments/<env>/ <GitHub PAT>`.
 * Perform `./scripts/set-manual-config.sh environments/<env>/ <Google OAuth2 Client ID> <Google OAuth2 Client Secret> <DNS hostname>`. The former two can be found within the 
 * If you will use Plastic SCM, perform `./scripts/set-plastic-config.sh environments/<env>/ <username> <encrypted password> <server> <encrypted content encryption key>`. Use `cm crypt <string>` to encrypt password & content encryption key.
 
@@ -132,7 +132,7 @@ First, make sure you have created a repository & GitHub user for your organizati
 
 * Visit [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts). Create a service account key for `gce-plugin-for-jenkins@<project>.iam.gserviceaccount.com`. Add this key to Jenkins as "Google Service Account from private key".
 
-* Redeploy Jenkins (`deploy-jenkins-controller.sh`)
+* Restart Jenkins.
 
 ### Bring up agent vms
 
