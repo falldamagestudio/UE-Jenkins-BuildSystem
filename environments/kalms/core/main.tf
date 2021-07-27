@@ -18,4 +18,8 @@ module "core" {
 
     cloud_config_store_bucket_name = var.cloud_config_store_bucket_name
     cloud_config_store_location = var.cloud_config_store_location
+
+    image_builder_subnetwork_cidr_range = var.image_builder_subnetwork_cidr_range
+    agent_vms_subnetwork_cidr_range = var.agent_vms_subnetwork_cidr_range
+    kubernetes_cluster_network_config = var.kubernetes_cluster_network_config
 }

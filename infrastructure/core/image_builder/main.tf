@@ -15,7 +15,7 @@ resource "google_compute_network" "image_builder_network" {
 
 resource "google_compute_subnetwork" "image_builder_subnetwork" {
   name          = "image-builder-subnetwork"
-  ip_cidr_range = "10.138.0.0/20"
+  ip_cidr_range = var.image_builder_subnetwork_cidr_range
   region        = var.region
   network       = google_compute_network.image_builder_network.id
 }

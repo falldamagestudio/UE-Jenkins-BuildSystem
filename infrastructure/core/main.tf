@@ -5,6 +5,9 @@ module "google_apis" {
 
 module "network" {
   source = "./network"
+
+  agent_vms_subnetwork_cidr_range = var.agent_vms_subnetwork_cidr_range
+  kubernetes_cluster_network_config = var.kubernetes_cluster_network_config
 }
 
 module "docker_build_artifacts" {
@@ -36,6 +39,7 @@ module "image_builder" {
   region = var.region
   build_artifact_uploader_service_account_name = module.docker_build_artifacts.build_artifact_uploader_service_account_name
   cloud_config_store_bucket_id = var.cloud_config_store_bucket_name
+  image_builder_subnetwork_cidr_range = var.image_builder_subnetwork_cidr_range
 }
 
 module "longtail_store" {

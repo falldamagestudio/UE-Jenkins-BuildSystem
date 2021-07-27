@@ -15,3 +15,7 @@ variable "build_artifact_uploader_service_account_name" {
 variable "cloud_config_store_bucket_id" {
   type = string
 }
+
+variable "image_builder_subnetwork_cidr_range" {
+  type = string
+}
