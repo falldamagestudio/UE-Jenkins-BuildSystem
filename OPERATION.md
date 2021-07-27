@@ -72,8 +72,6 @@ First, make sure you have created a repository & GitHub user for your organizati
 
 * Once this is done, you should be able to see [a new network + subnetwork](https://console.cloud.google.com/networking/networks/list), some [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts), and some extra [storage buckets](https://console.cloud.google.com/storage/browser) in GCP.
 
-* Configure a DNS entry that points to `jenkins-controller-external-ip-address`'s address.
-
 ### Build Docker & VM images
 
 * Add some secrets to your Images repository:
@@ -119,6 +117,8 @@ First, make sure you have created a repository & GitHub user for your organizati
 * Modify `seed_job_url` in `environments/<env>/helm-config.json` to point to your own replica of the repo.
 
 * Perform `./scripts/deploy-jenkins-controller.sh environments/<env>/`.
+
+* Configure a DNS entry that points to `jenkins-controller-external-ip-address`'s address.
 
 * Wait until everything - including [ingresses](https://console.cloud.google.com/kubernetes/ingresses?project=kalms-ue-jenkins-buildsystem) - are operational. Load balancing, routing, and SSL cert handling can be a bit off and on for some time (an hour?).
 
