@@ -15,8 +15,6 @@ data "http" "linux_ssh_agent_cloud_config" {
 
 resource "google_compute_instance_template" "linux_build_agent_template" {
 
-    depends_on = [ var.module_depends_on ]
-
     for_each = var.linux_build_agent_templates
 
     name = each.key
@@ -70,8 +68,6 @@ resource "google_compute_instance_template" "linux_build_agent_template" {
 }
 
 resource "google_compute_instance_template" "windows_build_agent_template" {
-
-    depends_on = [ var.module_depends_on ]
 
     for_each = var.windows_build_agent_templates
 

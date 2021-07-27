@@ -34,8 +34,6 @@ locals {
 
 resource "google_secret_manager_secret" "agent_secret" {
 
-  depends_on = [ var.module_depends_on ]
-
   for_each = local.secrets
 
   secret_id = each.key
@@ -46,7 +44,6 @@ resource "google_secret_manager_secret" "agent_secret" {
 }
 
 resource "google_secret_manager_secret_iam_member" "agent_secret_agent_access" {
-  depends_on = [ var.module_depends_on ]
 
   for_each = local.secrets
 
@@ -56,7 +53,6 @@ resource "google_secret_manager_secret_iam_member" "agent_secret_agent_access" {
 }
 
 resource "google_secret_manager_secret_version" "agent_secret_version" {
-  depends_on = [ var.module_depends_on ]
 
   for_each = local.secrets
 
