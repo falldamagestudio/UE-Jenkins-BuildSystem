@@ -132,8 +132,6 @@ First, make sure you have created a repository & GitHub user for your organizati
 
 * Visit [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts). Create a service account key for `gce-plugin-for-jenkins@<project>.iam.gserviceaccount.com`. Add this key to Jenkins as "Google Service Account from private key".
 
-* Update `application/values/gce-config.yaml` so that project names & zones are accurate.
-
 * Redeploy Jenkins (`deploy-jenkins-controller.sh`)
 
 ### Bring up agent vms

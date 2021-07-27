@@ -9,6 +9,10 @@ CHART_DIR="${APPLICATION_DIR}/helm-charts/charts/jenkins"
 GOOGLE_OAUTH_CLIENT_ID=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_id}" | base64 --decode`
 GOOGLE_OAUTH_CLIENT_SECRET=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_secret}" | base64 --decode`
 SUBDOMAIN_NAME=`kubectl get secrets jenkins-controller-from-manual-config -o jsonpath="{.data.hostname}" | base64 --decode`
+
+GOOGLE_PROJECT=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.project}" | base64 --decode`
+GOOGLE_REGION=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.region}" | base64 --decode`
+GOOGLE_ZONE=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.zone}" | base64 --decode`
 EXTERNAL_STATIC_IP_ADDRESS_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.external_ingress_static_ip_address_name}" | base64 --decode`
 INTERNAL_STATIC_IP_ADDRESS_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.internal_ingress_static_ip_address_name}" | base64 --decode`
 LONGTAIL_STORE_BUCKET_NAME=`kubectl get secrets jenkins-controller-from-terraform -o jsonpath="{.data.longtail_store_bucket_name}" | base64 --decode`
@@ -85,6 +89,9 @@ helm upgrade \
     --set controller.managedsslcertificate.domains[0]=${SUBDOMAIN_NAME} \
     --set GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID} \
     --set GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET} \
+    --set GOOGLE_PROJECT=${GOOGLE_PROJECT} \
+    --set GOOGLE_REGION=${GOOGLE_REGION} \
+    --set GOOGLE_ZONE=${GOOGLE_ZONE} \
     --set UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE=${UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE} \
     --set UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE=${UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE} \
     --set UE_JENKINS_BUILDTOOLS_LINUX_IMAGE=${UE_JENKINS_BUILDTOOLS_LINUX_IMAGE} \

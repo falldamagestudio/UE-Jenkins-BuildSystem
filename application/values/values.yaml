@@ -1,3 +1,7 @@
+GOOGLE_PROJECT: undefined
+GOOGLE_REGION: undefined
+GOOGLE_ZONE: undefined
+
 GOOGLE_OAUTH_CLIENT_ID: undefined
 GOOGLE_OAUTH_CLIENT_SECRET: undefined
 

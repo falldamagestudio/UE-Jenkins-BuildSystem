@@ -31,6 +31,7 @@ module "kubernetes_secrets_from_terraform" {
 
   project_id = var.project_id
   region = var.region
+  zone = var.zone
 
   external_ip_address_name = var.external_ip_address_name
   internal_ip_address_name = var.internal_ip_address_name

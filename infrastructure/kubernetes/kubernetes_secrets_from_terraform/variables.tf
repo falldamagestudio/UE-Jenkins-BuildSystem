@@ -29,6 +29,11 @@ variable "region" {
   default = null
 }
 
+variable "zone" {
+  type    = string
+  default = null
+}
+
 variable "external_ip_address_name" {
   type    = string
   default = null

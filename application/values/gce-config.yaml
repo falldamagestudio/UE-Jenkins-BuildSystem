@@ -7,9 +7,9 @@ controller:
           clouds:
             - computeEngine:
                 cloudName: GCE
-                projectId: kalms-ue-jenkins-buildsystem
+                projectId: {{ .Values.GOOGLE_PROJECT }}
                 instanceCapStr: 10
-                credentialsId: kalms-ue-jenkins-buildsystem
+                credentialsId: {{ .Values.GOOGLE_PROJECT }}
                 noDelayProvisioning: false
                 configurations:
                   - namePrefix:         build-game-linux-git-docker
@@ -26,9 +26,9 @@ controller:
                     javaExecPath:       /run/jenkins-agent-wrapper.sh
                     oneShot:            false
                     createSnapshot:     false
-                    region:             "https://www.googleapis.com/compute/v1/projects/kalms-ue-jenkins-buildsystem/regions/europe-west1"
-                    zone:               "https://www.googleapis.com/compute/v1/projects/kalms-ue-jenkins-buildsystem/zones/europe-west1-b"
-                    template:           "https://www.googleapis.com/compute/v1/projects/kalms-ue-jenkins-buildsystem/global/instanceTemplates/build-game-linux"
+                    region:             "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/regions/{{ .Values.GOOGLE_REGION }}"
+                    zone:               "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/zones/{{ .Values.GOOGLE_ZONE }}"
+                    template:           "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/global/instanceTemplates/build-game-linux"
 
                   - namePrefix:         build-game-win64-git-docker
                     description:        Build game Win64 Git Docker
@@ -46,6 +46,6 @@ controller:
                     createSnapshot:     false
                     windowsConfiguration:
                       privateKeyCredentialsId: gce-plugin-windows-vm-ssh-private-key
-                    region:             "https://www.googleapis.com/compute/v1/projects/kalms-ue-jenkins-buildsystem/regions/europe-west1"
-                    zone:               "https://www.googleapis.com/compute/v1/projects/kalms-ue-jenkins-buildsystem/zones/europe-west1-b"
-                    template:           "https://www.googleapis.com/compute/v1/projects/kalms-ue-jenkins-buildsystem/global/instanceTemplates/build-game-windows"
+                    region:             "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/regions/{{ .Values.GOOGLE_REGION }}"
+                    zone:               "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/zones/{{ .Values.GOOGLE_ZONE }}"
+                    template:           "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/global/instanceTemplates/build-game-windows"
