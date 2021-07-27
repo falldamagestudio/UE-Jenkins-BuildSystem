@@ -1,6 +1,6 @@
 module "kubernetes_cluster" {
 
-  source = "../services/kubernetes_cluster"
+  source = "./kubernetes_cluster"
 
   project_id = var.project_id
   project_number = var.project_number
@@ -22,7 +22,7 @@ module "kubernetes_cluster" {
 
 module "kubernetes_secrets_from_terraform" {
 
-  source = "../services/kubernetes_secrets_from_terraform"
+  source = "./kubernetes_secrets_from_terraform"
 
   module_depends_on = [ module.kubernetes_cluster.endpoint ]
 

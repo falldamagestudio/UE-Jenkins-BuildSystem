@@ -1,6 +1,6 @@
 module "agent_vms" {
 
-  source = "../services/agent_vms"
+  source = "./agent_vms"
 
   region = var.region
 
