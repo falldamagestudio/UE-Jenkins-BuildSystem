@@ -10,14 +10,14 @@ terraform {
       version = "~> 3.77.0"
     }
 
-    google-beta = {
-      source = "hashicorp/google-beta"
-      version = "~> 3.77.0"
-    }
-
     http = {
       source = "hashicorp/http"
       version = "~> 2.1.0"
+    }
+
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = "~> 2.3.0"
     }
 
     null = {
@@ -49,8 +49,12 @@ provider "google" {
   zone    = var.zone
 }
 
-provider "google-beta" {
-  project = var.project_id
-  zone    = var.zone
+data "google_client_config" "default" {
+  provider = google
 }
 
+provider "kubernetes" {
+  host                   = "https://${module.kubernetes_cluster.endpoint}"
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(module.kubernetes_cluster.ca_certificate)
+}

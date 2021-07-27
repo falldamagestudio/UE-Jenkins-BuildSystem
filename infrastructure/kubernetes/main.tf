@@ -26,9 +26,6 @@ module "kubernetes_secrets_from_terraform" {
 
   module_depends_on = [ module.kubernetes_cluster.endpoint ]
 
-  kubernetes_cluster_endpoint = module.kubernetes_cluster.endpoint
-  kubernetes_cluster_ca_certificate = module.kubernetes_cluster.ca_certificate
-
   project_id = var.project_id
   region = var.region
   zone = var.zone

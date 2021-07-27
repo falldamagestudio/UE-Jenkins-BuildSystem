@@ -16,9 +16,8 @@ locals {
 
 module "kubernetes_cluster" {
 
-  source                     = "./beta-public-cluster"
-
-  module_depends_on          = [ var.module_depends_on ]
+  source                     = "terraform-google-modules/kubernetes-engine/google"
+  version                    = "16.0.1"
 
   project_id                 = var.project_id
   name                       = "jenkins"
@@ -250,8 +249,6 @@ resource "google_compute_address" "internal_ip_address" {
 
 resource "google_iap_web_iam_member" "access_iap_policy" {
   depends_on = [ var.module_depends_on ]
-
-  provider  = google-beta
 
   role      = "roles/iap.httpsResourceAccessor"
   # Configure which users/groups/domains will be accepted by Identity-Aware Proxy

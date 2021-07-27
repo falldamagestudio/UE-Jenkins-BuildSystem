@@ -4,16 +4,6 @@ variable "module_depends_on" {
   default     = []
 }
 
-variable "kubernetes_cluster_ca_certificate" {
-  description = "Cluster ca certificate (base64 encoded)"
-  type        = string
-}
-
-variable "kubernetes_cluster_endpoint" {
-  description = "Cluster endpoint"
-  type        = string
-}
-
 variable "image_registry_prefix" {
   type    = string
   default = null
