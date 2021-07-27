@@ -26,6 +26,3 @@ fi
 kubectl create secret generic iap-configuration \
     --from-literal=client_id=$GOOGLE_OAUTH_CLIENT_ID \
     --from-literal=client_secret=$GOOGLE_OAUTH_CLIENT_SECRET
-
-# Create managed SSL certificate (this will be used by the load balancer)
-cat "${APPLICATION_DIR}/managed-ssl-certificate.yaml" | sed s/\<domain-name\>/${HOSTNAME}/ | kubectl apply -f -
