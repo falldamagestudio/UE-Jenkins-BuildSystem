@@ -27,7 +27,7 @@ locals {
         }
 
         ssh-vm-public-key-windows = {
-          version = tls_private_key.ssh_vm_key.public_key_openssh
+          version = var.settings.ssh-vm-public-key-windows
         }
     }
 }

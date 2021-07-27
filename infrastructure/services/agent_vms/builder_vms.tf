@@ -38,8 +38,8 @@ resource "google_compute_instance" "linux_build_agent" {
 
     network_interface {
 
-        network = google_compute_network.agent_vms.name
-        subnetwork = google_compute_subnetwork.agent_vms.name
+        network = var.agent_vms_network
+        subnetwork = var.agent_vms_subnetwork
 
         access_config {
 
@@ -91,8 +91,8 @@ resource "google_compute_instance" "windows_build_agent" {
 
     network_interface {
 
-        network = google_compute_network.agent_vms.name
-        subnetwork = google_compute_subnetwork.agent_vms.name
+        network = var.agent_vms_network
+        subnetwork = var.agent_vms_subnetwork
 
         access_config {
 

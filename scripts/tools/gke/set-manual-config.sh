@@ -29,9 +29,3 @@ kubectl create secret generic iap-configuration \
 
 # Create managed SSL certificate (this will be used by the load balancer)
 cat "${APPLICATION_DIR}/managed-ssl-certificate.yaml" | sed s/\<domain-name\>/${HOSTNAME}/ | kubectl apply -f -
-
-# Configure ingress to use IAP
-kubectl apply -f "${APPLICATION_DIR}/ingress-backend-config.yaml"
-
-# Configure ingress to redirect HTTP traffic to HTTPS
-kubectl apply -f "${APPLICATION_DIR}/ingress-frontend-config.yaml"

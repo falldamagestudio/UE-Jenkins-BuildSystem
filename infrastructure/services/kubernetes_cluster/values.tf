@@ -14,7 +14,3 @@ output "ca_certificate" {
   description = "Cluster ca certificate (base64 encoded)"
   value       = module.kubernetes_cluster.ca_certificate
 }
-
-output "network_id" {
-  value       = google_compute_network.kubernetes_network.id
-}

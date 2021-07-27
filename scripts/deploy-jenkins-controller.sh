@@ -6,7 +6,7 @@ SCRIPTS_DIR="${BASH_SOURCE%/*}/"
 
 
 if [ -z "${ENVIRONMENT_DIR}" ]; then
-	1>&2 echo "Usage: create-infrastructure.sh <environment dir>"
+	1>&2 echo "Usage: deploy-jenkins-controller.sh <environment dir>"
 	exit 1
 fi
 
@@ -27,7 +27,7 @@ fi
 "${SCRIPTS_DIR}/tools/activate_cluster.sh" "${CLUSTER_NAME}" || exit 1
 
 if ! `kubectl get secrets jenkins-controller-from-manual-config > /dev/null 2>&1`; then
-	1>&2 echo "You must run set-manual-config.sh before installing application"
+	1>&2 echo "You must run set-manual-config.sh before installing Jenkins"
 	exit 1
 fi
 

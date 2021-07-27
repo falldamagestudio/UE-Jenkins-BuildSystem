@@ -1,27 +1,21 @@
-variable "module_depends_on" {
-  description = "List of modules or resources this module depends on."
-  type        = list
-  default     = []
-}
-
 variable "project_id" {
-  type    = string
-  default = null
+  description = "ID for the GCP project that will contain the license server."
+  type        = string
 }
 
 variable "project_number" {
-  type    = string
-  default = null
+  description = "Number for the GCP project that will contain the license server."
+  type        = string
 }
 
 variable "region" {
-  type    = string
-  default = null
+  description = "License server VM region."
+  type        = string
 }
 
 variable "zone" {
-  type    = string
-  default = null
+  description = "License server VM zone."
+  type        = string
 }
 
 variable "kubernetes_network" {
@@ -40,23 +34,25 @@ variable "kubernetes_subnetwork_id" {
 }
 
 variable "external_ip_address_name" {
-  type    = string
-  default = null
+  type = string
 }
 
 variable "internal_ip_address_name" {
-  type    = string
-  default = null
+  type = string
 }
 
 variable "internal_ip_address" {
   type = string
 }
 
-variable "longtail_store_bucket_id" {
+variable "longtail_store_bucket_name" {
   type = string
 }
 
 variable "allowed_login_domain" {
+  type = string
+}
+
+variable "ssh_vm_private_key_windows" {
   type = string
 }

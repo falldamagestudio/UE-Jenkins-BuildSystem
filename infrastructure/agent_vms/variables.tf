@@ -4,7 +4,16 @@ variable "module_depends_on" {
   default     = []
 }
 
+variable "project_id" {
+  description = "ID for the GCP project that will contain the license server."
+  type        = string
+}
+
 variable "region" {
+  type    = string
+}
+
+variable "zone" {
   type    = string
 }
 
@@ -16,11 +25,19 @@ variable "agent_vms_subnetwork" {
   type = string
 }
 
-variable "cloud_config_store_bucket_id" {
+variable "internal_ip_address" {
   type = string
 }
 
-variable "longtail_store_bucket_id" {
+variable "cloud_config_store_bucket_name" {
+  type = string
+}
+
+variable "longtail_store_bucket_name" {
+  type = string
+}
+
+variable "ssh_vm_public_key_windows" {
   type = string
 }
 
@@ -65,13 +82,18 @@ variable "windows_build_agent_templates" {
   type = map
 }
 
-variable "settings" {
-  type = object({
-    jenkins-url = string
-    ssh-agent-image-url-linux = string
-    ssh-agent-image-url-windows = string
-    swarm-agent-image-url-linux = string
-    swarm-agent-image-url-windows = string
-    ssh-vm-public-key-windows = string
-  })
+variable "ssh_agent_docker_image_url_linux" {
+  type = string
+}
+
+variable "ssh_agent_docker_image_url_windows" {
+  type = string
+}
+
+variable "swarm_agent_docker_image_url_linux" {
+  type = string
+}
+
+variable "swarm_agent_docker_image_url_windows" {
+  type = string
 }
