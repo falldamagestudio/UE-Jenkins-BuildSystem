@@ -1,9 +1,8 @@
-module "agent_vms" {
+module "agents" {
 
-    source = "../../../infrastructure/agent_vms"
+    source = "../../../infrastructure/agents"
 
     project_id = data.terraform_remote_state.core.outputs.project_id
-    region = data.terraform_remote_state.core.outputs.region
     zone = data.terraform_remote_state.core.outputs.zone
 
     agent_vms_network = data.terraform_remote_state.core.outputs.agent_vms_network

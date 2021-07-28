@@ -3,10 +3,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "region" {
-  type    = string
-}
-
 variable "zone" {
   type    = string
 }
@@ -46,7 +42,6 @@ variable "ssh_agent_vm_cloud_config_url_linux" {
 variable "ssh_agent_vm_image_windows" {
   type = string
 }
-
 
 variable "swarm_agent_vm_image_linux" {
   type = string

@@ -137,11 +137,11 @@ First, make sure you have created a repository & GitHub user for your organizati
 ### Bring up agent vms
 
 * Modify settings in the following files:
-** `environments/<env>/agent_vms/backend.hcl` -> this should point to the new bucket
-** `environments/<env>/agent_vms/core_state.tf` -> this should point to the new bucket
-** `environments/<env>/agent_vms/terraform.tfvars` - be aware
+** `environments/<env>/agents/backend.hcl` -> this should point to the new bucket
+** `environments/<env>/agents/core_state.tf` -> this should point to the new bucket
+** `environments/<env>/agents/terraform.tfvars` - be aware
 
-** `./scripts/terraform-agent_vms-apply.sh environments/<env>/`
+** `./scripts/terraform-agents-apply.sh environments/<env>/`
 
 * Once this is done, your build system should be ready to rock.
 
@@ -152,6 +152,6 @@ First, make sure you have created a repository & GitHub user for your organizati
 ## Tear down infrastructure
 
 * Uninstall jenkins controller from Jenkins cluster with: `helm uninstall jenkins-controller`
-* Remove agent VMs with: `./scripts/terraform-agent_vms-destroy.sh environments/<env>/`
+* Remove agent VMs with: `./scripts/terraform-agents-destroy.sh environments/<env>/`
 * Delete Kubernetes cluster with: `./scripts/terraform-kubernetes-destroy.sh environments/<env>/`
 * Delete all remaining resources with: `./scripts/terraform-core-destroy.sh environments/<env>/` -- note that this will delete all VM images, Docker images, and all pre-built UE versions and any games which you have uploaded using Longtail

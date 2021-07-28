@@ -4,6 +4,10 @@
 //  filename = "../../../UE-Jenkins-Images/ue-jenkins-agent-vms/linux-gce-cos/ue-jenkins-ssh-agent-vm-cloud-config.yaml"
 //}
 
+// Access the Google provider's configuration (we will use this to get access tokens)
+data "google_client_config" "default" {
+}
+
 // Fetch the contents of a cloud-config file from a GCS bucket
 data "http" "linux_ssh_agent_cloud_config" {
   url = var.ssh_agent_vm_cloud_config_url_linux
@@ -56,7 +60,7 @@ resource "google_compute_instance_template" "linux_build_agent_template" {
     }
 
     service_account {
-        email = google_service_account.agent_service_account.email
+        email = var.agent_service_account_email
         scopes = [ "cloud-platform" ]
     }
 
@@ -100,7 +104,7 @@ resource "google_compute_instance_template" "windows_build_agent_template" {
     }
 
     service_account {
-        email = google_service_account.agent_service_account.email
+        email = var.agent_service_account_email
         scopes = [ "cloud-platform" ]
     }
 }

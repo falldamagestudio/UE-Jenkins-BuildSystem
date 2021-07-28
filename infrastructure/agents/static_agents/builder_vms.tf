@@ -47,7 +47,7 @@ resource "google_compute_instance" "linux_build_agent" {
     }
 
     service_account {
-        email = google_service_account.agent_service_account.email
+        email = var.agent_service_account_email
         scopes = [ "cloud-platform" ]
     }
 
@@ -96,7 +96,7 @@ resource "google_compute_instance" "windows_build_agent" {
     }
 
     service_account {
-        email = google_service_account.agent_service_account.email
+        email = var.agent_service_account_email
         scopes = [ "cloud-platform" ]
     }
 }
