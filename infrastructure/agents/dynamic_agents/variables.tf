@@ -18,7 +18,7 @@ variable "ssh_agent" {
   })
 }
 
-variable "ssh_agent_templates" {
+variable "dynamic_agent_templates" {
   type = object({
     linux = map(object({
       machine_type = string

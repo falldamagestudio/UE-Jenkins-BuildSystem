@@ -18,13 +18,29 @@ variable "swarm_agent" {
   })
 }
 
-
-variable "windows_build_agents" {
-  type = map
+variable "static_agent_templates" {
+  type = object({
+    linux = map(object({
+      machine_type = string
+      boot_disk_size = number
+      persistent_disk_size = number
+    }))
+    windows = map(object({
+      machine_type = string
+      boot_disk_size = number
+    }))
+  })
 }
 
-variable "linux_build_agents" {
-  type = map
+variable "static_agents" {
+  type = object({
+    linux = map(object({
+      template = string
+    }))
+    windows = map(object({
+      template = string
+    }))
+  })
 }
 
 variable "agent_service_account_email" {

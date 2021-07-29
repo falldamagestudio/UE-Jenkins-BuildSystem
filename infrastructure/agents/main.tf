@@ -29,7 +29,7 @@ module "dynamic_agents" {
 
   ssh_agent = var.ssh_agent
 
-  ssh_agent_templates = var.dynamic_agent_templates
+  dynamic_agent_templates = var.dynamic_agent_templates
 
   agent_service_account_email = module.agents.agent_service_account_email
 }
@@ -45,8 +45,8 @@ module "static_agents" {
 
   swarm_agent = var.swarm_agent
 
-  windows_build_agents = var.windows_build_agents
-  linux_build_agents = var.linux_build_agents
+  static_agent_templates = var.static_agent_templates
+  static_agents = var.static_agents
 
   agent_service_account_email = module.agents.agent_service_account_email
 }

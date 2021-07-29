@@ -23,8 +23,8 @@ module "agents" {
     }
     swarm_agent = var.swarm_agent
 
-    windows_build_agents = var.windows_build_agents
-    linux_build_agents = var.linux_build_agents
-
     dynamic_agent_templates = var.dynamic_agent_templates
+
+    static_agent_templates = var.static_agent_templates
+    static_agents = var.static_agents
 }
