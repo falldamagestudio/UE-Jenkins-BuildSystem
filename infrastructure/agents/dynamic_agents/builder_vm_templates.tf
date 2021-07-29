@@ -1,6 +1,6 @@
 
 // Fetch the contents of a cloud-config file from a GCS bucket
-//data "local_file" "linux_ssh_agent_cloud_config" {
+//data "local_file" "linux_ssh_agent_vm_cloud_config" {
 //  filename = "../../../UE-Jenkins-Images/ue-jenkins-agent-vms/linux-gce-cos/ue-jenkins-ssh-agent-vm-cloud-config.yaml"
 //}
 
@@ -9,17 +9,17 @@ data "google_client_config" "default" {
 }
 
 // Fetch the contents of a cloud-config file from a GCS bucket
-data "http" "linux_ssh_agent_cloud_config" {
-  url = var.ssh_agent_vm_cloud_config_url_linux
+data "http" "linux_ssh_agent_vm_cloud_config" {
+  url = var.ssh_agent.linux.vm_cloud_config_url
 
   request_headers = {
       Authorization = "Bearer ${data.google_client_config.default.access_token}"
   }
 }
 
-resource "google_compute_instance_template" "linux_build_agent_template" {
+resource "google_compute_instance_template" "linux_agent_template" {
 
-    for_each = var.linux_build_agent_templates
+    for_each = var.ssh_agent_templates.linux
 
     name = each.key
 
@@ -28,7 +28,7 @@ resource "google_compute_instance_template" "linux_build_agent_template" {
     // Add boot disk
 
     disk {
-        source_image = var.ssh_agent_vm_image_linux
+        source_image = var.ssh_agent.linux.vm_image_name
 
         auto_delete = true
         boot = true
@@ -66,14 +66,14 @@ resource "google_compute_instance_template" "linux_build_agent_template" {
 
     metadata = {
         google-logging-enabled = "true"
-        //user-data = data.local_file.linux_ssh_agent_cloud_config.content
-        user-data = data.http.linux_ssh_agent_cloud_config.body
+        //user-data = data.local_file.linux_ssh_agent_vm_cloud_config.content
+        user-data = data.http.linux_ssh_agent_vm_cloud_config.body
     }
 }
 
-resource "google_compute_instance_template" "windows_build_agent_template" {
+resource "google_compute_instance_template" "windows_agent_template" {
 
-    for_each = var.windows_build_agent_templates
+    for_each = var.ssh_agent_templates.windows
 
     name = each.key
 
@@ -82,7 +82,7 @@ resource "google_compute_instance_template" "windows_build_agent_template" {
     // Add boot disk
 
     disk {
-        source_image = var.ssh_agent_vm_image_windows
+        source_image = var.ssh_agent.windows.vm_image_name
 
         auto_delete = true
         boot = true
