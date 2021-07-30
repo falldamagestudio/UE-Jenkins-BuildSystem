@@ -38,12 +38,12 @@ dynamic_agent_templates = {
     }
 
     windows = {
-        "build-engine-windows-dynamic" = {
+        "build-engine-win64-dynamic" = {
             machine_type = "n1-standard-32"
             boot_disk_size = 200
         }
 
-        "build-game-windows-dynamic" = {
+        "build-game-win64-dynamic" = {
             machine_type = "n1-standard-8"
             boot_disk_size = 200
         }
@@ -52,26 +52,15 @@ dynamic_agent_templates = {
 
 static_agent_templates = {
     linux = {
-        "build-engine-linux-static" = {
-            "machine_type" = "n1-standard-32"
+        "build-linux-static" = {
+            "machine_type" = "n1-standard-8"
             "boot_disk_size" = 50
             "persistent_disk_size" = 200
-        }
-
-        "build-game-linux-static" = {
-            machine_type = "n1-standard-8"
-            boot_disk_size = 50
-            persistent_disk_size = 200
         }
     }
 
     windows = {
-        "build-engine-windows-static" = {
-            machine_type = "n1-standard-32"
-            boot_disk_size = 200
-        }
-
-        "build-game-windows-static" = {
+        "build-win64-static" = {
             machine_type = "n1-standard-8"
             boot_disk_size = 200
         }
@@ -82,26 +71,28 @@ static_agents = {
     linux = {
 /*
         "build-engine-linux-git-docker" = {
-            template = build-engine-linux-static
+            template = "build-linux-static"
         }
         "build-game-linux-git-docker" = {
-            template = build-game-linux-static
+            template = "build-linux-static"
         }
         "build-game-linux-plastic-docker" = {
-            template = build-game-linux-static
+            template = "build-linux-static"
         }
 */
     }
     windows = {
 /*
-        "build-engine-windows-git-docker" = {
-            template = build-windows-linux-static
+        "build-engine-win64-git-docker" = {
+            template = "build-win64-static"
         }
-        "build-windows-linux-git-docker" = {
-            template = build-windows-linux-static
+
+        "build-game-win64-git-docker" = {
+            template = "build-win64-static"
         }
-        "build-windows-linux-plastic-docker" = {
-            template = build-windows-linux-static
+
+        "build-game-win64-plastic-docker" = {
+            template = "build-win64-static"
         }
 */
     }
