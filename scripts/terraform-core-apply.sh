@@ -8,7 +8,7 @@ if [ -z "${ENVIRONMENT_DIR}" ]; then
 fi
 
 # Initialize Terraform
-(cd "${ENVIRONMENT_DIR}/core" && terraform init -backend-config="backend.hcl") || exit $?
+(cd "${ENVIRONMENT_DIR}/core" && terraform init) || exit $?
 
 # Update infrastructure
-(cd "${ENVIRONMENT_DIR}/core" && terraform apply -var-file="terraform.tfvars") || exit $?
+(cd "${ENVIRONMENT_DIR}/core" && terraform apply) || exit $?

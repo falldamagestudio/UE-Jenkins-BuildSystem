@@ -64,7 +64,7 @@ First, make sure you have created a repository & GitHub user for your organizati
 ### Bring up core
 
 * Modify settings in the following files:
-    * `environments/<env>/core/backend.hcl` -> this should point to the new Terraform state bucket
+    * `environments/<env>/core/backend.tf` -> this should point to the new Terraform state bucket
    * `environments/<env>/core/terraform.tfvars`
 	( Note, "project number" can be found out by doing `gcloud projects list`)
 
@@ -90,7 +90,7 @@ First, make sure you have created a repository & GitHub user for your organizati
 ### Bring up kubernetes
 
 * Modify settings in the following files:
-** `environments/<env>/kubernetes/backend.hcl` -> this should point to the new bucket
+** `environments/<env>/kubernetes/backend.tf` -> this should point to the new bucket
 ** `environments/<env>/kubernetes/core_state.tf` -> this should point to the new bucket
 ** `environments/<env>/kubernetes/terraform.tfvars`
 
@@ -136,7 +136,7 @@ First, make sure you have created a repository & GitHub user for your organizati
 ### Bring up agent vms
 
 * Modify settings in the following files:
-** `environments/<env>/agents/backend.hcl` -> this should point to the new bucket
+** `environments/<env>/agents/backend.tf` -> this should point to the new bucket
 ** `environments/<env>/agents/core_state.tf` -> this should point to the new bucket
 ** `environments/<env>/agents/terraform.tfvars` - be aware
 
