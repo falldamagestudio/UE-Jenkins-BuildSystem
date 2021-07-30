@@ -105,8 +105,7 @@ First, make sure you have created a repository & GitHub user for your organizati
 ### Provide manual cluster configuration
 
 * Perform `./scripts/set-github-pat.sh environments/<env>/ <GitHub PAT>`.
-* Perform `./scripts/set-manual-config.sh environments/<env>/ <Google OAuth2 Client ID> <Google OAuth2 Client Secret> <DNS hostname>`. The former two can be found within the 
-* If you will use Plastic SCM, perform `./scripts/set-plastic-config.sh environments/<env>/ <username> <encrypted password> <server> <encrypted content encryption key>`. Use `cm crypt <string>` to encrypt password & content encryption key.
+* Perform `./scripts/set-manual-config.sh environments/<env>/ <Google OAuth2 Client ID> <Google OAuth2 Client Secret> <DNS hostname>`. The OAuth2 parameters can be found among the details of the OAuth 2.0 Client ID that you previously created (see the [Credentials](https://console.cloud.google.com/apis/credentials) screen).
 
 ### Deploy Jenkins controller
 
@@ -124,7 +123,7 @@ First, make sure you have created a repository & GitHub user for your organizati
 
 ### Finish IAP configuration
 
-* Visit `<DNS hostname>` in a browser. You will be met with a HTTP 400 Authorization Error message. Add the redirect URI to the list of allowed domains in the OAuth 2.0 Client ID configuration.
+* Visit `<DNS hostname>` in a browser. You will be met with a HTTP 400 Authorization Error message. Add the redirect URI to the list of allowed domains in the OAuth 2.0 Client ID configuration (see the [Credentials](https://console.cloud.google.com/apis/credentials) screen).
 
 * Visit `<DNS hostname>` again. You probably need to log in twice.
 
@@ -143,15 +142,22 @@ First, make sure you have created a repository & GitHub user for your organizati
 
 ** `./scripts/terraform-agents-apply.sh environments/<env>/`
 
-* Once this is done, your build system should be ready to rock.
+### Provide manual agent configuration
+
+* Log in to Jenkins. Create an API token for one user.
+* Perform `./scripts/set-swarm-config.sh <username> <API token>`.
+* If you will use Plastic SCM, perform `./scripts/set-plastic-config.sh environments/<env>/ <username> <encrypted password> <server> <encrypted content encryption key>`. Use `cm crypt <string>` to encrypt password & content encryption key.
+* Restart Jenkins and any agents that happened to be running at the time.
 
 ### Populate with jobs
 
-* Trigger the Seed Job
+* Trigger the Seed Job. This will populate your Jenkins instance with build jobs.
+
+* Your build system should now be ready to rock.
 
 ## Tear down infrastructure
 
-* Uninstall jenkins controller from Jenkins cluster with: `helm uninstall jenkins-controller`
+* Uninstall Jenkins controller from Jenkins cluster with: `helm uninstall jenkins-controller`
 * Remove agent VMs with: `./scripts/terraform-agents-destroy.sh environments/<env>/`
 * Delete Kubernetes cluster with: `./scripts/terraform-kubernetes-destroy.sh environments/<env>/`
 * Delete all remaining resources with: `./scripts/terraform-core-destroy.sh environments/<env>/` -- note that this will delete all VM images, Docker images, and all pre-built UE versions and any games which you have uploaded using Longtail
