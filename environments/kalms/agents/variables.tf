@@ -58,9 +58,11 @@ variable "static_agents" {
   type = object({
     linux = map(object({
       template = string
+      jenkins_labels = string
     }))
     windows = map(object({
       template = string
+      jenkins_labels = string
     }))
   })
 }
