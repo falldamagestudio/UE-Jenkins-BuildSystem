@@ -40,7 +40,7 @@ dynamic_agent_templates = {
     windows = {
         "build-engine-win64-dynamic" = {
             machine_type = "n1-standard-32"
-            boot_disk_size = 200
+            boot_disk_size = 500
         }
 
         "build-game-win64-dynamic" = {
@@ -55,57 +55,32 @@ static_agent_templates = {
         "build-linux-static" = {
             "machine_type" = "n1-standard-8"
             "boot_disk_size" = 50
-            "persistent_disk_size" = 200
+            "persistent_disk_size" = 300
         }
     }
 
     windows = {
         "build-win64-static" = {
             machine_type = "n1-standard-8"
-            boot_disk_size = 500
+            boot_disk_size = 600
         }
     }
 }
 
 static_agents = {
     linux = {
-
+/*
         "build-linux-static" = {
             template = "build-linux-static"
-            jenkins_labels = "build-engine-linux-git-docker build-game-linux-plastic-docker"
-        }
-/*
-        "build-engine-linux-git-docker" = {
-            template = "build-linux-static"
-        }
-        "build-game-linux-git-docker" = {
-            template = "build-linux-static"
-        }
-        "build-game-linux-plastic-docker" = {
-            template = "build-linux-static"
+            jenkins_labels = "build-engine-linux-git-static build-game-linux-git-static build-game-linux-plastic-static"
         }
 */
     }
     windows = {
-
+/*
         "build-win64-static" = {
             template = "build-win64-static"
-            jenkins_labels = "build-engine-win64-git-docker build-game-win64-plastic-docker"
-        }
-/*
-        "build-engine-win64-git-docker" = {
-            template = "build-win64-static"
-            jenkins_labels = "build-engine-win64-git-docker"
-        }
-
-        "build-game-win64-git-docker" = {
-            template = "build-win64-static"
-            jenkins_labels = "build-game-win64-git-docker"
-        }
-
-        "build-game-win64-plastic-docker" = {
-            template = "build-win64-static"
-            jenkins_labels = "build-game-win64-plastic-docker"
+            jenkins_labels = "build-engine-win64-git-static build-game-win64-git-static build-game-win64-plastic-static"
         }
 */
     }
