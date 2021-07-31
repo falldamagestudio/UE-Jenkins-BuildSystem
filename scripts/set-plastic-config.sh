@@ -61,8 +61,8 @@ if `gcloud secrets describe plastic-config-zip >/dev/null 2>&1`; then
 	gcloud secrets versions add plastic-config-zip "--data-file=${SCRIPTS_DIR}/plastic-config.zip"
 else
 	gcloud secrets create plastic-config-zip "--data-file=${SCRIPTS_DIR}/plastic-config.zip"
-	gcloud secrets add-iam-policy-binding plastic-config-zip --member=serviceAccount:ue4-jenkins-agent-vm@kalms-ue-jenkins-buildsystem.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
 fi
+gcloud secrets add-iam-policy-binding plastic-config-zip --member=serviceAccount:ue4-jenkins-agent-vm@kalms-ue-jenkins-buildsystem.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
 
 
 # Add .tgz'ed config files to GCP's Secrets Manager
@@ -74,8 +74,8 @@ if `gcloud secrets describe plastic-config-tgz >/dev/null 2>&1`; then
 	gcloud secrets versions add plastic-config-tgz "--data-file=${SCRIPTS_DIR}/plastic-config.tgz"
 else
 	gcloud secrets create plastic-config-tgz "--data-file=${SCRIPTS_DIR}/plastic-config.tgz"
-	gcloud secrets add-iam-policy-binding plastic-config-tgz --member=serviceAccount:ue4-jenkins-agent-vm@kalms-ue-jenkins-buildsystem.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
 fi
+gcloud secrets add-iam-policy-binding plastic-config-tgz --member=serviceAccount:ue4-jenkins-agent-vm@kalms-ue-jenkins-buildsystem.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
 
 # Remove temp files
 
