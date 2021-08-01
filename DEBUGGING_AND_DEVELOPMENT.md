@@ -20,6 +20,20 @@ Windows only:
 * Check which state the controller pod is in, `kubectl get pods jenkins-controller-0`
 * Check Jenkins controller logs, `kubectl logs jenkins-controller-0 -c jenkins`
 
+## Plastic jobs get stuck at startup / unable to find jenkinsfiles
+
+Is the only line of output is: `<timestamp>  Started by user <username>`, the Jenkinsfile is not being fetched, it's not being assigned to any machine? Then it is probably the Plastic server/username/password that is incorrect.
+
+If the master doesn't find the Jenkinsfile, then either the server/reponames are incorrect, the path to the Jenkinsfile is incorrect, or the cloud content encryption server/password is incorrec.
+
+* Log in to jenkins controller machine, `kubectl exec -it jenkins-controller-0 -c jenkins -- /bin/bash`
+
+* Verify username/password, `cm lrep <server>`
+
+* Verify server + cloud content encryption password, `cm cat serverpath:<path to jenkins groovy script in repo>#br:/main@<reponame>@<server>`
+
+* Iterate with `./scripts/set-plastic-config.sh` and redeploy the controller pod after each time, `kubectl delete pods jenkins-controller-0`
+
 ## Iterating on Windows agent VM images
 
 * Start up a VM (either blank Windows, or a pre-made agent VM)

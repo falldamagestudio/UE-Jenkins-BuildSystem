@@ -13,6 +13,16 @@ if [ $# -ne 5 ]; then
 	exit 1
 fi
 
+if [ ${ENCRYPTED_PASSWORD::5} != "|SoC|" ]; then
+	1>&2 echo "Error: Encrypted password should begin with '|SoC|'"
+	exit 1
+fi
+
+if [ ${ENCRYPTED_CONTENT_ENCRYPTION_KEY::5} != "|SoC|" ]; then
+	1>&2 echo "Error: Encrypted content encryption key should begin with '|SoC|'"
+	exit 1
+fi
+
 CLUSTER_TYPE=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".cluster_type"`
 
 if [ -z "${CLUSTER_TYPE}" ]; then
@@ -34,7 +44,7 @@ fi
 # cryptedservers.conf <- references a single server/cloud organization, and an associated key file
 # cryptedserver.key <- contains the encrypted content password for that server/cloud organization
 
-SECURITY_CONFIG="::0:${USERNAME}:${ENCRYPTED_PASSWORD}:"
+SECURITY_CONFIG="::0:${USERNAME}:${ENCRYPTED_PASSWORD:5}:" # The string in client.conf should not include the '|SoC|' prefix
 
 SECURITY_CONFIG=${SECURITY_CONFIG} envsubst < "${SCRIPTS_DIR}/../application/plastic/client.conf.template" > "${SCRIPTS_DIR}/client.conf"
 SERVER=${SERVER} envsubst < "${SCRIPTS_DIR}/../application/plastic/cryptedservers.conf.template" > "${SCRIPTS_DIR}/cryptedservers.conf"
