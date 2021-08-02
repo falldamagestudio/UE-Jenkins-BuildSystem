@@ -33,7 +33,14 @@ resource "google_project_iam_member" "gce_plugin_iam_service_account_user" {
   member = "serviceAccount:${google_service_account.gce_plugin_service_account.email}"
 }
 
-resource "google_service_account_key" "gce_plugin_service_account_key" {
-
-  service_account_id = google_service_account.gce_plugin_service_account.name
-}
+# TODO: First, make kubernetes credentials provider able to create GoogleRobotPrivateKeyCredentials
+# and then make this write a secret of that type, with the private key & project ID attached
+#
+# Then we should create this key via tf, and let kubernetes_secret.gce_plugin_service_account_key
+#  expose it to Jenkins
+# (Currently, those steps need to be done manually)
+#
+#resource "google_service_account_key" "gce_plugin_service_account_key" {
+#
+#  service_account_id = google_service_account.gce_plugin_service_account.name
+#}
