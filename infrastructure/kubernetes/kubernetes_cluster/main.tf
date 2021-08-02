@@ -1,3 +1,17 @@
+locals {
+  
+  all_pools = merge({
+    "jenkins-controller-node-pool" = {
+      os = "linux"
+      machine_type = var.node_pools.controller.machine_type
+      disk_type = var.node_pools.controller.disk_type
+      disk_size = var.node_pools.controller.disk_size
+      min_nodes = 1
+      max_nodes = 1
+    }},
+  var.node_pools.agent_pools)
+}
+
 module "kubernetes_cluster" {
 
   source                     = "terraform-google-modules/kubernetes-engine/google"
@@ -27,152 +41,129 @@ module "kubernetes_cluster" {
   // https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_cluster#node_metadata
   node_metadata              = "EXPOSE"
 
-  node_pools = [
-    {
+  node_pools = concat(
+    [{
       name               = "jenkins-controller-node-pool"
-      machine_type       = "n1-standard-2"
+      machine_type       = var.node_pools.controller.machine_type
       node_locations     = var.zone
       min_count          = 1
       max_count          = 1
       local_ssd_count    = 0
-      disk_size_gb       = 50
-      disk_type          = "pd-standard"
+      disk_size_gb       = var.node_pools.controller.disk_size
+      disk_type          = var.node_pools.controller.disk_type
       image_type         = "COS"
       auto_repair        = true
       auto_upgrade       = true
       service_account    = google_service_account.controller_service_account.email
       preemptible        = false
       initial_node_count = 1
-    },
+    }],
 
-    {
-      name               = "jenkins-agent-linux-node-pool"
-      machine_type       = "n1-standard-16"
+    [ for key, value in var.node_pools.agent_pools : {
+      name               = key
+      machine_type       = value.machine_type
       node_locations     = var.zone
-      min_count          = 0
-      max_count          = 10
+      min_count          = value.min_nodes
+      max_count          = value.max_nodes
       local_ssd_count    = 0
-      disk_size_gb       = 100
-      disk_type          = "pd-ssd"
-      image_type         = "COS"
+      disk_size_gb       = value.disk_size
+      disk_type          = value.disk_type
+      image_type         = value.os == "windows" ? "WINDOWS_LTSC" : "COS"
       auto_repair        = true
       auto_upgrade       = true
       service_account    = google_service_account.agent_service_account.email
       preemptible        = false
-      initial_node_count = 0
-    },
+      initial_node_count = value.min_nodes
 
-    {
-      name               = "jenkins-agent-windows-node-pool"
-      machine_type       = "n1-standard-16"
-      node_locations     = var.zone
-      min_count          = 0
-      max_count          = 10
-      local_ssd_count    = 0
-      disk_size_gb       = 100
-      disk_type          = "pd-ssd"
-      image_type         = "WINDOWS_LTSC"
-      auto_repair        = true
-      auto_upgrade       = true
-      service_account    = google_service_account.agent_service_account.email
-      preemptible        = false
-      initial_node_count = 0
+      // Windows nodes do not support Shielded Instance features
+      // For Linux, we could activate Secure Boot - but we aren't doing so yet
+      enable_secure_boot = false 
 
-      enable_secure_boot = false // Windows nodes do not support Shielded Instance features
-      enable_integrity_monitoring = false // Windows nodes do not support Shielded Instance features
-    },
-  ]
+      // Windows nodes do not support Shielded Instance features
+      enable_integrity_monitoring = (value.os == "windows" ? false : true) 
+    }]
+  )
 
+  # All pools receive full cloud-platform scopes
   node_pools_oauth_scopes = {
-    all = []
-
-    jenkins-controller-node-pool = [
-      "https://www.googleapis.com/auth/cloud-platform",
-    ]
-
-    jenkins-agent-linux-node-pool = [
-      "https://www.googleapis.com/auth/cloud-platform",
-    ]
-
-    jenkins-agent-windows-node-pool = [
-      "https://www.googleapis.com/auth/cloud-platform",
-    ]
+    for key, value in local.all_pools : 
+      key => [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ]
   }
 
+  # All pools receive a key looking like this:
+  #   jenkins-<mypoolname>-node-pool = true
+  #
   node_pools_labels = {
-    all = {}
-
-    jenkins-controller-node-pool = {
-      jenkins-controller-node-pool = true
-    }
-
-    jenkins-agent-linux-node-pool = {
-      jenkins-agent-linux-node-pool = true
-    }
-
-    jenkins-agent-windows-node-pool = {
-      jenkins-agent-windows-node-pool = true
-    }
+    for key, value in local.all_pools : 
+      key => {
+        "${key}" = true
+      }
   }
 
+  # All pools receive a key looking like this:
+  #   node-pool-metadata-custom-value = "my-node-pool"
+  #
   node_pools_metadata = {
-    all = {}
-
-    jenkins-controller-node-pool = {
-      node-pool-metadata-custom-value = "my-node-pool"
-    }
-    jenkins-agent-linux-node-pool = {
-      node-pool-metadata-custom-value = "my-node-pool"
-    }
-    jenkins-agent-windows-node-pool = {
-      node-pool-metadata-custom-value = "my-node-pool"
-    }
+    for key, value in local.all_pools : 
+      key => {
+        node-pool-metadata-custom-value = "my-node-pool"
+      }
   }
 
-  node_pools_taints = {
-    all = []
+  # Controller pool receives no taints
+  #
+  # All agent pools receive this taint:
+  #          key    = "jenkins-<mypoolname>-node-pool"
+  #          value  = true
+  #          effect = "NO_SCHEDULE"
+  #
+  # In addition, all Windows agent pools receive this taint:
+  #          key    = "node.kubernetes.io/os"
+  #          value  = "windows"
+  #          effect = "NO_SCHEDULE"
+  # (GKE will automatically set that taint for any Windows pools)
+  #
+  node_pools_taints = merge({
+      jenkins-controller-node-pool = []
+    },
+    {
+      for key, value in var.node_pools.agent_pools : 
+        key => [
+          {
+            key    = "${key}"
+            value  = true
+            effect = "NO_SCHEDULE"
+          },
+        ] if value.os == "linux"
+    },
+        {
+      for key, value in var.node_pools.agent_pools : 
+        key => [
+          {
+            key    = "${key}"
+            value  = true
+            effect = "NO_SCHEDULE"
+          },
 
-    jenkins-controller-node-pool = [
-    ]
+          // GKE automatically adds this taint for Windows node pools
+          {
+            key    = "node.kubernetes.io/os"
+            value  = "windows"
+            effect = "NO_SCHEDULE"
+          },
+        ] if value.os == "windows"
+    })
 
-    jenkins-agent-linux-node-pool = [
-      {
-        key    = "jenkins-agent-linux-node-pool"
-        value  = true
-        effect = "NO_SCHEDULE"
-      },
-    ]
-
-    jenkins-agent-windows-node-pool = [
-      {
-        key    = "jenkins-agent-windows-node-pool"
-        value  = true
-        effect = "NO_SCHEDULE"
-      },
-
-      // GKE automatically adds this taint for Windows node pools
-      {
-        key    = "node.kubernetes.io/os"
-        value  = "windows"
-        effect = "NO_SCHEDULE"
-      },
-    ]
-  }
-
+  # All pools receive a tag looking like this:
+  #   jenkins-<mypoolname>-node-pool = jenkins-<mypoolname>-node-pool
+  #
   node_pools_tags = {
-    all = []
-
-    jenkins-controller-node-pool = [
-      "jenkins-controller-node-pool",
-    ]
-
-    jenkins-agent-linux-node-pool = [
-      "jenkins-agent-linux-node-pool",
-    ]
-
-    jenkins-agent-windows-node-pool = [
-      "jenkins-agent-windows-node-pool",
-    ]
+    for key, value in local.all_pools : 
+      key => [
+        "${key}"
+      ]
   }
 }
 

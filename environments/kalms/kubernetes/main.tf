@@ -19,5 +19,7 @@ module "kubernetes" {
 
     allowed_login_domain = var.allowed_login_domain
 
+    node_pools = var.node_pools
+
     ssh_vm_private_key_windows = data.terraform_remote_state.core.outputs.ssh_vm_private_key_windows
 }

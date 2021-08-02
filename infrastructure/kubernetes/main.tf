@@ -18,6 +18,8 @@ module "kubernetes_cluster" {
   longtail_store_bucket_id = var.longtail_store_bucket_name
 
   allowed_login_domain = var.allowed_login_domain
+
+  node_pools = var.node_pools
 }
 
 module "kubernetes_secrets_from_terraform" {
