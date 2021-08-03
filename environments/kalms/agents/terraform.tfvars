@@ -1,24 +1,24 @@
 ssh_agent = {
     linux = {
         vm_image_name = "projects/cos-cloud/global/images/cos-89-16108-403-26"
-        vm_cloud_config_url = "https://storage.googleapis.com/kalms-ue-jenkins-buildsystem-cloud-config/ue-jenkins-ssh-agent-vm/cloud-config-commit-54bf5a0.yaml"
-        docker_image_url = "europe-west1-docker.pkg.dev/kalms-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-54bf5a0-linux"
+        vm_cloud_config_url = "https://storage.googleapis.com/kalms-ue-jenkins-buildsystem-cloud-config/ue-jenkins-ssh-agent-vm/cloud-config-commit-53901af.yaml"
+        docker_image_url = "europe-west1-docker.pkg.dev/kalms-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-53901af-linux"
     }
     windows = {
-        vm_image_name = "projects/kalms-ue-jenkins-buildsystem/global/images/ue-jenkins-ssh-agent-vm-54bf5a0-windows"
-        docker_image_url = "europe-west1-docker.pkg.dev/kalms-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-54bf5a0-windows"
+        vm_image_name = "projects/kalms-ue-jenkins-buildsystem/global/images/ue-jenkins-ssh-agent-vm-53901af-windows"
+        docker_image_url = "europe-west1-docker.pkg.dev/kalms-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-53901af-windows"
     }
 }
 
 swarm_agent = {
     linux = {
         vm_image_name = "projects/cos-cloud/global/images/cos-89-16108-403-26"
-        vm_cloud_config_url = "https://storage.googleapis.com/kalms-ue-jenkins-buildsystem-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-54bf5a0.yaml"
-        docker_image_url = "europe-west1-docker.pkg.dev/kalms-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-54bf5a0-linux"
+        vm_cloud_config_url = "https://storage.googleapis.com/kalms-ue-jenkins-buildsystem-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-53901af.yaml"
+        docker_image_url = "europe-west1-docker.pkg.dev/kalms-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-53901af-linux"
     }
     windows = {
-        vm_image_name = "projects/kalms-ue-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-54bf5a0-windows"
-        docker_image_url = "europe-west1-docker.pkg.dev/kalms-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-54bf5a0-windows"
+        vm_image_name = "projects/kalms-ue-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-53901af-windows"
+        docker_image_url = "europe-west1-docker.pkg.dev/kalms-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-53901af-windows"
     }
 }
 
@@ -69,19 +69,15 @@ static_agent_templates = {
 
 static_agents = {
     linux = {
-/*
         "build-linux-static" = {
             template = "build-linux-static"
             jenkins_labels = "build-engine-linux-git-static build-game-linux-git-static build-game-linux-plastic-static"
         }
-*/
     }
     windows = {
-/*
         "build-win64-static" = {
             template = "build-win64-static"
             jenkins_labels = "build-engine-win64-git-static build-game-win64-git-static build-game-win64-plastic-static"
         }
-*/
     }
 }
