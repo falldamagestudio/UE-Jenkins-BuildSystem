@@ -13,18 +13,18 @@ node_pools = {
             os = "linux"
             machine_type = "n1-standard-16"
             disk_type = "pd-ssd"
-            disk_size = 100
+            disk_size = 300         # Dimensioned to have enough storage to run a "build engine linux" job without a separate PVC
             min_nodes = 0
-            max_nodes = 10
+            max_nodes = 2
         }
 
         "jenkins-agent-windows-node-pool" = {
             os = "windows"
             machine_type = "n1-standard-16"
             disk_type = "pd-ssd"
-            disk_size = 100
+            disk_size = 500         # Dimensioned to have enough storage to run a "build engine win64" job without a separate PVC
             min_nodes = 0
-            max_nodes = 10
+            max_nodes = 2
         }
     }
 }
