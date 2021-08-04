@@ -1,7 +1,9 @@
 locals {
-  
+
+  controller_node_pool_name = "jenkins-controller-node-pool"
+
   all_pools = merge({
-    "jenkins-controller-node-pool" = {
+    (local.controller_node_pool_name) = {
       os = "linux"
       machine_type = var.node_pools.controller.machine_type
       disk_type = var.node_pools.controller.disk_type
@@ -10,6 +12,9 @@ locals {
       max_nodes = 1
     }},
   var.node_pools.agent_pools)
+
+  controller_service_account_name = "ue-jenkins-controller-node"
+  agent_service_account_name = "ue-jenkins-agent-node"
 }
 
 module "kubernetes_cluster" {
@@ -41,25 +46,8 @@ module "kubernetes_cluster" {
   // https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_cluster#node_metadata
   node_metadata              = "EXPOSE"
 
-  node_pools = concat(
-    [{
-      name               = "jenkins-controller-node-pool"
-      machine_type       = var.node_pools.controller.machine_type
-      node_locations     = var.zone
-      min_count          = 1
-      max_count          = 1
-      local_ssd_count    = 0
-      disk_size_gb       = var.node_pools.controller.disk_size
-      disk_type          = var.node_pools.controller.disk_type
-      image_type         = "COS"
-      auto_repair        = true
-      auto_upgrade       = true
-      service_account    = google_service_account.controller_service_account.email
-      preemptible        = false
-      initial_node_count = 1
-    }],
-
-    [ for key, value in var.node_pools.agent_pools : {
+  node_pools = [
+    for key, value in local.all_pools : {
       name               = key
       machine_type       = value.machine_type
       node_locations     = var.zone
@@ -71,7 +59,19 @@ module "kubernetes_cluster" {
       image_type         = value.os == "windows" ? "WINDOWS_LTSC" : "COS"
       auto_repair        = true
       auto_upgrade       = true
-      service_account    = google_service_account.agent_service_account.email
+
+      // HACK: Manually generate email addresses, based on pool name
+      // There's a for_each over node_pools within the kubernetes module
+      //  and if the input is a for-loop with at least one computed property anywhere
+      //  then Terraform is unable to evaluate the number of items in the result
+      //  which in turn results in the node_pools parameter not being 'available'
+      //  during the planning phase...
+      // Specifying the email accounts literally avoids that limitation
+      // If we could, we would use these computed attributes instead:
+      //  - google_service_account.controller_service_account.email
+      //  - google_service_account.agent_service_account.email
+      service_account    = (key == local.controller_node_pool_name ? "${local.controller_service_account_name}@${var.project_id}.iam.gserviceaccount.com" : "${local.agent_service_account_name}@${var.project_id}.iam.gserviceaccount.com")
+
       preemptible        = false
       initial_node_count = value.min_nodes
 
@@ -82,7 +82,6 @@ module "kubernetes_cluster" {
       // Windows nodes do not support Shielded Instance features
       enable_integrity_monitoring = (value.os == "windows" ? false : true) 
     }]
-  )
 
   # All pools receive full cloud-platform scopes
   node_pools_oauth_scopes = {
@@ -169,7 +168,7 @@ module "kubernetes_cluster" {
 
 resource "google_service_account" "agent_service_account" {
 
-  account_id   = "ue-jenkins-agent-node"
+  account_id   = local.agent_service_account_name
   display_name = "UE Jenkins Agent Node"
 }
 
@@ -190,7 +189,7 @@ resource "google_storage_bucket_iam_member" "agent_longtail_store_admin_access" 
 
 resource "google_service_account" "controller_service_account" {
 
-  account_id   = "ue-jenkins-controller-node"
+  account_id   = local.controller_service_account_name
   display_name = "UE Jenkins Controller Node"
 }
 
