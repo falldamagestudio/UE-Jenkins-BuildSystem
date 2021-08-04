@@ -1,8 +1,0 @@
-{
-	"controller_image": "ue-jenkins-controller:local",
-	"ue_jenkins_inbound_agent_linux_image": "ue-jenkins-inbound-agent:local-linux",
-	"ue_jenkins_buildtools_linux_image": "ue-jenkins-buildtools:local-linux",
-	"seed_job_url": "https://github.com/Kalmalyzer/UE-Jenkins-Jobs",
-	"seed_job_branch": "main",
-	"plastic": "true"
-}
