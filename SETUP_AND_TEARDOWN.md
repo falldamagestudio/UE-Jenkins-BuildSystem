@@ -34,7 +34,6 @@ You need to make a number of decisions early on:
 * Visit the [Credentials](https://console.cloud.google.com/apis/credentials) screen. Create a new OAuth 2.0 Client ID, type `Web Application`, name `Jenkins Web Access`, authorized redirect URIs:
     * `http://localhost:8080/securityRealm/finishLogin`
     * `https://<DNS hostname>/securityRealm/finishLogin`
-    * <magic URI from IAP>
 
 * Create a bucket for Terraform state storage within the new project. Name it as `<GCP project>-state`. Place it in the same region that you intend to have other resources. Choose Standard default storage class. Choose Uniform access control.
 * [Enable versioning](https://cloud.google.com/storage/docs/using-object-versioning) for the bucket.
