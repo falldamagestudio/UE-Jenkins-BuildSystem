@@ -19,6 +19,7 @@ We want a CI/CD solution for our Unreal projects, which has these characteristic
 * Scalability - supports bursting and many different jobs, running some/all in parallel, without being very expensive to run
 * Speed - can do incremental builds quickly, even when the build state is 100GB+
 * Maintainability - Employ Infrastructure as Code & Configuration as Code, devs should be able to operate their own build system replicas
+* Security - can be exposed to the Internet without too much risk, people use Google accounts for auth
 * Built upon Open Source software as much as possible
 * Avoid writing a new build system
 
@@ -41,6 +42,25 @@ It is also possible to run jobs on Kubernetes. These will suffer from long image
 Regardless of agent type, each agent has a single executor, and thus serves only one job at a time.
 
 The Jenkins agent runs within a Docker container. Build jobs are also run within a Docker container (either via the Docker pipeline plugin, or via the Kubernetes pipeline plugin). The build tools container images contain all software necessary to build a typical UE engine or game on Linux and Windows.
+
+# Security
+
+## Controller
+
+The Jenkins controller runs within GKE.
+
+It is exposed to the Internet via a load balancer.
+Identity-Aware Proxy is enabled for that load balancer. This ensures that anyone who wants to send HTTP traffic to the Jenkins controller has authenticated with a Google account on your internal domain first.
+
+The Jenkins controller also exposes an internal load balancer. This is not behind IAP. It is the entry point for any incoming traffic (for example, Swarm agents) that needs to talk to Jenkins but is not IAP-compatible.
+
+## Agents
+
+Agents run in their own network, separate from the GKE cluster. They have a few ports open to the Internet (typically WinRM & SSH). They have a route to the internal load balancer.
+
+## Image builders
+
+Image builders run in a separate network, with no connectivity to the agents or the controller.
 
 # Agent types
 
@@ -68,6 +88,7 @@ To setup and operate this, you need to be comfortable operating a diverse range 
 
 If you don't know the tech since before, you should expect to spend a fair bit of time as you figure out "why isn't my build personal system replica starting up properly?"
 
+You will use at least this on a regular basis:
 * Terraform
 * Google Cloud Platform - Cloud Console, `gcloud`, `gsutil` - VMs, load balancers, cloud storage buckets, firewall rules, Google Kubernetes Engine, Secrets Manager, Service Accounts, IAM permissions
 * Kubernetes - `kubectl`, `gcloud container`, `helm` - nodes, pods, secrets, yaml resource definitions
