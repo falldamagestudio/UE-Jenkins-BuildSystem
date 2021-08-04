@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ClientConfigData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Language>en</Language>
-  <WorkspaceServer>local</WorkspaceServer>
+  <WorkspaceServer>${SERVER}</WorkspaceServer>
   <WorkingMode>LDAPWorkingMode</WorkingMode>
   <SecurityConfig>${SECURITY_CONFIG}</SecurityConfig>
   <ShowPerformanceWarnings>yes</ShowPerformanceWarnings>
