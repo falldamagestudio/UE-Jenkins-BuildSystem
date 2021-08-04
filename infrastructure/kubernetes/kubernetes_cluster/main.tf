@@ -169,8 +169,8 @@ module "kubernetes_cluster" {
 
 resource "google_service_account" "agent_service_account" {
 
-  account_id   = "ue4-jenkins-agent-node"
-  display_name = "UE4 Jenkins Agent Node"
+  account_id   = "ue-jenkins-agent-node"
+  display_name = "UE Jenkins Agent Node"
 }
 
 # Allow agent nodes to download artifacts from all repositories in project
@@ -190,8 +190,8 @@ resource "google_storage_bucket_iam_member" "agent_longtail_store_admin_access" 
 
 resource "google_service_account" "controller_service_account" {
 
-  account_id   = "ue4-jenkins-controller-node"
-  display_name = "UE4 Jenkins Controller Node"
+  account_id   = "ue-jenkins-controller-node"
+  display_name = "UE Jenkins Controller Node"
 }
 
 # Allow controller node to download artifacts from all repositories in project
@@ -227,8 +227,8 @@ resource "google_iap_web_iam_member" "access_iap_policy" {
 
 resource "google_service_account" "build_job_service_account" {
 
-  account_id   = "ue4-jenkins-build-job"
-  display_name = "UE4 Jenkins build job"
+  account_id   = "ue-jenkins-build-job"
+  display_name = "UE Jenkins build job"
 }
 
 # Allow build jobs to manage content in Longtail store

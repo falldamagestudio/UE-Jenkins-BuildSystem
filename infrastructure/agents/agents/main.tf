@@ -1,7 +1,7 @@
 resource "google_service_account" "agent_service_account" {
 
-  account_id   = "ue4-jenkins-agent-vm"
-  display_name = "UE4 Jenkins Agent VM"
+  account_id   = "ue-jenkins-agent-vm"
+  display_name = "UE Jenkins Agent VM"
 }
 
 resource "google_service_account_key" "agent_service_account_key" {
