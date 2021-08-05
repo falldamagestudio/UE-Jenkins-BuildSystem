@@ -9,7 +9,7 @@ SERVER=$4
 ENCRYPTED_CONTENT_ENCRYPTION_KEY=$5
 
 if [ $# -ne 5 ]; then
-	1>&2 echo "Usage: set-plastic-config.sh <environment dir> <username> <encrypted password> <server> <encrypted content encryption key>"
+	1>&2 echo "Usage: set-plastic-kubernetes-config.sh <environment dir> <username> <encrypted password> <server> <encrypted content encryption key>"
 	exit 1
 fi
 
@@ -62,31 +62,6 @@ kubectl create secret generic plastic-config \
     "--from-file=cryptedservers.conf=${SCRIPTS_DIR}/cryptedservers.conf" \
     "--from-file=cryptedserver.key=${SCRIPTS_DIR}/cryptedserver.key"
 
-# Add .zipped config files to GCP's Secrets Manager
-# These will be used by non-Kubernetes build jobs on Windows
-
-(cd "${SCRIPTS_DIR}" && zip plastic-config.zip client.conf cryptedservers.conf cryptedserver.key >/dev/null)
-
-if `gcloud secrets describe plastic-config-zip >/dev/null 2>&1`; then
-	gcloud secrets versions add plastic-config-zip "--data-file=${SCRIPTS_DIR}/plastic-config.zip"
-else
-	gcloud secrets create plastic-config-zip "--data-file=${SCRIPTS_DIR}/plastic-config.zip"
-fi
-gcloud secrets add-iam-policy-binding plastic-config-zip --member=serviceAccount:ue-jenkins-agent-vm@kalms-ue-jenkins-buildsystem.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
-
-
-# Add .tgz'ed config files to GCP's Secrets Manager
-# These will be used by non-Kubernetes build jobs on Linux
-
-(cd "${SCRIPTS_DIR}" && tar -czvf plastic-config.tgz client.conf cryptedservers.conf cryptedserver.key >/dev/null)
-
-if `gcloud secrets describe plastic-config-tgz >/dev/null 2>&1`; then
-	gcloud secrets versions add plastic-config-tgz "--data-file=${SCRIPTS_DIR}/plastic-config.tgz"
-else
-	gcloud secrets create plastic-config-tgz "--data-file=${SCRIPTS_DIR}/plastic-config.tgz"
-fi
-gcloud secrets add-iam-policy-binding plastic-config-tgz --member=serviceAccount:ue-jenkins-agent-vm@kalms-ue-jenkins-buildsystem.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
-
 # Remove temp files
 
-rm "${SCRIPTS_DIR}/client.conf" "${SCRIPTS_DIR}/cryptedservers.conf" "${SCRIPTS_DIR}/cryptedserver.key" "${SCRIPTS_DIR}/plastic-config.zip" "${SCRIPTS_DIR}/plastic-config.tgz"
+rm "${SCRIPTS_DIR}/client.conf" "${SCRIPTS_DIR}/cryptedservers.conf" "${SCRIPTS_DIR}/cryptedserver.key"
