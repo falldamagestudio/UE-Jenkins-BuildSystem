@@ -10,7 +10,7 @@ controller:
                 projectId: {{ .Values.GOOGLE_PROJECT }}
                 instanceCapStr: 10
                 credentialsId: {{ .Values.GOOGLE_PROJECT }}
-                noDelayProvisioning: false
+                noDelayProvisioning: true
                 configurations:
                   - namePrefix:         build-engine-linux-dynamic
                     description:        Build Engine Linux Dynamic VM
