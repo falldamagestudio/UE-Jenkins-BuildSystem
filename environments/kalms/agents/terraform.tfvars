@@ -26,17 +26,17 @@ dynamic_agent_templates = {
     linux = {
         "build-engine-linux-dynamic" = {
             machine_type = "n1-standard-32"
-            boot_disk_type = "pd-ssd"
+            boot_disk_type = "pd-balanced"
             boot_disk_size = 50
-            persistent_disk_type = "pd-ssd"
+            persistent_disk_type = "pd-balanced"
             persistent_disk_size = 200
         }
 
         "build-game-linux-dynamic" = {
             machine_type = "n1-standard-8"
-            boot_disk_type = "pd-ssd"
+            boot_disk_type = "pd-balanced"
             boot_disk_size = 50
-            persistent_disk_type = "pd-ssd"
+            persistent_disk_type = "pd-balanced"
             persistent_disk_size = 200
         }
     }
@@ -44,13 +44,13 @@ dynamic_agent_templates = {
     windows = {
         "build-engine-win64-dynamic" = {
             machine_type = "n1-standard-32"
-            boot_disk_type = "pd-ssd"
+            boot_disk_type = "pd-balanced"
             boot_disk_size = 500
         }
 
         "build-game-win64-dynamic" = {
             machine_type = "n1-standard-8"
-            boot_disk_type = "pd-ssd"
+            boot_disk_type = "pd-balanced"
             boot_disk_size = 200
         }
     }
@@ -60,9 +60,9 @@ static_agent_templates = {
     linux = {
         "build-linux-static" = {
             machine_type = "n1-standard-8"
-            boot_disk_type = "pd-ssd"
+            boot_disk_type = "pd-balanced"
             boot_disk_size = 50
-            persistent_disk_type = "pd-ssd"
+            persistent_disk_type = "pd-balanced"
             persistent_disk_size = 300
         }
     }
@@ -70,7 +70,7 @@ static_agent_templates = {
     windows = {
         "build-win64-static" = {
             machine_type = "n1-standard-8"
-            boot_disk_type = "pd-ssd"
+            boot_disk_type = "pd-balanced"
             boot_disk_size = 600
         }
     }
