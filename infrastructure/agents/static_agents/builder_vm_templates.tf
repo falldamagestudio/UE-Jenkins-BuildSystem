@@ -33,8 +33,8 @@ resource "google_compute_instance_template" "linux_agent_template" {
         auto_delete = true
         boot = true
 
+        disk_type = each.value.boot_disk_type
         disk_size_gb = each.value.boot_disk_size
-        disk_type = "pd-ssd"
     }
 
     // Add persistent disk
@@ -43,8 +43,8 @@ resource "google_compute_instance_template" "linux_agent_template" {
         auto_delete = true
         boot = false
 
+        disk_type = each.value.persistent_disk_type
         disk_size_gb = each.value.persistent_disk_size
-        disk_type = "pd-ssd"
     }
 
     network_interface {
@@ -87,8 +87,8 @@ resource "google_compute_instance_template" "windows_agent_template" {
         auto_delete = true
         boot = true
 
+        disk_type = each.value.boot_disk_type
         disk_size_gb = each.value.boot_disk_size
-        disk_type = "pd-ssd"
     }
 
     network_interface {

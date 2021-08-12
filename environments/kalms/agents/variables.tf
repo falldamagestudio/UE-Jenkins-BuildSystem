@@ -30,11 +30,14 @@ variable "dynamic_agent_templates" {
   type = object({
     linux = map(object({
       machine_type = string
+      boot_disk_type = string
       boot_disk_size = number
+      persistent_disk_type = string
       persistent_disk_size = number
     }))
     windows = map(object({
       machine_type = string
+      boot_disk_type = string
       boot_disk_size = number
     }))
   })
@@ -44,16 +47,18 @@ variable "static_agent_templates" {
   type = object({
     linux = map(object({
       machine_type = string
+      boot_disk_type = string
       boot_disk_size = number
+      persistent_disk_type = string
       persistent_disk_size = number
     }))
     windows = map(object({
       machine_type = string
+      boot_disk_type = string
       boot_disk_size = number
     }))
   })
 }
-
 variable "static_agents" {
   type = object({
     linux = map(object({
