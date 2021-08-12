@@ -78,15 +78,19 @@ static_agent_templates = {
 
 static_agents = {
     linux = {
+/*
         "build-linux-static" = {
             template = "build-linux-static"
             jenkins_labels = "build-engine-linux-git-static build-game-linux-git-static build-game-linux-plastic-static"
         }
+*/
     }
     windows = {
+/*
         "build-win64-static" = {
             template = "build-win64-static"
             jenkins_labels = "build-engine-win64-git-static build-game-win64-git-static build-game-win64-plastic-static"
         }
+*/
     }
 }
