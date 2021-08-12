@@ -1,24 +1,24 @@
 ssh_agent = {
     linux = {
         vm_image_name = "projects/cos-cloud/global/images/cos-89-16108-403-26"
-        vm_cloud_config_url = "https://storage.googleapis.com/fd-ue-jenkins-buildsystem-cloud-config/ue-jenkins-ssh-agent-vm/cloud-config-commit-418a51d.yaml"
-        docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-418a51d-linux"
+        vm_cloud_config_url = "https://storage.googleapis.com/fd-ue-jenkins-buildsystem-cloud-config/ue-jenkins-ssh-agent-vm/cloud-config-commit-b97852e.yaml"
+        docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-b97852e-linux"
     }
     windows = {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ue-jenkins-ssh-agent-vm-418a51d-windows"
-        docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-418a51d-windows"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ue-jenkins-ssh-agent-vm-b97852e-windows"
+        docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-ssh-agent:commit-b97852e-windows"
     }
 }
 
 swarm_agent = {
     linux = {
         vm_image_name = "projects/cos-cloud/global/images/cos-89-16108-403-26"
-        vm_cloud_config_url = "https://storage.googleapis.com/fd-ue-jenkins-buildsystem-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-418a51d.yaml"
-        docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-418a51d-linux"
+        vm_cloud_config_url = "https://storage.googleapis.com/fd-ue-jenkins-buildsystem-cloud-config/ue-jenkins-swarm-agent-vm/cloud-config-commit-b97852e.yaml"
+        docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-b97852e-linux"
     }
     windows = {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-418a51d-windows"
-        docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-418a51d-windows"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ue-jenkins-swarm-agent-vm-b97852e-windows"
+        docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ue-jenkins-swarm-agent:commit-b97852e-windows"
     }
 }
 
