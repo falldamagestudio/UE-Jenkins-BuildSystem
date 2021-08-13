@@ -34,7 +34,7 @@ controller:
                     description:        Build Engine Win64 Dynamic VM
                     maxNumInstancesToCreateStr: 1
                     maxNumInstancesToPersistStr: 1
-                    launchTimeoutSecondsStr: 300
+                    launchTimeoutSecondsStr: 600
                     retentionTimeMinutesStr: 6
                     mode:               EXCLUSIVE
                     labelString:        build-engine-win64-git-dynamic
@@ -72,7 +72,7 @@ controller:
                     description:        Build game Win64 Dynamic VM
                     maxNumInstancesToCreateStr: 2
                     maxNumInstancesToPersistStr: 1
-                    launchTimeoutSecondsStr: 300
+                    launchTimeoutSecondsStr: 600
                     retentionTimeMinutesStr: 6
                     mode:               EXCLUSIVE
                     labelString:        build-game-win64-git-dynamic build-game-win64-plastic-dynamic
