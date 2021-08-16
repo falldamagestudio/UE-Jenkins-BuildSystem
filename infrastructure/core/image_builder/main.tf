@@ -73,3 +73,16 @@ resource "google_service_account_iam_member" "image_builder_instance_controller_
   role   = "roles/iam.serviceAccountUser"
   member = "serviceAccount:${google_service_account.image_builder_instance_controller.email}"
 }
+
+// Allow the instance controller account to read from GAR
+// GitHub Actions needs this permission; it will peek into GAR to determine which images already exist
+resource "google_artifact_registry_repository_iam_member" "image_builder_instance_controller_build_artifact_uploader_access" {
+  provider = google-beta
+
+  depends_on = [ var.module_depends_on ]
+
+  location = var.build_artifact_registry_repository_location
+  repository = var.build_artifact_registry_repository_name
+  role   = "roles/artifactregistry.reader"
+  member = "serviceAccount:${google_service_account.image_builder_instance_controller.email}"
+}

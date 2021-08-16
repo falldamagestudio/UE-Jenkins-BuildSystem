@@ -40,6 +40,8 @@ module "image_builder" {
   build_artifact_uploader_service_account_name = module.docker_build_artifacts.build_artifact_uploader_service_account_name
   cloud_config_store_bucket_id = var.cloud_config_store_bucket_name
   image_builder_subnetwork_cidr_range = var.image_builder_subnetwork_cidr_range
+  build_artifact_registry_repository_location = var.build_artifacts_location
+  build_artifact_registry_repository_name = module.docker_build_artifacts.name
 }
 
 module "longtail_store" {
