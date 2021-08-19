@@ -5,8 +5,7 @@ ssh_agent = {
         docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ssh-agent:commit-4b16fd1-linux"
     }
     windows = {
-#        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/docker-ssh-agent-daded1f-windows"
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/packer-1629352523"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/docker-ssh-agent-2f0ca89-windows"
         docker_image_url = "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/ssh-agent:commit-4b16fd1-windows"
     }
 }

@@ -41,7 +41,6 @@ controller:
                     numExecutorsStr:    1
                     runAsUser:          jenkins
                     remoteFs:           C:\W
-                    javaExecPath:       C:\Runtime\Scripts\Run-SshAgentWrapper.bat
                     oneShot:            false
                     createSnapshot:     false
                     windowsConfiguration:
@@ -79,7 +78,6 @@ controller:
                     numExecutorsStr:    1
                     runAsUser:          jenkins
                     remoteFs:           C:\W
-                    javaExecPath:       C:\Runtime\Scripts\Run-SshAgentWrapper.bat
                     oneShot:            false
                     createSnapshot:     false
                     windowsConfiguration:
