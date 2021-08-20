@@ -13,17 +13,17 @@ if [ $# -ne 5 ]; then
 	exit 1
 fi
 
-if [ ${ENCRYPTED_PASSWORD::5} != "|SoC|" ]; then
+if [ "${ENCRYPTED_PASSWORD::5}" != "|SoC|" ]; then
 	1>&2 echo "Error: Encrypted password should begin with '|SoC|'"
 	exit 1
 fi
 
-if [ ${ENCRYPTED_CONTENT_ENCRYPTION_KEY::5} != "|SoC|" ]; then
+if [ "${ENCRYPTED_CONTENT_ENCRYPTION_KEY::5}" != "|SoC|" ]; then
 	1>&2 echo "Error: Encrypted content encryption key should begin with '|SoC|'"
 	exit 1
 fi
 
-PROJECT_ID=`cat "${ENVIRONMENT_DIR}/gcloud-config.json" | jq -r ".project_id"`
+PROJECT_ID=$(jq -r ".project_id" "${ENVIRONMENT_DIR}/gcloud-config.json")
 
 if [ -z "${PROJECT_ID}" ]; then
 	1>&2 echo "You must specify project_id in gcloud-config.json"

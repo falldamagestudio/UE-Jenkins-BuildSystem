@@ -13,24 +13,24 @@ if [ $# -ne 5 ]; then
 	exit 1
 fi
 
-if [ ${ENCRYPTED_PASSWORD::5} != "|SoC|" ]; then
+if [ "${ENCRYPTED_PASSWORD::5}" != "|SoC|" ]; then
 	1>&2 echo "Error: Encrypted password should begin with '|SoC|'"
 	exit 1
 fi
 
-if [ ${ENCRYPTED_CONTENT_ENCRYPTION_KEY::5} != "|SoC|" ]; then
+if [ "${ENCRYPTED_CONTENT_ENCRYPTION_KEY::5}" != "|SoC|" ]; then
 	1>&2 echo "Error: Encrypted content encryption key should begin with '|SoC|'"
 	exit 1
 fi
 
-CLUSTER_TYPE=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".cluster_type"`
+CLUSTER_TYPE=$(jq -r ".cluster_type" "${ENVIRONMENT_DIR}/kube-config.json")
 
 if [ -z "${CLUSTER_TYPE}" ]; then
 	1>&2 echo "You must specify cluster_type in kube-config.json"
 	exit 1
 fi
 
-CLUSTER_NAME=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".cluster_name"`
+CLUSTER_NAME=$(jq -r ".cluster_name" "${ENVIRONMENT_DIR}/kube-config.json")
 
 if [ -z "${CLUSTER_NAME}" ]; then
 	1>&2 echo "You must specify cluster_name in kube-config.json"

@@ -11,7 +11,7 @@ if [ $# -ne 3 ]; then
 	exit 1
 fi
 
-PROJECT_ID=`cat "${ENVIRONMENT_DIR}/gcloud-config.json" | jq -r ".project_id"`
+PROJECT_ID=$(jq -r ".project_id" "${ENVIRONMENT_DIR}/gcloud-config.json")
 
 if [ -z "${PROJECT_ID}" ]; then
 	1>&2 echo "You must specify project_id in gcloud-config.json"
@@ -25,11 +25,11 @@ if `gcloud secrets describe swarm-agent-username >/dev/null 2>&1`; then
 else
 	echo -n "${USERNAME}" | gcloud secrets create swarm-agent-username --data-file=-
 fi
-gcloud secrets add-iam-policy-binding swarm-agent-username --member=serviceAccount:ue-jenkins-agent-vm@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
+gcloud secrets add-iam-policy-binding swarm-agent-username "--member=serviceAccount:ue-jenkins-agent-vm@${PROJECT_ID}.iam.gserviceaccount.com" --role=roles/secretmanager.secretAccessor
 
 if `gcloud secrets describe swarm-agent-api-token >/dev/null 2>&1`; then
 	echo -n "${API_TOKEN}" | gcloud secrets versions add swarm-agent-api-token --data-file=-
 else
 	echo -n "${API_TOKEN}" | gcloud secrets create swarm-agent-api-token --data-file=-
 fi
-gcloud secrets add-iam-policy-binding swarm-agent-api-token --member=serviceAccount:ue-jenkins-agent-vm@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
+gcloud secrets add-iam-policy-binding swarm-agent-api-token "--member=serviceAccount:ue-jenkins-agent-vm@${PROJECT_ID}.iam.gserviceaccount.com" --role=roles/secretmanager.secretAccessor

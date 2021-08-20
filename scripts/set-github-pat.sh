@@ -11,14 +11,14 @@ if [ $# -ne 2 ]; then
 	exit 1
 fi
 
-CLUSTER_TYPE=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".cluster_type"`
+CLUSTER_TYPE=$(jq -r ".cluster_type" "${ENVIRONMENT_DIR}/kube-config.json")
 
 if [ -z "${CLUSTER_TYPE}" ]; then
 	1>&2 echo "You must specify cluster_type in kube-config.json"
 	exit 1
 fi
 
-CLUSTER_NAME=`cat "${ENVIRONMENT_DIR}/kube-config.json" | jq -r ".cluster_name"`
+CLUSTER_NAME=$(jq -r ".cluster_name" "${ENVIRONMENT_DIR}/kube-config.json")
 
 if [ -z "${CLUSTER_NAME}" ]; then
 	1>&2 echo "You must specify cluster_name in kube-config.json"
@@ -27,4 +27,4 @@ fi
 
 "${SCRIPTS_DIR}/tools/activate_cluster.sh" "${CLUSTER_NAME}" || exit 1
 
-cat ${APPLICATION_DIR}/github-pat.yaml | sed s/\<password\>/${GITHUB_PAT}/ | kubectl apply -f -
+cat "${APPLICATION_DIR}/github-pat.yaml" | sed "s/\<password\>/${GITHUB_PAT}/" | kubectl apply -f -
