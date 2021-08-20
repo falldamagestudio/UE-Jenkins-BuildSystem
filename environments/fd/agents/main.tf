@@ -13,14 +13,17 @@ module "agents" {
     longtail_store_bucket_name = data.terraform_remote_state.core.outputs.longtail_store_bucket_name
     cloud_config_store_bucket_name = data.terraform_remote_state.core.outputs.cloud_config_store_bucket_name
 
-    ssh_agent = {
-        linux = var.ssh_agent.linux
-        windows = {
-            vm_image_name = var.ssh_agent.windows.vm_image_name
-            vm_ssh_public_key = data.terraform_remote_state.core.outputs.ssh_vm_public_key_windows
-            docker_image_url = var.ssh_agent.windows.docker_image_url
-        }
-    }
+    windows_vm_ssh_public_key = data.terraform_remote_state.core.outputs.ssh_vm_public_key_windows
+
+    docker_ssh_agent = var.docker_ssh_agent
+    docker_swarm_agent = var.docker_swarm_agent
+
+    docker_dynamic_agent_templates = var.docker_dynamic_agent_templates
+
+    docker_static_agent_templates = var.docker_static_agent_templates
+    docker_static_agents = var.docker_static_agents
+
+    ssh_agent = var.ssh_agent
     swarm_agent = var.swarm_agent
 
     dynamic_agent_templates = var.dynamic_agent_templates

@@ -12,6 +12,80 @@ controller:
                 credentialsId: {{ .Values.GOOGLE_PROJECT }}
                 noDelayProvisioning: true
                 configurations:
+                  - namePrefix:         build-engine-linux-docker-dynamic
+                    description:        Build Engine Linux Docker Dynamic VM
+                    maxNumInstancesToCreateStr: 1
+                    maxNumInstancesToPersistStr: 1
+                    launchTimeoutSecondsStr: 300
+                    retentionTimeMinutesStr: 6
+                    mode:               EXCLUSIVE
+                    labelString:        build-engine-linux-git-docker-dynamic
+                    numExecutorsStr:    1
+                    runAsUser:          jenkins-ssh
+                    remoteFs:           /mnt/disks/persistent-disk
+                    javaExecPath:       /run/jenkins-agent-wrapper.sh
+                    oneShot:            false
+                    createSnapshot:     false
+                    region:             "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/regions/{{ .Values.GOOGLE_REGION }}"
+                    zone:               "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/zones/{{ .Values.GOOGLE_ZONE }}"
+                    template:           "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/global/instanceTemplates/build-engine-linux-docker-dynamic"
+
+                  - namePrefix:         build-engine-win64-docker-dynamic
+                    description:        Build Engine Win64 Docker Dynamic VM
+                    maxNumInstancesToCreateStr: 1
+                    maxNumInstancesToPersistStr: 1
+                    launchTimeoutSecondsStr: 600
+                    retentionTimeMinutesStr: 6
+                    mode:               EXCLUSIVE
+                    labelString:        build-engine-win64-git-docker-dynamic
+                    numExecutorsStr:    1
+                    runAsUser:          jenkins
+                    remoteFs:           C:\W
+                    oneShot:            false
+                    createSnapshot:     false
+                    windowsConfiguration:
+                      privateKeyCredentialsId: gce-plugin-windows-vm-ssh-private-key
+                    region:             "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/regions/{{ .Values.GOOGLE_REGION }}"
+                    zone:               "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/zones/{{ .Values.GOOGLE_ZONE }}"
+                    template:           "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/global/instanceTemplates/build-engine-win64-docker-dynamic"
+
+                  - namePrefix:         build-game-linux-docker-dynamic
+                    description:        Build game Linux Docker Dynamic VM
+                    maxNumInstancesToCreateStr: 2
+                    maxNumInstancesToPersistStr: 1
+                    launchTimeoutSecondsStr: 300
+                    retentionTimeMinutesStr: 6
+                    mode:               EXCLUSIVE
+                    labelString:        build-game-linux-git-docker-dynamic build-game-linux-plastic-docker-dynamic
+                    numExecutorsStr:    1
+                    runAsUser:          jenkins-ssh
+                    remoteFs:           /mnt/disks/persistent-disk
+                    javaExecPath:       /run/jenkins-agent-wrapper.sh
+                    oneShot:            false
+                    createSnapshot:     false
+                    region:             "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/regions/{{ .Values.GOOGLE_REGION }}"
+                    zone:               "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/zones/{{ .Values.GOOGLE_ZONE }}"
+                    template:           "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/global/instanceTemplates/build-game-linux-docker-dynamic"
+
+                  - namePrefix:         build-game-win64-docker-dynamic
+                    description:        Build game Win64 Docker Dynamic VM
+                    maxNumInstancesToCreateStr: 2
+                    maxNumInstancesToPersistStr: 1
+                    launchTimeoutSecondsStr: 600
+                    retentionTimeMinutesStr: 6
+                    mode:               EXCLUSIVE
+                    labelString:        build-game-win64-git-docker-dynamic build-game-win64-plastic-docker-dynamic
+                    numExecutorsStr:    1
+                    runAsUser:          jenkins
+                    remoteFs:           C:\W
+                    oneShot:            false
+                    createSnapshot:     false
+                    windowsConfiguration:
+                      privateKeyCredentialsId: gce-plugin-windows-vm-ssh-private-key
+                    region:             "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/regions/{{ .Values.GOOGLE_REGION }}"
+                    zone:               "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/zones/{{ .Values.GOOGLE_ZONE }}"
+                    template:           "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/global/instanceTemplates/build-game-win64-docker-dynamic"
+
                   - namePrefix:         build-engine-linux-dynamic
                     description:        Build Engine Linux Dynamic VM
                     maxNumInstancesToCreateStr: 1

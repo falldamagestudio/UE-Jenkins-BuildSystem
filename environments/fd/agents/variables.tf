@@ -1,4 +1,4 @@
-variable "ssh_agent" {
+variable "docker_ssh_agent" {
   type = object({
     linux = object({
       vm_image_name = string
@@ -12,7 +12,7 @@ variable "ssh_agent" {
   })
 }
 
-variable "swarm_agent" {
+variable "docker_swarm_agent" {
   type = object({
     linux = object({
       vm_image_name = string
@@ -26,7 +26,7 @@ variable "swarm_agent" {
   })
 }
 
-variable "dynamic_agent_templates" {
+variable "docker_dynamic_agent_templates" {
   type = object({
     linux = map(object({
       machine_type = string
@@ -35,6 +35,62 @@ variable "dynamic_agent_templates" {
       persistent_disk_type = string
       persistent_disk_size = number
     }))
+    windows = map(object({
+      machine_type = string
+      boot_disk_type = string
+      boot_disk_size = number
+    }))
+  })
+}
+
+variable "docker_static_agent_templates" {
+  type = object({
+    linux = map(object({
+      machine_type = string
+      boot_disk_type = string
+      boot_disk_size = number
+      persistent_disk_type = string
+      persistent_disk_size = number
+    }))
+    windows = map(object({
+      machine_type = string
+      boot_disk_type = string
+      boot_disk_size = number
+    }))
+  })
+}
+
+variable "docker_static_agents" {
+  type = object({
+    linux = map(object({
+      template = string
+      jenkins_labels = string
+    }))
+    windows = map(object({
+      template = string
+      jenkins_labels = string
+    }))
+  })
+}
+
+variable "ssh_agent" {
+  type = object({
+    windows = object({
+      vm_image_name = string
+    })
+  })
+}
+
+variable "swarm_agent" {
+  type = object({
+    windows = object({
+      vm_image_name = string
+    })
+  })
+}
+
+variable "dynamic_agent_templates" {
+  type = object({
     windows = map(object({
       machine_type = string
       boot_disk_type = string
@@ -45,13 +101,6 @@ variable "dynamic_agent_templates" {
 
 variable "static_agent_templates" {
   type = object({
-    linux = map(object({
-      machine_type = string
-      boot_disk_type = string
-      boot_disk_size = number
-      persistent_disk_type = string
-      persistent_disk_size = number
-    }))
     windows = map(object({
       machine_type = string
       boot_disk_type = string
@@ -62,10 +111,6 @@ variable "static_agent_templates" {
 
 variable "static_agents" {
   type = object({
-    linux = map(object({
-      template = string
-      jenkins_labels = string
-    }))
     windows = map(object({
       template = string
       jenkins_labels = string
