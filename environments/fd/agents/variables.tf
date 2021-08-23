@@ -10,6 +10,18 @@ variable "docker_ssh_agent" {
       docker_image_url = string
     })
   })
+
+  default = {
+    linux = {
+      vm_image_name = ""
+      vm_cloud_config_url = ""
+      docker_image_url = ""
+    }
+    windows = {
+      vm_image_name = ""
+      docker_image_url = ""
+    }
+  }
 }
 
 variable "docker_swarm_agent" {
@@ -24,6 +36,18 @@ variable "docker_swarm_agent" {
       docker_image_url = string
     })
   })
+
+  default = {
+    linux = {
+      vm_image_name = ""
+      vm_cloud_config_url = ""
+      docker_image_url = ""
+    }
+    windows = {
+      vm_image_name = ""
+      docker_image_url = ""
+    }
+  }
 }
 
 variable "docker_dynamic_agent_templates" {
@@ -41,6 +65,11 @@ variable "docker_dynamic_agent_templates" {
       boot_disk_size = number
     }))
   })
+
+  default = {
+    linux = {}
+    windows = {}
+  }
 }
 
 variable "docker_static_agent_templates" {
@@ -58,6 +87,11 @@ variable "docker_static_agent_templates" {
       boot_disk_size = number
     }))
   })
+
+  default = {
+    linux = {}
+    windows = {}
+  }
 }
 
 variable "docker_static_agents" {
@@ -71,6 +105,11 @@ variable "docker_static_agents" {
       jenkins_labels = string
     }))
   })
+
+  default = {
+    linux = {}
+    windows = {}
+  }
 }
 
 variable "ssh_agent" {
@@ -79,6 +118,12 @@ variable "ssh_agent" {
       vm_image_name = string
     })
   })
+
+  default = {
+    windows = {
+      vm_image_name = ""
+    }
+  }
 }
 
 variable "swarm_agent" {
@@ -87,6 +132,12 @@ variable "swarm_agent" {
       vm_image_name = string
     })
   })
+
+  default = {
+    windows = {
+      vm_image_name = ""
+    }
+  }
 }
 
 variable "dynamic_agent_templates" {
@@ -97,6 +148,10 @@ variable "dynamic_agent_templates" {
       boot_disk_size = number
     }))
   })
+
+  default = {
+    windows = {}
+  }
 }
 
 variable "static_agent_templates" {
@@ -107,6 +162,10 @@ variable "static_agent_templates" {
       boot_disk_size = number
     }))
   })
+
+  default = {
+    windows = {}
+  }
 }
 
 variable "static_agents" {
@@ -116,4 +175,8 @@ variable "static_agents" {
       jenkins_labels = string
     }))
   })
+ 
+  default = {
+    windows = {}
+  }
 }
