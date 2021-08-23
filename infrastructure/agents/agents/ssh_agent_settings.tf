@@ -1,7 +1,7 @@
 
 locals {
 
-    ssh_agent_secrets = {
+    ssh_agent_secrets_unfiltered = {
         ssh-agent-image-url-linux = {
           version = var.ssh_agent_settings.ssh-agent-image-url-linux
         }
@@ -13,6 +13,11 @@ locals {
         ssh-vm-public-key-windows = {
           version = var.ssh_agent_settings.ssh-vm-public-key-windows
         }
+    }
+
+    ssh_agent_secrets = {
+      for k, v in local.ssh_agent_secrets_unfiltered : k => v
+      if v.version != ""
     }
 }
 

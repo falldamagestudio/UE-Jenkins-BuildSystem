@@ -1,7 +1,8 @@
 
 locals {
 
-    swarm_agent_secrets = {
+    swarm_agent_secrets_unfiltered = {
+
         jenkins-url = {
           version = var.swarm_agent_settings.jenkins-url
         }
@@ -13,6 +14,11 @@ locals {
         swarm-agent-image-url-windows = {
           version = var.swarm_agent_settings.swarm-agent-image-url-windows
         }
+    }
+
+    swarm_agent_secrets = {
+      for k, v in local.swarm_agent_secrets_unfiltered : k => v
+      if v.version != ""
     }
 }
 

@@ -10,6 +10,7 @@ data "google_client_config" "default" {
 
 // Fetch the contents of a cloud-config file from a GCS bucket
 data "http" "linux_swarm_agent_vm_cloud_config" {
+  count = (var.docker_swarm_agent.linux.vm_cloud_config_url != "" ? 1 : 0)
   url = var.docker_swarm_agent.linux.vm_cloud_config_url
 
   request_headers = {
@@ -67,7 +68,7 @@ resource "google_compute_instance_template" "linux_agent_template" {
     metadata = {
         google-logging-enabled = "true"
         //user-data = data.local_file.linux_swarm_agent_vm_cloud_config.content
-        user-data = data.http.linux_swarm_agent_vm_cloud_config.body
+        user-data = data.http.linux_swarm_agent_vm_cloud_config[0].body
     }
 }
 
