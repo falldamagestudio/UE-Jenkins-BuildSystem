@@ -10,9 +10,18 @@ Linux only:
 * Inspect logs in `/mnt/disks/persistent-disk/agent/remoting/logs`, any hints?
 
 Windows only:
+* Fetch the private key used for SSHing into instances: `kubectl get secrets gce-plugin-windows-vm-ssh-private-key -o json | jq -r ".data.privateKey" | base64 --decode > ~/windows_vm_id_rsa_<projectname>`
+* Connect to the instance using SSH: `ssh -i ~/windows_vm_id_rsa_<projectname> jenkins@<instance IP>`
+* Force the agent service to stop via `Stop-Service JenkinsAgent`
+* Inspect logs in `C:\Logs`, any hints?
+* Inspect logs in `C:\J\Remoting\Logs`, any hints?
+
+... or ...
+
 * Use `gcloud compute reset-windows-password` to prepare a Windows account
 * [Connect to the instance using PowerShell](https://cloud.google.com/compute/docs/instances/windows/connecting-powershell).
 * Force the agent service to stop via `Stop-Service JenkinsAgent`
+* Inspect logs in `C:\Logs`, any hints?
 * Inspect logs in `C:\J\Remoting\Logs`, any hints?
 
 ## Jenkins controller is not starting up properly (UI does not become available)
