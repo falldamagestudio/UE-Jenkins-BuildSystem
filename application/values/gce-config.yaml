@@ -7,6 +7,7 @@ controller:
           clouds:
             - computeEngine:
                 cloudName: GCE
+                instanceId: {{ (lower .Values.GOOGLE_PROJECT) }}-gce
                 projectId: {{ .Values.GOOGLE_PROJECT }}
                 instanceCapStr: 10
                 credentialsId: {{ .Values.GOOGLE_PROJECT }}
