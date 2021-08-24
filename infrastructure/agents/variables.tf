@@ -63,11 +63,13 @@ variable "docker_dynamic_agent_templates" {
       boot_disk_size = number
       persistent_disk_type = string
       persistent_disk_size = number
+      preemptible = bool
     }))
     windows = map(object({
       machine_type = string
       boot_disk_type = string
       boot_disk_size = number
+      preemptible = bool
     }))
   })
 }
@@ -80,11 +82,13 @@ variable "docker_static_agent_templates" {
       boot_disk_size = number
       persistent_disk_type = string
       persistent_disk_size = number
+      preemptible = bool
     }))
     windows = map(object({
       machine_type = string
       boot_disk_type = string
       boot_disk_size = number
+      preemptible = bool
     }))
   })
 }
@@ -124,6 +128,7 @@ variable "dynamic_agent_templates" {
       machine_type = string
       boot_disk_type = string
       boot_disk_size = number
+      preemptible = bool
     }))
   })
 }
@@ -134,6 +139,7 @@ variable "static_agent_templates" {
       machine_type = string
       boot_disk_type = string
       boot_disk_size = number
+      preemptible = bool
     }))
   })
 }

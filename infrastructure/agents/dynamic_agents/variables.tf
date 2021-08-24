@@ -20,6 +20,7 @@ variable "dynamic_agent_templates" {
       machine_type = string
       boot_disk_type = string
       boot_disk_size = number
+      preemptible = bool
     }))
   })
 }
