@@ -22,6 +22,8 @@ resource "google_compute_subnetwork" "image_builder_subnetwork" {
 
 // Cloud Builder and Packer both need to connect to instances via WinRM
 resource "google_compute_firewall" "allow_winrm_ingress" {
+  // This rule should have this specific name, since the Cloud Builder otherwise creates
+  //  a new rule with this name
   name = "allow-winrm-ingress"
   
   network = google_compute_network.image_builder_network.name
@@ -31,6 +33,20 @@ resource "google_compute_firewall" "allow_winrm_ingress" {
   allow {
     protocol = "tcp"
     ports = [ "5986" ]
+  }
+}
+
+// Packer needs to connect to instances via ssh
+resource "google_compute_firewall" "allow_ssh_ingress" {
+  name = "image-builder-vms-allow-ssh-ingress"
+  
+  network = google_compute_network.image_builder_network.name
+
+  description = "Allow Packer to connect to image builder VMs"
+
+  allow {
+    protocol = "tcp"
+    ports = [ "22" ]
   }
 }
 
