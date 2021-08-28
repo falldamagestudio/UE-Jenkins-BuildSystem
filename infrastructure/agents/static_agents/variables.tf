@@ -8,6 +8,9 @@ variable "agent_vms_subnetwork" {
 
 variable "swarm_agent" {
   type = object({
+    linux = object({
+      vm_image_name = string
+    })
     windows = object({
       vm_image_name = string
     })
@@ -16,6 +19,11 @@ variable "swarm_agent" {
 
 variable "static_agent_templates" {
   type = object({
+    linux = map(object({
+      machine_type = string
+      boot_disk_type = string
+      boot_disk_size = number
+    }))
     windows = map(object({
       machine_type = string
       boot_disk_type = string
@@ -27,6 +35,10 @@ variable "static_agent_templates" {
 
 variable "static_agents" {
   type = object({
+    linux = map(object({
+      template = string
+      jenkins_labels = string
+    }))
     windows = map(object({
       template = string
       jenkins_labels = string

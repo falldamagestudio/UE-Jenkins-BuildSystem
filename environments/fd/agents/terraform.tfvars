@@ -105,18 +105,39 @@ docker_static_agents = {
 # Non-Docker based configurations
 
 ssh_agent = {
+    linux = {
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-linux-test"
+    }
     windows = {
         vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-ff94206-windows"
     }
 }
 
 swarm_agent = {
+    linux = {
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-linux-test"
+    }
     windows = {
         vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-ff94206-windows"
     }
 }
 
 dynamic_agent_templates = {
+    linux = {
+        "build-engine-linux-dynamic" = {
+            machine_type = "n1-standard-32"
+            boot_disk_type = "pd-balanced"
+            boot_disk_size = 500
+            preemptible = true
+        }
+
+        "build-game-linux-dynamic" = {
+            machine_type = "n1-standard-8"
+            boot_disk_type = "pd-balanced"
+            boot_disk_size = 200
+            preemptible = true
+        }
+    }
     windows = {
         "build-engine-win64-dynamic" = {
             machine_type = "n1-standard-32"
@@ -135,6 +156,14 @@ dynamic_agent_templates = {
 }
 
 static_agent_templates = {
+    linux = {
+        "build-linux-static" = {
+            machine_type = "n1-standard-8"
+            boot_disk_type = "pd-balanced"
+            boot_disk_size = 600
+            preemptible = true
+         }
+    }
     windows = {
         "build-win64-static" = {
             machine_type = "n1-standard-8"
@@ -146,12 +175,22 @@ static_agent_templates = {
 }
 
 static_agents = {
-    windows = {
 
+    linux = {
+/*
+        "build-linux-static" = {
+            template = "build-linux-static"
+            jenkins_labels = "build-engine-linux-git-static build-game-linux-git-static build-game-linux-plastic-static"
+        }
+*/
+    }
+
+    windows = {
+/*
         "build-win64-static" = {
             template = "build-win64-static"
             jenkins_labels = "build-engine-win64-git-static build-game-win64-git-static build-game-win64-plastic-static"
         }
-
+*/
     }
 }

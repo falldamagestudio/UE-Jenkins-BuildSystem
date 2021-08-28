@@ -96,9 +96,7 @@ controller:
                     mode:               EXCLUSIVE
                     labelString:        build-engine-linux-git-dynamic
                     numExecutorsStr:    1
-                    runAsUser:          jenkins-ssh
-                    remoteFs:           /mnt/disks/persistent-disk
-                    javaExecPath:       /run/jenkins-agent-wrapper.sh
+                    runAsUser:          jenkins
                     oneShot:            false
                     createSnapshot:     false
                     region:             "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/regions/{{ .Values.GOOGLE_REGION }}"
@@ -133,9 +131,7 @@ controller:
                     mode:               EXCLUSIVE
                     labelString:        build-game-linux-git-dynamic build-game-linux-plastic-dynamic
                     numExecutorsStr:    1
-                    runAsUser:          jenkins-ssh
-                    remoteFs:           /mnt/disks/persistent-disk
-                    javaExecPath:       /run/jenkins-agent-wrapper.sh
+                    runAsUser:          jenkins
                     oneShot:            false
                     createSnapshot:     false
                     region:             "https://www.googleapis.com/compute/v1/projects/{{ .Values.GOOGLE_PROJECT }}/regions/{{ .Values.GOOGLE_REGION }}"
