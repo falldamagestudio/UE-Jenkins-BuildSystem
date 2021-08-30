@@ -52,7 +52,7 @@ controller:
 
                   - namePrefix:         build-game-linux-docker-dynamic
                     description:        Build game Linux Docker Dynamic VM
-                    maxNumInstancesToCreateStr: 2
+                    maxNumInstancesToCreateStr: 1
                     maxNumInstancesToPersistStr: 1
                     launchTimeoutSecondsStr: 300
                     retentionTimeMinutesStr: 6
@@ -70,7 +70,7 @@ controller:
 
                   - namePrefix:         build-game-win64-docker-dynamic
                     description:        Build game Win64 Docker Dynamic VM
-                    maxNumInstancesToCreateStr: 2
+                    maxNumInstancesToCreateStr: 1
                     maxNumInstancesToPersistStr: 1
                     launchTimeoutSecondsStr: 600
                     retentionTimeMinutesStr: 6
@@ -125,7 +125,7 @@ controller:
 
                   - namePrefix:         build-game-linux-dynamic
                     description:        Build game Linux Dynamic VM
-                    maxNumInstancesToCreateStr: 2
+                    maxNumInstancesToCreateStr: 1
                     maxNumInstancesToPersistStr: 1
                     launchTimeoutSecondsStr: 300
                     retentionTimeMinutesStr: 6
@@ -142,7 +142,7 @@ controller:
 
                   - namePrefix:         build-game-win64-dynamic
                     description:        Build game Win64 Dynamic VM
-                    maxNumInstancesToCreateStr: 2
+                    maxNumInstancesToCreateStr: 1
                     maxNumInstancesToPersistStr: 1
                     launchTimeoutSecondsStr: 600
                     retentionTimeMinutesStr: 6
