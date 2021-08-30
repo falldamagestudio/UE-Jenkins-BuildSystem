@@ -30,6 +30,11 @@ resource "google_compute_instance_template" "linux_agent_template" {
         }
     }
 
+    scheduling {
+        automatic_restart = !each.value.preemptible
+        preemptible = each.value.preemptible
+    }
+
     service_account {
         email = var.agent_service_account_email
         scopes = [ "cloud-platform" ]
