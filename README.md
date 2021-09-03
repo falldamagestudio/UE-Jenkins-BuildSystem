@@ -166,4 +166,4 @@ See [REFERENCES.md](REFERENCES.md).
 
 # License
 
-See [LICENSE.md](LICENSE.md).
+See [LICENSE.txt](LICENSE.txt).
