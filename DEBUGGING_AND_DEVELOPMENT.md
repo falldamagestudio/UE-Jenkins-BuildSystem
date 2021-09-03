@@ -45,7 +45,7 @@ If the master doesn't find the Jenkinsfile, then either the server/reponames are
 
 ## Iterating on Windows agent VM images
 
-* Start up a VM (either blank Windows, or a pre-made agent VM)
+* Start up a VM (either blank Windows, or a pre-made agent VM) in GCE
 * Prepare one Linux terminal, and two Windows terminals
 * Set up remote WinRM session from both Windows terminals to the VM
 * Edit code with VS Code against WSL
@@ -53,15 +53,16 @@ If the master doesn't find the Jenkinsfile, then either the server/reponames are
 * Run tests via `Invoke-Pester`
 * Use Windows terminal 1 to copy files from the local Windows machine to the VM
 * Use Windows terminal 2 to run things and inspects results on the VM
+* Or - if SSH is up and running on the VM - extract the private key from core's terraform state, then SSH to jenkins@<agent IP>, and use scp to transfer files directly from WSL to agent
+* When satisfied, build new VM image using `windows-vm-image-builder.sh` like the GHA workflow does it
+* Update `agents` Terraform config, run `./scripts/terraform-agents-apply.sh environments/<env>`, test with Jenkins
 
 ## Iterating on Linux agent VM images
 
-* Set up Terraform to deploy a Linux VM of the appropriate type
-* Ensure you have `UE-Jenkins-BuildSystem` and `UE-Jenkins-Images` repos cloned as siblings on your local machine
-* Modify one of the `builder_vm_templates.tf` to pick up cloud-init config from local disk
-* Modify the appropriate `*-cloud-config.yaml` file
-* Run `./scripts/terraform-agents-apply.sh environments/<env>` to create VM if necessary, and apply your locally-modified cloud config to it
-* Restart VM to pick up changes
+* Prepare a Linux terminal
+* Test-run scripts within a fresh Debian Docker container
+* When satisfied, build new VM image using `linux-vm-image-builder.sh` like the GHA workflow does it
+* Update `agents` Terraform config, run `./scripts/terraform-agents-apply.sh environments/<env>`, test with Jenkins
 
 ## Iterating on Windows Docker images
 
@@ -79,7 +80,6 @@ If the master doesn't find the Jenkinsfile, then either the server/reponames are
 
 ## Iterating on Linux Docker images
 
-* Similar to iterating on Windows agent VM images:
 * Develop code under WSL
 * Build container on local machine
 * Test-run container on local machine
