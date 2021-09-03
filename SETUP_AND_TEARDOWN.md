@@ -141,7 +141,7 @@ First, make sure you have created a repository & GitHub user for your organizati
 * Modify settings in the following files:
     * `environments/<env>/agents/backend.tf` -> this should point to the new bucket
     * `environments/<env>/agents/core_state.tf` -> this should point to the new bucket
-    * `environments/<env>/agents/terraform.tfvars` - be aware
+    * `environments/<env>/agents/*.auto.tfvars` - be aware that any static agents will run 24/7 and cost accordingly
 
 * Run `./scripts/terraform-agents-apply.sh environments/<env>/`
 
