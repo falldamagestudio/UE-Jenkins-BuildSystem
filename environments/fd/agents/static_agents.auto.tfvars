@@ -1,12 +1,11 @@
 # Configuration for Static VMs
-
 /*
 swarm_agent = {
     linux = {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-linux-test"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-c95061a-linux"
     }
     windows = {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-ff94206-windows"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-c95061a-windows"
     }
 }
 

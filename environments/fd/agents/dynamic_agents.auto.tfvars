@@ -2,10 +2,10 @@
 
 ssh_agent = {
     linux = {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-linux-test"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-c95061a-linux"
     }
     windows = {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-ff94206-windows"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-c95061a-windows"
     }
 }
 
