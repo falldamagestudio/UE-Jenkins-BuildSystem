@@ -64,6 +64,8 @@ The main benefit here is that the game repo can contain the Docker image ID for 
 
 Given the operational problems, there is no compelling reason to use Docker VMs.
 
+There are also some problems with the current implementation of the Docker VMs; see [#40](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/40) and [#44](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/44).
+
 ## Kubernetes pods 
 
 These _can_ run UE jobs ... but it is rarely a good idea when run on auto-scaled GKE, since [provisioning a new Windows node and pulling the required images can take 20 minutes](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/20) and GKE does not allow us to modify the autoscaling logic. If you want to do incremental builds, you need to create PVCs within the Kubernetes cluster and change the corresponding jobs to use those PVCs. Incremental builds on GKE with autoscaling are not compatible with Plastic SCM, because Plastic needs to persist some info in the .plastic4 folder together with the workspace, and Jenkins Kubernetes plugin does not allow us enough control to persist that correctly.
