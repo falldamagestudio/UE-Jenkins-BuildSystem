@@ -53,7 +53,7 @@ ENCRYPTED_CONTENT_ENCRYPTION_KEY=${ENCRYPTED_CONTENT_ENCRYPTION_KEY} envsubst < 
 # Add config files to Kubernetes secret
 # These will be used by Kubernetes build jobs that use Plastic
 
-if `kubectl get secret plastic-config > /dev/null 2>&1`; then
+if kubectl get secret plastic-config > /dev/null 2>&1; then
     kubectl delete secret plastic-config
 fi
 

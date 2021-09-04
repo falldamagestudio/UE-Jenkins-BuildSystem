@@ -48,7 +48,7 @@ ENCRYPTED_CONTENT_ENCRYPTION_KEY=${ENCRYPTED_CONTENT_ENCRYPTION_KEY} envsubst < 
 
 (cd "${SCRIPTS_DIR}" && zip plastic-config.zip client.conf cryptedservers.conf cryptedserver.key >/dev/null)
 
-if `gcloud secrets describe plastic-config-zip >/dev/null 2>&1`; then
+if gcloud secrets describe plastic-config-zip >/dev/null 2>&1; then
 	gcloud secrets versions add plastic-config-zip "--data-file=${SCRIPTS_DIR}/plastic-config.zip"
 else
 	gcloud secrets create plastic-config-zip "--data-file=${SCRIPTS_DIR}/plastic-config.zip"
@@ -60,7 +60,7 @@ gcloud secrets add-iam-policy-binding plastic-config-zip --member=serviceAccount
 
 (cd "${SCRIPTS_DIR}" && tar -czvf plastic-config.tgz client.conf cryptedservers.conf cryptedserver.key >/dev/null)
 
-if `gcloud secrets describe plastic-config-tgz >/dev/null 2>&1`; then
+if gcloud secrets describe plastic-config-tgz >/dev/null 2>&1; then
 	gcloud secrets versions add plastic-config-tgz "--data-file=${SCRIPTS_DIR}/plastic-config.tgz"
 else
 	gcloud secrets create plastic-config-tgz "--data-file=${SCRIPTS_DIR}/plastic-config.tgz"

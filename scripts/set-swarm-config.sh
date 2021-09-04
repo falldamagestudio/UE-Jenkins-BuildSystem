@@ -20,14 +20,14 @@ fi
 
 "${SCRIPTS_DIR}/tools/activate-gcloud-project.sh" "${PROJECT_ID}" || exit 1
 
-if `gcloud secrets describe swarm-agent-username >/dev/null 2>&1`; then
+if gcloud secrets describe swarm-agent-username >/dev/null 2>&1; then
 	echo -n "${USERNAME}" | gcloud secrets versions add swarm-agent-username --data-file=-
 else
 	echo -n "${USERNAME}" | gcloud secrets create swarm-agent-username --data-file=-
 fi
 gcloud secrets add-iam-policy-binding swarm-agent-username "--member=serviceAccount:ue-jenkins-agent-vm@${PROJECT_ID}.iam.gserviceaccount.com" --role=roles/secretmanager.secretAccessor
 
-if `gcloud secrets describe swarm-agent-api-token >/dev/null 2>&1`; then
+if gcloud secrets describe swarm-agent-api-token >/dev/null 2>&1; then
 	echo -n "${API_TOKEN}" | gcloud secrets versions add swarm-agent-api-token --data-file=-
 else
 	echo -n "${API_TOKEN}" | gcloud secrets create swarm-agent-api-token --data-file=-
