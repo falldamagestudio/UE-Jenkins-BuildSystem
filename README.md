@@ -6,11 +6,11 @@ This repo brings up a Kubernetes cluster in Google Kubernetes Engine. It install
 
 This is still a proof-of-concept. We are just about to begin using it for production.
 
-![Jobs - Dynamic VMs](Jobs-DynamicVMs.png)
-![Jobs - Static VMs](Jobs-StaticVMs.png)
-![Jobs - Docker Dynamic VMs](Jobs-DockerDynamicVMs.png)
-![Jobs - Docker Static VMs](Jobs-DockerStaticVMs.png)
-![Jobs - Kubernetes](Jobs-Kubernetes.png)
+![Jobs - Dynamic VMs](docs/images/Jobs-DynamicVMs.png)
+![Jobs - Static VMs](docs/images/Jobs-StaticVMs.png)
+![Jobs - Docker Dynamic VMs](docs/images/Jobs-DockerDynamicVMs.png)
+![Jobs - Docker Static VMs](docs/images/Jobs-DockerStaticVMs.png)
+![Jobs - Kubernetes](docs/images/Jobs-Kubernetes.png)
 
 # Goals
 
@@ -28,6 +28,12 @@ We want a CI/CD solution for our Unreal projects, which has these characteristic
 Jenkins is not fancy, but it supports all the above goals.
 
 # Architecture
+
+![System architecture](docs/images/SystemArchitecture.png)
+
+# Operation
+
+![Operation](docs/images/Operation.png)
 
 Terraform is used to create all infrastructure. This includes load balancers, storage buckets, and a Kubernetes cluster. The cluster has a couple of node pools, some of which scale dynamically based on demand.
 
@@ -62,7 +68,7 @@ These agents are ready to accept jobs at a moment's notice. However, be careful 
 These are similar to the Dynamic / Static VMs, except that all the lifting is done from within Docker containers.
 The main benefit here is that the game repo can contain the Docker image ID for the build tools, thereby versioning the build environment within the game repo. However, these suffer from slow boot times at first provisioning (Windows machines can take 15 minutes to provision, pull down the Jenkins agent image, and another 15 minutes to pull the build tools image). It is also more difficult to debug build job problems inside of a Windows container than outside.
 
-Given the operational problems, there is no compelling reason to use Docker VMs.
+Given the operational problems, there is no compelling reason to use Docker VMs on GCP. Use non-Docker VMs instead.
 
 There are also some problems with the current implementation of the Docker VMs; see [#40](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/40) and [#44](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/44).
 
@@ -77,7 +83,7 @@ compatibility problems remain unsolved; you'd need to sort that out yourself.
 
 ## Self-hosted agents (recommended for on-premises hardware)
 
-You can start up a Swarm agent on any machine of your choosing, and point it to the internal IP of the Jenkins controller. The agent should connect and handle jobs. There is no automation to help with this in this repo though.
+You can start up a Swarm agent on any machine of your choosing, and point it to the internal IP of the Jenkins controller, assuming that you have connected your company network to the agent network in GCP. The agent should connect and handle jobs. There is no automation to help with this in this repo though.
 
 # Security considerations
 
@@ -102,7 +108,7 @@ Image builders run in a separate network, with no connectivity to the agents or 
 
 ## Storage
 
-Any storage buckets have tightly-defined access rules: only the intended Service Accounts can use them.
+Storage buckets are accessible to the Internet, but have tightly-defined access rules: only the intended Service Accounts and user groups can access their content.
 
 # Performance considerations
 
@@ -152,19 +158,19 @@ You will use at least this on a regular basis:
 
 # Setup and teardown
 
-See [SETUP_AND_TEARDOWN.md](SETUP_AND_TEARDOWN.md).
+See [SETUP_AND_TEARDOWN.md](docs/SETUP_AND_TEARDOWN.md).
 
 # Debugging and development
 
-See [DEBUGGING_AND_DEVELOPMENT.md](DEBUGGING_AND_DEVELOPMENT.md).
+See [DEBUGGING_AND_DEVELOPMENT.md](docs/DEBUGGING_AND_DEVELOPMENT.md).
 
 # Daily operation
 
-See [DAILY_OPERATION.md](DAILY_OPERATION.md).
+See [DAILY_OPERATION.md](docs/DAILY_OPERATION.md).
 
 # Useful references
 
-See [REFERENCES.md](REFERENCES.md).
+See [REFERENCES.md](docs/REFERENCES.md).
 
 # License
 
