@@ -1,0 +1,28 @@
+controller:
+  JCasC:
+    configScripts:
+
+      job-env-vars: |-
+        jenkins:
+          globalNodeProperties:
+            - envVars:
+                env:
+
+                # Add LONGTAIL_STORE_BUCKET_NAME as a job environment variable
+                # This will be available in all jobs
+                - key: "LONGTAIL_STORE_BUCKET_NAME"
+                  value: "{{ .Values.LONGTAIL_STORE_BUCKET_NAME }}"
+
+                # Add UE_JENKINS_BUILDTOOLS_*_IMAGE as job environment variables
+                # These will be available in all jobs
+                - key: "UE_JENKINS_BUILDTOOLS_LINUX_IMAGE"
+                  value: "{{ .Values.UE_JENKINS_BUILDTOOLS_LINUX_IMAGE }}"
+                - key: "UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE"
+                  value: "{{ .Values.UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE }}"
+
+                # Add UE_JENKINS_INBOUND_AGENT_*_IMAGE as job environment variables
+                # These will be available in all jobs
+                - key: "UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE"
+                  value: "{{ .Values.UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE }}"
+                - key: "UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE"
+                  value: "{{ .Values.UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE }}"
