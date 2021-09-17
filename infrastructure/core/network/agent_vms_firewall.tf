@@ -32,31 +32,19 @@ resource "google_compute_firewall" "agent_vms_allow_ssh" {
   source_ranges = [ "0.0.0.0/0" ]
 }
 
-resource "google_compute_firewall" "agent_vms_allow_rdp_tcp" {
+resource "google_compute_firewall" "agent_vms_allow_rdp" {
   depends_on = [ var.module_depends_on ]
 
-  name = "agent-vms-allow-rdp-tcp"
-  
+  name = "agent-vms-allow-rdp"
+
   network = google_compute_network.agent_vms.name
 
-  description = "Allow Remote Desktop (TCP) to agent VMs"
+  description = "Allow Remote Desktop to agent VMs"
 
   allow {
-    protocol = "tcp"
-    ports = [ "3389" ]
+      protocol = "tcp"
+      ports = [ "3389" ]
   }
-
-  source_ranges = [ "0.0.0.0/0" ]
-}
-
-resource "google_compute_firewall" "agent_vms_allow_rdp_udp" {
-  depends_on = [ var.module_depends_on ]
-
-  name = "agent-vms-allow-rdp-udp"
-  
-  network = google_compute_network.agent_vms.name
-
-  description = "Allow Remote Desktop (UDP) to agent VMs"
 
   allow {
     protocol = "udp"
