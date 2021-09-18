@@ -20,7 +20,7 @@ docker_dynamic_agent_templates = {
             boot_disk_size = 50
             persistent_disk_type = "pd-balanced"
             persistent_disk_size = 200
-            preemptible = true
+            preemptible = false
         }
 
         "build-game-linux-docker-dynamic" = {
@@ -29,7 +29,7 @@ docker_dynamic_agent_templates = {
             boot_disk_size = 50
             persistent_disk_type = "pd-balanced"
             persistent_disk_size = 200
-            preemptible = true
+            preemptible = false
         }
     }
 
@@ -38,14 +38,14 @@ docker_dynamic_agent_templates = {
             machine_type = "n1-standard-32"
             boot_disk_type = "pd-balanced"
             boot_disk_size = 500
-            preemptible = true
+            preemptible = false
         }
 
         "build-game-win64-docker-dynamic" = {
             machine_type = "n1-standard-8"
             boot_disk_type = "pd-balanced"
             boot_disk_size = 200
-            preemptible = true
+            preemptible = false
         }
     }
 }

@@ -15,14 +15,14 @@ dynamic_agent_templates = {
             machine_type = "n1-standard-32"
             boot_disk_type = "pd-balanced"
             boot_disk_size = 500
-            preemptible = true
+            preemptible = false
         }
 
         "build-game-linux-dynamic" = {
             machine_type = "n1-standard-8"
             boot_disk_type = "pd-balanced"
             boot_disk_size = 200
-            preemptible = true
+            preemptible = false
         }
     }
     windows = {
@@ -30,14 +30,14 @@ dynamic_agent_templates = {
             machine_type = "n1-standard-32"
             boot_disk_type = "pd-balanced"
             boot_disk_size = 500
-            preemptible = true
+            preemptible = false
         }
 
         "build-game-win64-dynamic" = {
             machine_type = "n1-standard-8"
             boot_disk_type = "pd-balanced"
             boot_disk_size = 200
-            preemptible = true
+            preemptible = false
         }
     }
 }
