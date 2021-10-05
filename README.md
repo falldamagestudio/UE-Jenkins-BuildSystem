@@ -136,12 +136,12 @@ GCP wins on flexibility, but a well-run on-premises cluster is cheaper than anyt
 
 There are some cost cutting measures that you can do on GCP with this build system:
 - Dynamic VMs reduce the CPU, RAM & OS license rental costs.
-- Using preemptive VMs cust rental costs 50-80% further for CPU & RAM rental costs. This can cause reliability problems - jobs terminated midway, sometimes there's no machine available - but the price diff is probably worth it for you.
 - Being careful with disk sizes (do you really need X GB for job Y?) and disk type (pd-ssd vs pd-balanced) reduces the disk rental costs.
+- Using preemptive VMs cuts rental costs 50-80% further for CPU & RAM. This can cause reliability problems - jobs terminated midway, sometimes there's no machine available - and the modified GCE plugin doesn't handle it well enough yet (see [#54](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/54)) so it is probably not worthwhile for you.
 
 The big remaining costs on GCP are:
-- Disk rental costs remain even with Dynamic VMs. This turns into a static cost that goes up with the number of build jobs. If the GCE plugin was able to snapshot disks when they aren't used for a long time, it could cut those costs further.
-- Windows OS license cost is significant. The more jobs you can run on Linux, the more you save.
+- Disk rental costs remain even with Dynamic VMs. This turns into a static cost that goes up with the number of build jobs. If the GCE plugin was able to snapshot disks when they aren't used for a long time, it could cut those costs further (see [#53](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/53)).
+- Windows OS license cost is significant. The more jobs you can run on Linux, the more you save. Perhaps we can build for Windows targets on Linux (see [#55](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/55))?
 
 # Required skills
 

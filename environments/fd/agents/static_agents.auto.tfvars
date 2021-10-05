@@ -15,7 +15,7 @@ static_agent_templates = {
             machine_type = "n1-standard-8"
             boot_disk_type = "pd-balanced"
             boot_disk_size = 600
-            preemptible = true
+            preemptible = false
          }
     }
     windows = {
@@ -23,7 +23,7 @@ static_agent_templates = {
             machine_type = "n1-standard-8"
             boot_disk_type = "pd-balanced"
             boot_disk_size = 600
-            preemptible = true
+            preemptible = false
         }
     }
 }
