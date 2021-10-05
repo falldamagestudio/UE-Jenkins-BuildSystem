@@ -53,9 +53,43 @@ with the Docker image link in the Helm chart.
 This may interrupt ongoing builds. Most of Jenkins' state is persisted outside
 of the pod though.
 
-## Deploy a new version of the Jenkins controller
+## Add or modify plugins in Jenkins
 
+* First, do some work in the Images repo:
+  * Modify `Docker/controller/plugins.txt`
+  * Run `Docker/controller/update-plugins-with-dependencies.sh` to update the dependency tree
+  * Build locally, for validation
+  * Push to GitHub
+
+* Wait for GitHub Actions to build new images
 * Update URLs in `helm-config.json`
 * Run `./scripts/deploy-jenkins-controller.sh`
 
 This will restart Jenkins if necessary.
+
+## Perform a major version update of Jenkins
+
+* First, do lots of work in the Images repo:
+
+  * Modify the FROM line of `Docker/controller/Dockerfile`
+  * If there's a change to the Remoting version:
+    * Update `Docker/controller/plugins.txt` to use a swarm plugin version compatible with the new Remoting version
+    * Run `Docker/controller/update-plugins-with-dependencies.sh` to update the dependency tree
+    * Update `Docker/agents/**/Dockerfile` to use agents with a matching Remoting version
+    * Update `Docker/agents/*/swarm-agent/Dockerfile` to use a swarm client compatible with the new Remoting version
+    * Update `Scripts/Linux/applications/install_jenkins_swarm_agent.sh` and `Scripts/Windows/Applications/ToolsAndVersions.psd1` to install a swarm client compatible with the new Remoting version
+    * Build as many of these as you can locally, for validation
+    * Push to GitHub
+
+* Wait for GitHub Actions to build new images
+
+* If there's a change to the Remoting version:
+  * Put Jenkins into maintenance mode
+  * Modify `environments/<env>/agents/terraform.tfvars` to refer to new images
+  * Run `./scripts/terraform-agents-apply.sh environments/<env>` to update agent config
+  * Delete all existing agent VMs
+* Update URLs in `helm-config.json`
+* Run `./scripts/deploy-jenkins-controller.sh`
+
+This will restart Jenkins if necessary.
+All agents might be gone. Trigger existing jobs once to recreate them and pre-populate them with state (downloading prebuilt UE, etc etc).
