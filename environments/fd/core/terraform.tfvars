@@ -12,9 +12,6 @@ internal_ip_address = "10.142.15.250"
 longtail_store_bucket_name = "fd-ue-jenkins-buildsystem-longtail"
 longtail_store_location = "europe-west1"
 
-cloud_config_store_bucket_name = "fd-ue-jenkins-buildsystem-cloud-config"
-cloud_config_store_location = "europe-west1"
-
 image_builder_subnetwork_cidr_range = "10.148.0.0/20"
 agent_vms_subnetwork_cidr_range = "10.143.0.0/20"
 

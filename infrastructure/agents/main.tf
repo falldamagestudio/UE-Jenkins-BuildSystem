@@ -2,7 +2,6 @@ module "agents" {
 
   source = "./agents"
 
-  cloud_config_store_bucket_id = var.cloud_config_store_bucket_name
   longtail_store_bucket_id = var.longtail_store_bucket_name
 
   swarm_agent_settings = {

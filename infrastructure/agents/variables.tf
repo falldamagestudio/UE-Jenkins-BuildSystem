@@ -19,10 +19,6 @@ variable "internal_ip_address" {
   type = string
 }
 
-variable "cloud_config_store_bucket_name" {
-  type = string
-}
-
 variable "longtail_store_bucket_name" {
   type = string
 }

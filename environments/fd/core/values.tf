@@ -50,10 +50,6 @@ output "longtail_store_bucket_name" {
     value = var.longtail_store_bucket_name
 }
 
-output "cloud_config_store_bucket_name" {
-    value = var.cloud_config_store_bucket_name
-}
-
 output "ssh_vm_public_key_windows" {
   value = module.core.ssh_vm_public_key_windows
 }

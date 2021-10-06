@@ -11,7 +11,6 @@ module "agents" {
     internal_ip_address = data.terraform_remote_state.core.outputs.internal_ip_address
 
     longtail_store_bucket_name = data.terraform_remote_state.core.outputs.longtail_store_bucket_name
-    cloud_config_store_bucket_name = data.terraform_remote_state.core.outputs.cloud_config_store_bucket_name
 
     windows_vm_ssh_public_key = data.terraform_remote_state.core.outputs.ssh_vm_public_key_windows
 

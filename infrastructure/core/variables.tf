@@ -43,14 +43,6 @@ variable "longtail_store_location" {
   type = string
 }
 
-variable "cloud_config_store_bucket_name" {
-  type = string
-}
-
-variable "cloud_config_store_location" {
-  type = string
-}
-
 variable "image_builder_subnetwork_cidr_range" {
   type = string
 }

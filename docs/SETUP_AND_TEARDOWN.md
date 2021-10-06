@@ -79,7 +79,6 @@ First, make sure you have created a repository & GitHub user for your organizati
 * Add some secrets to your Images repository:
     * `ARTIFACT_REGISTRY_LOCATION` - take value from `core/terraform.tfvars`
     * `GOOGLE_CLOUD_BUILD_ARTIFACT_UPLOADER_SERVICE_ACCOUNT_KEY` - create a key for the `build-artifact-uploader@<project>.iam.gserviceaccount.com` Service Account
-    * `GOOGLE_CLOUD_CONFIG_STORAGE_BUCKET` - take value from `core/terraform.tfvars`
     * `GOOGLE_CLOUD_IMAGE_BUILDER_INSTANCE_CONTROLLER_SERVICE_ACCOUNT_KEY` - create a key for the `image-builder-instance-ctl@<project>.iam.gserviceaccount.com` Service Account
     * `GOOGLE_CLOUD_PROJECT_ID` - take from `core/terraform.tfvars`
     * `GOOGLE_CLOUD_REGION` - take value from `core/terraform.tfvars`
