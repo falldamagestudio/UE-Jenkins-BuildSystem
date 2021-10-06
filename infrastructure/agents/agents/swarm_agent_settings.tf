@@ -6,14 +6,6 @@ locals {
         jenkins-url = {
           version = var.swarm_agent_settings.jenkins-url
         }
-
-        swarm-agent-image-url-linux = {
-          version = var.swarm_agent_settings.swarm-agent-image-url-linux
-        }
-
-        swarm-agent-image-url-windows = {
-          version = var.swarm_agent_settings.swarm-agent-image-url-windows
-        }
     }
 
     swarm_agent_secrets = {

@@ -15,14 +15,6 @@ module "agents" {
 
     windows_vm_ssh_public_key = data.terraform_remote_state.core.outputs.ssh_vm_public_key_windows
 
-    docker_ssh_agent = var.docker_ssh_agent
-    docker_swarm_agent = var.docker_swarm_agent
-
-    docker_dynamic_agent_templates = var.docker_dynamic_agent_templates
-
-    docker_static_agent_templates = var.docker_static_agent_templates
-    docker_static_agents = var.docker_static_agents
-
     ssh_agent = var.ssh_agent
     swarm_agent = var.swarm_agent
 

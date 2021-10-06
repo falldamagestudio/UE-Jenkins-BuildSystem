@@ -2,14 +2,6 @@
 locals {
 
     ssh_agent_secrets_unfiltered = {
-        ssh-agent-image-url-linux = {
-          version = var.ssh_agent_settings.ssh-agent-image-url-linux
-        }
-
-        ssh-agent-image-url-windows = {
-          version = var.ssh_agent_settings.ssh-agent-image-url-windows
-        }
-
         ssh-vm-public-key-windows = {
           version = var.ssh_agent_settings.ssh-vm-public-key-windows
         }
