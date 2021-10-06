@@ -1,6 +1,6 @@
 # Build Unreal Engine & games with Jenkins on GKE/GCE
 
-This repo brings up a Kubernetes cluster in Google Kubernetes Engine. It installs Jenkins. It runs build jobs on on-demand provisioned VMs, or on statically-provisioned VMs, or directly on the Kubernetes cluster. Windows and Linux supported. Build jobs run either within Docker containers (on GKE or on VMs), or directly on VMs.
+This repo brings up a Kubernetes cluster in Google Kubernetes Engine. It installs Jenkins. It runs build jobs on on-demand provisioned VMs, or on statically-provisioned VMs, or directly on the Kubernetes cluster. Windows and Linux supported. Build jobs run either within Docker containers (on GKE), or directly on VMs.
 
 # Status
 
@@ -8,8 +8,6 @@ This is still a proof-of-concept. We are just about to begin using it for produc
 
 ![Jobs - Dynamic VMs](docs/images/Jobs-DynamicVMs.png)
 ![Jobs - Static VMs](docs/images/Jobs-StaticVMs.png)
-![Jobs - Docker Dynamic VMs](docs/images/Jobs-DockerDynamicVMs.png)
-![Jobs - Docker Static VMs](docs/images/Jobs-DockerStaticVMs.png)
 ![Jobs - Kubernetes](docs/images/Jobs-Kubernetes.png)
 
 # Goals
@@ -62,15 +60,6 @@ The most cost-efficient way to use this on GCP is via Dynamic VMs. The GCE plugi
 ## Static VMs
 
 These agents are ready to accept jobs at a moment's notice. However, be careful with costs!
-
-## Dynamic / Static Docker VMs
-
-These are similar to the Dynamic / Static VMs, except that all the lifting is done from within Docker containers.
-The main benefit here is that the game repo can contain the Docker image ID for the build tools, thereby versioning the build environment within the game repo. However, these suffer from slow boot times at first provisioning (Windows machines can take 15 minutes to provision, pull down the Jenkins agent image, and another 15 minutes to pull the build tools image). It is also more difficult to debug build job problems inside of a Windows container than outside.
-
-Given the operational problems, there is no compelling reason to use Docker VMs on GCP. Use non-Docker VMs instead.
-
-There are also some problems with the current implementation of the Docker VMs; see [#40](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/40) and [#44](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/44).
 
 ## Kubernetes pods 
 
