@@ -166,3 +166,7 @@ See [REFERENCES.md](docs/REFERENCES.md).
 # License
 
 See [LICENSE.txt](LICENSE.txt).
+
+# Further reading
+
+Here is [a blog post](https://blog.falldamagestudio.com/posts/modern-jenkins-for-unreal-engine/) that provides more motivation and background details about the build system.
