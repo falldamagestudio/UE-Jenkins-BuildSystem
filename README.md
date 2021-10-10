@@ -1,29 +1,27 @@
 # Build Unreal Engine & games with Jenkins on GKE/GCE
 
-This repo brings up a Kubernetes cluster in Google Kubernetes Engine. It installs Jenkins. It runs build jobs on on-demand provisioned VMs, or on statically-provisioned VMs, or directly on the Kubernetes cluster. Windows and Linux supported. Build jobs run either within Docker containers (on GKE), or directly on VMs.
+# Overview
+
+This is a [Jenkins](https://www.jenkins.io/)-based build system that runs on [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) / [Google Compute Engine (GCE)](https://cloud.google.com/compute). It is designed to build Unreal Engine and UE-based games. Windows and Linux targets supported.
+
+Build jobs are typically run on VMs whose disks are persistent (to support quick incremental builds) but are started/stopped as necessary (to reduce cost).
+
+You can access the Jenkins UI directly over the Internet; it is protected using [Identity-Aware Proxy](https://cloud.google.com/iap). 
+
+The build system is complex to operate, and pricey, but it is reliable and convenient for users.
 
 # Status
 
-This is still a proof-of-concept. We are just about to begin using it for production.
+We are using this in production.
+
+Example jobs:
 
 ![Jobs - Dynamic VMs](docs/images/Jobs-DynamicVMs.png)
+
+There are some other jobs, which are mainly for R&D purposes:
+
 ![Jobs - Static VMs](docs/images/Jobs-StaticVMs.png)
 ![Jobs - Kubernetes](docs/images/Jobs-Kubernetes.png)
-
-# Goals
-
-We want a CI/CD solution for our Unreal projects, which has these characteristics:
-* App specific - supports building Unreal Engine applications, Engine & Game, clients & servers
-* VCS support - supports Git + Plastic SCM
-* OS support - Windows + Linux at least, potentially MacOS in the future
-* Scalability - supports bursting and many different jobs, running some/all in parallel, without being very expensive to run
-* Speed - can do incremental builds quickly, even when the build state is 100GB+
-* Maintainability - Employ Infrastructure as Code & Configuration as Code, devs should be able to operate their own build system replicas
-* Security - can be exposed to the Internet without too much risk, people use Google accounts for auth
-* Built upon Open Source software as much as possible
-* Avoid writing a new build system
-
-Jenkins is not fancy, but it supports all the above goals.
 
 # Architecture
 
@@ -33,23 +31,23 @@ Jenkins is not fancy, but it supports all the above goals.
 
 ![Operation](docs/images/Operation.png)
 
-Terraform is used to create all infrastructure. This includes load balancers, storage buckets, and a Kubernetes cluster. The cluster has a couple of node pools, some of which scale dynamically based on demand.
+[Terraform](https://www.terraform.io/) is used to create all infrastructure. This includes load balancers, storage buckets, and a Kubernetes cluster. The cluster has a couple of node pools, some of which scale dynamically based on demand.
 
-Helm is used to deploy the Jenkins controller.
+[Helm](https://helm.sh/) is used to deploy the Jenkins controller.
 
-The Jenkins controller contains a Seed job. When the Seed job is run, a couple of Job DSL files are processed; these in turn create the engine/game specific jobs.
+The Jenkins controller contains a Seed job. When the Seed job is run, a couple of [Job DSL](https://jenkinsci.github.io/job-dsl-plugin/) files are processed; these in turn create the engine/game specific jobs.
 
 Terraform is used to create static VMs, and templates for dynamic agent VMs.
 
-A modified version of Jenkins' GCE plugin is capable of creating and destroying agent VMs on-demand. These "dynamic" agent VMs can also be retained (changed to stopped state, instead of being destroyed) between jobs by the modified GCE plugin. This eliminates most of the cost for the dynamic VMs when they are not in use, while keeping the warm-up time for jobs low.
+[A modified version of Jenkins' GCE plugin](https://github.com/falldamagestudio/google-compute-engine-plugin) is capable of creating and destroying agent VMs on-demand. These "dynamic" agent VMs can also be retained (changed to stopped state, instead of being destroyed) between jobs by the modified GCE plugin. This eliminates most of the cost for the dynamic VMs when they are not in use, while keeping the warm-up time for jobs low.
 
 It is also possible to run jobs on Kubernetes. These will suffer from long image pull times when new nodes are provisioned. For incremental builds, the jobs will need to have PVCs provisioned.
 
 Regardless of agent type, each agent has a single executor, and thus serves only one job at a time.
 
-For Kubernetes, and Docker VMs: The Jenkins agent runs within a Docker container. Build jobs are also run within a Docker container (either via the Docker pipeline plugin, or via the Kubernetes pipeline plugin). The build tools container images contain all software necessary to build a typical UE engine or game on Linux and Windows.
+For VMs: The Jenkins agent and all build tools are installed directly onto the VM, and build jobs are run directly on the VM as well.
 
-For non-Docker VMs: The Jenkins agent and all build tools are installed directly onto the VM, and build jobs are run directly on the VM as well.
+For Kubernetes: The Jenkins agent runs within a Docker container. Build jobs are also run within a Docker container (via the Kubernetes pipeline plugin). The build tools container images contain all software necessary to build a typical UE engine or game on Linux and Windows.
 
 # Agent types
 
@@ -59,7 +57,7 @@ The most cost-efficient way to use this on GCP is via Dynamic VMs. The GCE plugi
 
 ## Static VMs
 
-These agents are ready to accept jobs at a moment's notice. However, be careful with costs!
+These agents are ready to accept jobs at a moment's notice. However, be careful with costs! The primary reason for these is to validate that the swarm agent works (that's how you'd run on-premises agents).
 
 ## Kubernetes pods 
 
@@ -103,30 +101,34 @@ Storage buckets are accessible to the Internet, but have tightly-defined access 
 
 ## Parallel jobs
 
-This build system is intended to have many independent agents - in the extreme case, one unique agent per job. When many jobs want to run at the same time, these agents (in the form of Dynamic VMs) can start up and run independently of each other. This reduces queue problems.
+This build system is intended to have many independent agents - in the extreme case, one unique agent per job. When many jobs want to run at the same time, these agents (in the form of Dynamic VMs) can start up and run independently of each other. This minimizes queue problems.
 
 ## Single-builder throughput
 
 Individual VMs can be scaled from ~4 to 96 vCPUs.
 
-pd-standard disks are a bottleneck, don't use those. pd-balanced become bottlenecks for 32+ vCPU machines (but may overall be the most cost effective option). pd-ssd sustain 64+ vCPU VMs well.
+`pd-standard` disks are a bottleneck, don't use those. `pd-balanced` become bottlenecks for 32+ vCPU machines (but may overall be the most cost effective option). `pd-ssd` sustain 64+ vCPU VMs well.
 
 ## Cold start latency
 
-Expect 60-90 seconds to provision a new VM if one doesn't exist.
+Expect 60-90 seconds to provision & start a new VM if one doesn't exist.
 
 ## Hot start latency
 
-Expect ~60 seconds to provision a VM, if the job previously has been run, and there is a persisted disk.
+Expect ~60 seconds to start a VM, if the job previously has been run, and there is a persisted disk.
 
 # Cost considerations
 
 GCP wins on flexibility, but a well-run on-premises cluster is cheaper than anything on GCP.
 
+In our case - team of 50 developers, a couple of CI jobs run on every commit, a couple of manually-triggered jobs - the system costs $20/day during weekends and $70/day during workdays. This adds up to $1700/month.
+
 There are some cost cutting measures that you can do on GCP with this build system:
-- Dynamic VMs reduce the CPU, RAM & OS license rental costs.
-- Being careful with disk sizes (do you really need X GB for job Y?) and disk type (pd-ssd vs pd-balanced) reduces the disk rental costs.
-- Using preemptive VMs cuts rental costs 50-80% further for CPU & RAM. This can cause reliability problems - jobs terminated midway, sometimes there's no machine available - and the modified GCE plugin doesn't handle it well enough yet (see [#54](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/54)) so it is probably not worthwhile for you.
+- Make sure to use Dynamic VMs or self-hosted agents. Otherwise the CPU, RAM & OS license rental costs will explode.
+- Being careful with disk sizes (do you really need X GB for job Y?) and disk type (`pd-ssd` vs `pd-balanced`) reduces the disk rental costs.
+- Being careful with CPUs for jobs (do you really need X cores for job Y?) reduces the CPU & Windows license costs, but may increase build times.
+
+Using preemptive VMs would cut rental costs 50-80% further for CPU & RAM, but it causes reliability problems - jobs terminated midway, sometimes there's no machine available - and the modified GCE plugin doesn't handle it well enough yet (see [#54](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/54)) so it is probably not worthwhile for you.
 
 The big remaining costs on GCP are:
 - Disk rental costs remain even with Dynamic VMs. This turns into a static cost that goes up with the number of build jobs. If the GCE plugin was able to snapshot disks when they aren't used for a long time, it could cut those costs further (see [#53](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/53)).
