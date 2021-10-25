@@ -1,9 +1,9 @@
 {
-	"controller_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/controller:commit-f486ec9",
-	"ue_jenkins_inbound_agent_linux_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/inbound-agent:commit-f486ec9-linux",
-	"ue_jenkins_inbound_agent_windows_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/inbound-agent:commit-f486ec9-windows",
-	"ue_jenkins_buildtools_linux_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/buildtools:commit-f486ec9-linux",
-	"ue_jenkins_buildtools_windows_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/buildtools:commit-f486ec9-windows",
+	"controller_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/controller:commit-018e7be",
+	"ue_jenkins_inbound_agent_linux_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/inbound-agent:commit-018e7be-linux",
+	"ue_jenkins_inbound_agent_windows_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/inbound-agent:commit-018e7be-windows",
+	"ue_jenkins_buildtools_linux_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/buildtools:commit-018e7be-linux",
+	"ue_jenkins_buildtools_windows_image": "europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/buildtools:commit-018e7be-windows",
 	"seed_job_url": "https://github.com/falldamagestudio/UE-Jenkins-Jobs",
 	"seed_job_branch": "main",
 	"plastic": "true"

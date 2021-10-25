@@ -2,10 +2,10 @@
 /*
 swarm_agent = {
     linux = {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-f486ec9-linux"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-018e7be-linux"
     }
     windows = {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-f486ec9-windows"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/swarm-agent-018e7be-windows"
     }
 }
 
