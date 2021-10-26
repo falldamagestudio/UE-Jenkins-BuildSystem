@@ -77,6 +77,9 @@ agent_template_groups = [
 ]
 
 static_agents = {
+
+    # Static agents are normally disabled, to avoid unexpected costs when developing on the build system
+
 /*
     # Static VMs (Linux)
 

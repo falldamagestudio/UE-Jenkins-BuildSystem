@@ -1,37 +1,29 @@
-/*
 locals {
-    agent_templates_flattened = concat(flatten([
-        for agent_template_group in var.dynamic_agent_template_groups : [
-            for agent_template in agent_template_group.agent_templates : { name : {
-                    type = "dynamic"
-                    os = agent_template_group.os
-                    vm_image_name = agent_template_group.vm_image_name
-                    machine_type = agent_template.machine_type
-                    boot_disk_type = agent_template.boot_disk_type
-                    boot_disk_size = agent_template.boot_disk_size
-                    preemptible = agent_template.preemptible
-                }
-            }
-        ]
-    ]),
-    flatten([
-        for agent_template_group in var.static_agent_template_groups : [
-            for agent_template in agent_template_group.agent_templates : { name : {
-                    type = "static"
-                    os = agent_template_group.os
-                    vm_image_name = agent_template_group.vm_image_name
-                    machine_type = agent_template.machine_type
-                    boot_disk_type = agent_template.boot_disk_type
-                    boot_disk_size = agent_template.boot_disk_size
-                    preemptible = agent_template.preemptible
-                }
-            }
-        ]
-    ]))
-}
-*/
 
-locals {
+    # Flatten hierarchical notation into a linear list of templates:
+    #
+    # [{
+    #   vm_image_name : "image1"
+    #   agent_templates = {
+    #       template1 = { machine_type = "type1", ... }
+    #       template2 = { machine_type = "type2", ... }
+    #   }
+    # },{
+    #   vm_image_name : "image2"
+    #   agent_templates = {
+    #       template3 = { machine_type = "type3", ... }
+    #   }
+    # }]
+    #
+    # =>
+    #
+    # {
+    #   template1 = { vm_image_name : "image1", machine_type = "type1", ... }
+    #   template2 = { vm_image_name : "image1", machine_type = "type2", ... }
+    #   template3 = { vm_image_name : "image2", machine_type = "type3", ... }
+    # }
+
+
     agent_templates_flattened = merge([
         for agent_template_group in var.agent_template_groups : {
             for agent_template_name, agent_template_parameters in agent_template_group.agent_templates : agent_template_name => {
