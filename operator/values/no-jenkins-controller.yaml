@@ -1,0 +1,4 @@
+
+jenkins:
+  # Deploy the Jenkins operator only, without any Jenkins controller
+  enabled: false
