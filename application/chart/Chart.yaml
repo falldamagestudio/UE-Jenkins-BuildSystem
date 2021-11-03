@@ -1,0 +1,6 @@
+apiVersion: v2
+name: jenkins
+home: https://jenkins.io/
+version: 1.0
+appVersion: 1.0
+description: Jenkins instance CR
