@@ -1,0 +1,5 @@
+jenkins:
+
+  # Specifying a blank namespace for where Jenkins will be deployed makes
+  # the Operator watch all namespaces for Jenkins instance CRs
+  namespace: ""
