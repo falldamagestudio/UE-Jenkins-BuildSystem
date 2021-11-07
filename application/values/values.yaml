@@ -1,5 +1,5 @@
 jenkins:
   # The Jenkins instance CR will be named <name>
   # The Jenkins controller pod will be named jenkins-<name>
-  name: jenkins
+  name: ue
   namespace: jenkins
