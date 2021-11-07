@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-{{ .Values.jenkins.name }}-casc
+  namespace: {{ .Values.jenkins.namespace }}
+data:
+
+  {{- range $key, $val := .Values.jenkins.cascConfigs }}
+  {{- if $val }}
+
+  {{ $key }}.yaml: |-
+{{ tpl $val $| indent 4 }}
+
+  {{- end }}
+  {{- end }}

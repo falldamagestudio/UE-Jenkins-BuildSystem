@@ -5,7 +5,8 @@ metadata:
   namespace: {{ .Values.jenkins.namespace }}
 spec:
   configurationAsCode:
-    configurations: []
+    configurations:
+      - name: jenkins-{{ .Values.jenkins.name }}-casc
     secret:
       name: ""
   groovyScripts:
