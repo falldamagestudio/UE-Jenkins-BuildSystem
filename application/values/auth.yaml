@@ -1,0 +1,17 @@
+jenkins:
+  cascConfigs:
+
+    # Disable access for anonymous users
+    authorizationStrategy: |-
+      jenkins:
+        authorizationStrategy:
+          loggedInUsersCanDoAnything:
+            allowAnonymousRead: false
+
+    # Configure google credentials provider plugin's OAuth settings
+    securityRealm: |-
+      jenkins:
+        securityRealm:
+          googleOAuth2:
+            clientId: "{{ .Values.GOOGLE_OAUTH_CLIENT_ID }}"
+            clientSecret: "{{ .Values.GOOGLE_OAUTH_CLIENT_SECRET }}"

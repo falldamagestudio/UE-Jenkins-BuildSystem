@@ -6,6 +6,9 @@ JENKINS_CHART_DIR="${APPLICATION_DIR}/chart"
 JENKINS_RELEASE="jenkins"
 JENKINS_NAMESPACE="jenkins"
 
+GOOGLE_OAUTH_CLIENT_ID=$(kubectl get secrets -n ${JENKINS_NAMESPACE} jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_id}" | base64 --decode)
+GOOGLE_OAUTH_CLIENT_SECRET=$(kubectl get secrets -n ${JENKINS_NAMESPACE} jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_secret}" | base64 --decode)
+
 VALUES_FILES=()
 
 # Include platform-independent values files
@@ -42,5 +45,7 @@ helm upgrade \
     "${JENKINS_RELEASE}" \
     "${JENKINS_CHART_DIR}" \
     "--namespace" "${JENKINS_NAMESPACE}" \
+    --set "GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}" \
+    --set "GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET}" \
     --debug \
     --wait

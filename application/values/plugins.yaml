@@ -1,0 +1,5 @@
+jenkins:
+  controller:
+    plugins:
+      - name: google-login
+        version: "1.6"

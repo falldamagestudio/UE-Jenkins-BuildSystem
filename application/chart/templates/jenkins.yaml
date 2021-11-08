@@ -48,6 +48,13 @@ spec:
           requests:
             cpu: "1"
             memory: 500Mi
+
+    plugins:
+{{- range $plugin := .Values.jenkins.controller.plugins }}
+      - name: {{ $plugin.name }}
+        version: "{{ $plugin.version }}"
+{{- end }}
+
   seedJobs:
     - id: jenkins-operator
       targets: "cicd/jobs/*.jenkins"

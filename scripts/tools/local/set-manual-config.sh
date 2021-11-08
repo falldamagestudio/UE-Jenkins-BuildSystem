@@ -8,10 +8,12 @@ fi
 GOOGLE_OAUTH_CLIENT_ID=$1
 GOOGLE_OAUTH_CLIENT_SECRET=$2
 
-if `kubectl get secret jenkins-controller-from-manual-config > /dev/null 2>&1`; then
-    kubectl delete secret jenkins-controller-from-manual-config
+JENKINS_NAMESPACE="jenkins"
+
+if kubectl get secret -n "${JENKINS_NAMESPACE}" jenkins-controller-from-manual-config > /dev/null 2>&1; then
+    kubectl delete secret -n "${JENKINS_NAMESPACE}" jenkins-controller-from-manual-config
 fi
 
-kubectl create secret generic jenkins-controller-from-manual-config \
-    --from-literal=google_oauth_client_id=$GOOGLE_OAUTH_CLIENT_ID \
-    --from-literal=google_oauth_client_secret=$GOOGLE_OAUTH_CLIENT_SECRET
+kubectl create secret -n "${JENKINS_NAMESPACE}" generic jenkins-controller-from-manual-config \
+    "--from-literal=google_oauth_client_id=${GOOGLE_OAUTH_CLIENT_ID}" \
+    "--from-literal=google_oauth_client_secret=${GOOGLE_OAUTH_CLIENT_SECRET}"
