@@ -1,0 +1,10 @@
+jenkins:
+  cascConfigs:
+
+    # Add timestamps to all job logs
+    timestamper: |-
+      unclassified:
+        timestamper:
+          allPipelines: true
+          elapsedTimeFormat: "'<b>'HH:mm:ss.SSS'</b> '"
+          systemTimeFormat: "'<b>'yyyy-MM-dd HH:mm:ss'</b> '"

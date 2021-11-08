@@ -1,5 +1,13 @@
 jenkins:
   controller:
     plugins:
+
+      # This is a Jenkins plugin which lets you log in to Jenkins with your Google account. Also allows you to restrict access to accounts in a given Google Apps domain.
+      # https://plugins.jenkins.io/google-login/
       - name: google-login
         version: "1.6"
+
+      # Export build timestamps to build env variables; BUILD_TIMESTAMP exported by default
+      # https://plugins.jenkins.io/build-timestamp/
+      - name: build-timestamp
+        version: "1.0.3"
