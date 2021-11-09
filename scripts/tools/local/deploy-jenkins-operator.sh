@@ -1,11 +1,15 @@
 #!/bin/bash
 
+HELM_CONFIG_FILE=$1
+
 OPERATOR_DIR=${BASH_SOURCE%/*}/../../../operator
 
 OPERATOR_CHART_NAME="jenkins-operator"
 OPERATOR_CHART_VERSION="0.5.3"
 OPERATOR_RELEASE="jenkins-operator"
-OPERATOR_NAMESPACE="jenkins-operator"
+
+HELM_CONFIG_JSON=$(cat "${HELM_CONFIG_FILE}")
+OPERATOR_NAMESPACE=$(echo "${HELM_CONFIG_JSON}" | jq -r ".namespace")
 
 VALUES_FILES=()
 

@@ -1,10 +1,14 @@
 #!/bin/bash
 
+HELM_CONFIG_FILE=$1
+
 APPLICATION_DIR="${BASH_SOURCE%/*}/../../../application"
 
 JENKINS_CHART_DIR="${APPLICATION_DIR}/chart"
 JENKINS_RELEASE="jenkins"
-JENKINS_NAMESPACE="jenkins"
+
+HELM_CONFIG_JSON=$(cat "${HELM_CONFIG_FILE}")
+JENKINS_NAMESPACE=$(echo "${HELM_CONFIG_JSON}" | jq -r ".namespace")
 
 GOOGLE_OAUTH_CLIENT_ID=$(kubectl get secrets -n ${JENKINS_NAMESPACE} jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_id}" | base64 --decode)
 GOOGLE_OAUTH_CLIENT_SECRET=$(kubectl get secrets -n ${JENKINS_NAMESPACE} jenkins-controller-from-manual-config -o jsonpath="{.data.google_oauth_client_secret}" | base64 --decode)

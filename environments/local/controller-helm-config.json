@@ -1,4 +1,5 @@
 {
+	"namespace": "jenkins",
 	"controller_image": "controller:local",
 	"ue_jenkins_inbound_agent_linux_image": "inbound-agent:local-linux",
 	"ue_jenkins_inbound_agent_windows_image": "",

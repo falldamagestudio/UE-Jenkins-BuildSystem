@@ -32,7 +32,7 @@ fi
 #fi
 
 if [ "${CLUSTER_TYPE}" = "local" ] || [ "${CLUSTER_TYPE}" = "gke" ]; then
-	"${SCRIPTS_DIR}/tools/${CLUSTER_TYPE}/deploy-jenkins-controller.sh" "${ENVIRONMENT_DIR}/helm-config.json" || exit 1
+	"${SCRIPTS_DIR}/tools/${CLUSTER_TYPE}/deploy-jenkins-controller.sh" "${ENVIRONMENT_DIR}/controller-helm-config.json" || exit 1
 else
 	1>&2 echo "Cluster type ${CLUSTER_TYPE} is not supported"
 	exit 1
