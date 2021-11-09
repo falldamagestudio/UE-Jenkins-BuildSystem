@@ -51,5 +51,6 @@ helm upgrade \
     "--namespace" "${JENKINS_NAMESPACE}" \
     --set "GOOGLE_OAUTH_CLIENT_ID=${GOOGLE_OAUTH_CLIENT_ID}" \
     --set "GOOGLE_OAUTH_CLIENT_SECRET=${GOOGLE_OAUTH_CLIENT_SECRET}" \
+    --set "jenkins.namespace=${JENKINS_NAMESPACE}" \
     --debug \
     --wait
