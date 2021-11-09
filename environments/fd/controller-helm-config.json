@@ -1,0 +1,11 @@
+{
+	"namespace": "default",
+	"controller_image": "",
+	"ue_jenkins_inbound_agent_linux_image": "",
+	"ue_jenkins_inbound_agent_windows_image": "",
+	"ue_jenkins_buildtools_linux_image": "",
+	"ue_jenkins_buildtools_windows_image": "",
+	"seed_job_url": "https://github.com/falldamagestudio/UE-Jenkins-Jobs",
+	"seed_job_branch": "main",
+	"plastic": "true"
+}
