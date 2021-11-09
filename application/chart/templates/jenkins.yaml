@@ -60,6 +60,12 @@ spec:
 {{ toYaml .Values.jenkins.controller.nodeSelector | indent 6 }}
     {{- end }}
 
+{{- if .Values.jenkins.controller.serviceAnnotations }}
+  service:
+    annotations:
+{{ toYaml .Values.jenkins.controller.serviceAnnotations | indent 6 }}
+{{- end }}
+
   seedJobs:
     - id: jenkins-operator
       targets: "cicd/jobs/*.jenkins"
