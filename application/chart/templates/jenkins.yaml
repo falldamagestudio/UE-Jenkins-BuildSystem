@@ -55,6 +55,11 @@ spec:
         version: "{{ $plugin.version }}"
 {{- end }}
 
+    {{- if .Values.jenkins.controller.nodeSelector }}
+    nodeSelector:
+{{ toYaml .Values.jenkins.controller.nodeSelector | indent 6 }}
+    {{- end }}
+
   seedJobs:
     - id: jenkins-operator
       targets: "cicd/jobs/*.jenkins"

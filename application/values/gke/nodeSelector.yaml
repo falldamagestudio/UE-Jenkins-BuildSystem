@@ -1,0 +1,6 @@
+# Force controller pod to run on an instance in the controler node pool only
+
+jenkins:
+  controller:
+    nodeSelector:
+      jenkins-controller-node-pool: "true"
