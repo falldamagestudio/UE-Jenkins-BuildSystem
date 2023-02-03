@@ -18,4 +18,5 @@ services:
       CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
       OAUTH2_CLIENT_ID: ${OAUTH2_CLIENT_ID}
       OAUTH2_CLIENT_SECRET: ${OAUTH2_CLIENT_SECRET}
+      GITHUB_PAT: ${GITHUB_PAT}
       WEB_URL: http://localhost:8080
