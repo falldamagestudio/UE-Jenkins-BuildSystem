@@ -1,0 +1,21 @@
+services:
+  jenkins:
+    image: europe-west1-docker.pkg.dev/fd-alara-jenkins-buildsystem/docker-build-artifacts/controller:commit-5bcf7ae
+
+    ports:
+      - 8080:8080
+
+    volumes:
+      - type: bind
+        source: ./casc_configs
+        target: /var/jenkins_home/casc_configs
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: true
+
+    environment:
+      CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
+      OAUTH2_CLIENT_ID: ${OAUTH2_CLIENT_ID}
+      OAUTH2_CLIENT_SECRET: ${OAUTH2_CLIENT_SECRET}
+      WEB_URL: http://localhost:8080

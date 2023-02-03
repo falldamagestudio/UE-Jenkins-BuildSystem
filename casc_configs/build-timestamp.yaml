@@ -1,0 +1,5 @@
+unclassified:
+  buildTimestamp:
+    enableBuildTimestamp: true
+    pattern: "yyyyMMdd_HHmmss"
+    timezone: "Etc/UTC"

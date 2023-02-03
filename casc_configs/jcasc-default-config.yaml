@@ -1,0 +1,35 @@
+jenkins:
+
+  # should be in auth.yaml
+  # Disable access for anonymous users
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+  # should be in auth.yaml
+  # Configure google credentials provider plugin's OAuth settings
+  securityRealm:
+    googleOAuth2:
+      clientId: ${OAUTH2_CLIENT_ID}
+      clientSecret: ${OAUTH2_CLIENT_SECRET}
+
+  disableRememberMe: false
+  remotingSecurity:
+    enabled: true
+  mode: NORMAL
+  numExecutors: 0
+  projectNamingStrategy: "standard"
+  markupFormatter:
+    plainText
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+unclassified:
+  location:
+    adminAddress: 
+    url: ${WEB_URL}
