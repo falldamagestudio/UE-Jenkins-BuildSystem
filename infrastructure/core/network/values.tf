@@ -1,13 +1,9 @@
-output "kubernetes_network" {
-    value = google_compute_network.kubernetes.name
+output "controller_vm_network" {
+    value = google_compute_network.controller_vm.name
 }
 
-output "kubernetes_subnetwork" {
-    value = google_compute_subnetwork.kubernetes.name
-}
-
-output "kubernetes_subnetwork_id" {
-    value = google_compute_subnetwork.kubernetes.id
+output "controller_vm_subnetwork" {
+    value = google_compute_subnetwork.controller_vm.name
 }
 
 output "agent_vms_network" {

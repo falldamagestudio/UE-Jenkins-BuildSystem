@@ -13,11 +13,5 @@ longtail_store_bucket_name = "fd-ue-jenkins-buildsystem-longtail"
 longtail_store_location = "europe-west1"
 
 image_builder_subnetwork_cidr_range = "10.148.0.0/20"
+controller_vm_subnetwork_cidr_range = "10.142.0.0/24"
 agent_vms_subnetwork_cidr_range = "10.143.0.0/20"
-
-kubernetes_cluster_network_config = {
-    vms_cidr_range = "10.142.0.0/20"
-    pods_cidr_range = "10.44.0.0/14"
-    services_cidr_range = "10.48.0.0/20"
-    internal_lb_cidr_range = "10.144.0.0/24"
-}

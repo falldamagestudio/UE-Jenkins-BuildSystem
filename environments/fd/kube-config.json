@@ -1,4 +1,0 @@
-{
-    "cluster_type": "gke",
-    "cluster_name": "gke_fd-ue-jenkins-buildsystem_europe-west1-b_jenkins"
-}

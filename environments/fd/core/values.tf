@@ -14,16 +14,12 @@ output "zone" {
     value = var.zone
 }
 
-output "kubernetes_network" {
-    value = module.core.kubernetes_network
+output "controller_vm_network" {
+    value = module.core.controller_vm_network
 }
 
-output "kubernetes_subnetwork" {
-    value = module.core.kubernetes_subnetwork
-}
-
-output "kubernetes_subnetwork_id" {
-    value = module.core.kubernetes_subnetwork_id
+output "controller_vm_subnetwork" {
+    value = module.core.controller_vm_subnetwork
 }
 
 output "agent_vms_network" {

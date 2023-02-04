@@ -7,7 +7,7 @@ module "network" {
   source = "./network"
 
   agent_vms_subnetwork_cidr_range = var.agent_vms_subnetwork_cidr_range
-  kubernetes_cluster_network_config = var.kubernetes_cluster_network_config
+  controller_vm_subnetwork_cidr_range = var.controller_vm_subnetwork_cidr_range
 }
 
 module "docker_build_artifacts" {

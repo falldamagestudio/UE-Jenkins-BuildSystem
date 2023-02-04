@@ -17,6 +17,6 @@ module "core" {
     longtail_store_location = var.longtail_store_location
 
     image_builder_subnetwork_cidr_range = var.image_builder_subnetwork_cidr_range
+    controller_vm_subnetwork_cidr_range = var.controller_vm_subnetwork_cidr_range
     agent_vms_subnetwork_cidr_range = var.agent_vms_subnetwork_cidr_range
-    kubernetes_cluster_network_config = var.kubernetes_cluster_network_config
 }
