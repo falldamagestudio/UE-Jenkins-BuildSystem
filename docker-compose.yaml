@@ -1,14 +1,33 @@
 services:
   jenkins:
-    image: europe-west1-docker.pkg.dev/fd-alara-jenkins-buildsystem/docker-build-artifacts/controller:commit-5bcf7ae
+    image: controller:local
 
     ports:
       - 8080:8080
 
     volumes:
+      # Ensure the controller's home directory maps to a folder on the host
+      # This allows upgrading the jenkins container but keeping all history
+      - type: bind
+        source: ./jenkins_home
+        target: /var/jenkins_home
+        bind:
+          propagation: rprivate
+          create_host_path: false
+
+      # Map CasC config files into container
       - type: bind
         source: ./casc_configs
         target: /var/jenkins_home/casc_configs
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: true
+
+      # Make GCP Service Account credential file available to controller
+      - type: bind
+        source: ./google_application_credentials.json
+        target: /google_application_credentials.json
         bind:
           propagation: rprivate
           create_host_path: false
@@ -18,5 +37,6 @@ services:
       CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
       OAUTH2_CLIENT_ID: ${OAUTH2_CLIENT_ID}
       OAUTH2_CLIENT_SECRET: ${OAUTH2_CLIENT_SECRET}
-      GITHUB_PAT: ${GITHUB_PAT}
-      WEB_URL: http://localhost:8080
+      WEB_UI_URL: http://localhost:8080
+      SEED_JOB_REPO_URL: https://github.com/falldamagestudio/UE-Jenkins-Jobs
+      GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json

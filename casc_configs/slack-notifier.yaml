@@ -1,7 +1,0 @@
-unclassified:
-  slackNotifier:
-    teamDomain: falldamage
-    tokenCredentialId: jenkins-slack-bot-user-integration-token
-    username: Jenkins build system
-    botUser: true
-    sendAsText: false

@@ -14,10 +14,8 @@ jenkins:
       clientSecret: ${OAUTH2_CLIENT_SECRET}
 
   disableRememberMe: false
-  remotingSecurity:
-    enabled: true
   mode: NORMAL
-  numExecutors: 0
+  numExecutors: 1
   projectNamingStrategy: "standard"
   markupFormatter:
     plainText
@@ -29,7 +27,3 @@ security:
     creationOfLegacyTokenEnabled: false
     tokenGenerationOnCreationEnabled: false
     usageStatisticsEnabled: true
-unclassified:
-  location:
-    adminAddress: 
-    url: ${WEB_URL}

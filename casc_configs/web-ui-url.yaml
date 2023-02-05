@@ -1,0 +1,4 @@
+unclassified:
+  location:
+    adminAddress:
+    url: ${WEB_UI_URL}

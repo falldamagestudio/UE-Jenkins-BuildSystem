@@ -6,7 +6,7 @@ jobs:
         scm {
           git {
             remote {
-              url('https://github.com/falldamagestudio/Alara-Jenkins-Jobs')
+              url("${SEED_JOB_REPO_URL}")
               credentials('github-user')
             }
             branch('*/main')

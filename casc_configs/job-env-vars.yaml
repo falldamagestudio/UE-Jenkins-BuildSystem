@@ -6,34 +6,16 @@ jenkins:
         # Add BUILD_STORE_LIMITED_DURATION_BUCKET_NAME as job environment variable
         # This will be available in all jobs
         - key: "BUILD_STORE_LIMITED_DURATION_BUCKET_NAME"
-          value: "fd-alara-jenkins-buildsystem-builds-limited-duration"
+          value: "fd-ue-jenkins-buildsystem-builds-limited-duration"
 
         # Add GOOGLE_ROBOT_CREDENTIALS_ID as job environment variable
         # This will be available in all jobs
         #
         # This is the ID of a credential that can be used in any place where a GoogleRobotCredential is needed
         - key: "GOOGLE_ROBOT_CREDENTIALS_ID"
-          value: "fd-alara-jenkins-buildsystem"
+          value: "fd-ue-jenkins-buildsystem"
 
         # Add LONGTAIL_STORE_BUCKET_NAME as a job environment variable
         # This will be available in all jobs
         - key: "LONGTAIL_STORE_BUCKET_NAME"
-          value: "fd-alara-jenkins-buildsystem-longtail"
-
-        # Add UE_JENKINS_BUILDTOOLS_*_IMAGE as job environment variables
-        # These will be available in all jobs
-        - key: "UE_JENKINS_BUILDTOOLS_LINUX_IMAGE"
-          value: ""
-        - key: "UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE"
-          value: ""
-
-        # Add UE_JENKINS_INBOUND_AGENT_*_IMAGE as job environment variables
-        # These will be available in all jobs
-        - key: "UE_JENKINS_INBOUND_AGENT_LINUX_IMAGE"
-          value: "europe-west1-docker.pkg.dev/fd-alara-jenkins-buildsystem/docker-build-artifacts/inbound-agent:commit-5bcf7ae-linux"
-        - key: "UE_JENKINS_INBOUND_AGENT_WINDOWS_IMAGE"
-          value: "europe-west1-docker.pkg.dev/fd-alara-jenkins-buildsystem/docker-build-artifacts/inbound-agent:commit-5bcf7ae-windows"
-        # Add UTILITY_STAGE_TIMEOUT_MINUTES as a job environment variable
-        # This will be available in all jobs
-        - key: "UTILITY_STAGE_TIMEOUT_MINUTES"
-          value: "3"
+          value: "fd-ue-jenkins-buildsystem-longtail"

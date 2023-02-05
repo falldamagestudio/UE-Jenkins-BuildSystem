@@ -1,0 +1,45 @@
+jenkins:
+  clouds:
+    - computeEngine:
+        cloudName: GCE
+        instanceId: fd-ue-jenkins-buildsystem-gce
+        projectId: fd-ue-jenkins-buildsystem
+        instanceCapStr: 256
+        credentialsId: fd-ue-jenkins-buildsystem
+        noDelayProvisioning: true
+        configurations:
+          - namePrefix:         ue-linux
+            description:        Build UE.Linux
+            maxNumInstancesToCreateStr: 1
+            maxNumInstancesToPersistStr: 1
+            launchTimeoutSecondsStr: 300
+            retentionTimeMinutesStr: 6
+            mode:               EXCLUSIVE
+            labelString:        ue-linux
+            numExecutorsStr:    1
+            runAsUser:          jenkins
+            remoteFs:           /home/jenkins
+            oneShot:            false
+            createSnapshot:     false
+            region:             "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/regions/europe-west1"
+            zone:               "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/zones/europe-west1-b"
+            template:           "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/global/instanceTemplates/build-engine-linux-dynamic"
+
+          - namePrefix:         ue-win64
+            description:        Build UE.Win64
+            maxNumInstancesToCreateStr: 1
+            maxNumInstancesToPersistStr: 1
+            launchTimeoutSecondsStr: 600
+            retentionTimeMinutesStr: 6
+            mode:               EXCLUSIVE
+            labelString:        ue-win64
+            numExecutorsStr:    1
+            runAsUser:          jenkins
+            remoteFs:           C:\W
+            oneShot:            false
+            createSnapshot:     false
+            windowsConfiguration:
+              privateKeyCredentialsId: gce-plugin-windows-vm-ssh-private-key
+            region:             "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/regions/europe-west1"
+            zone:               "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/zones/europe-west1-b"
+            template:           "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/global/instanceTemplates/build-engine-win64-dynamic"
