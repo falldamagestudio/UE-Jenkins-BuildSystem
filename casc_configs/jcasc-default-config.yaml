@@ -1,9 +1,6 @@
 jenkins:
   markupFormatter:
     plainText
-  crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: true
 security:
   apiToken:
     creationOfLegacyTokenEnabled: false
