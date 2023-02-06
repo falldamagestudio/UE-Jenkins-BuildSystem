@@ -1,5 +1,4 @@
 jenkins:
-  disableRememberMe: false
   markupFormatter:
     plainText
   crumbIssuer:
