@@ -67,5 +67,6 @@ services:
       JENKINS_URL: http://controller:8080
       AGENT_USERNAME: ${AGENT_USERNAME}
       AGENT_API_TOKEN: ${AGENT_API_TOKEN}
+      AGENT_NAME: controller-companion-agent
       LABELS: "controller-companion-agent"
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
