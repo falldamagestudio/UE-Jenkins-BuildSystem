@@ -1,7 +1,6 @@
 #!/bin/bash
 
-SCRIPTS_DIR="${BASH_SOURCE%/*}"
-APPLICATION_DIR="${SCRIPTS_DIR}/../application"
+SCRIPTS_DIR="${BASH_SOURCE%/*}/"
 
 ENVIRONMENT_DIR=$1
 GITHUB_PAT=$2
@@ -11,20 +10,21 @@ if [ $# -ne 2 ]; then
 	exit 1
 fi
 
-CLUSTER_TYPE=$(jq -r ".cluster_type" "${ENVIRONMENT_DIR}/kube-config.json")
+PROJECT_ID=$(jq -r ".project_id" "${ENVIRONMENT_DIR}/gcloud-config.json")
 
-if [ -z "${CLUSTER_TYPE}" ]; then
-	1>&2 echo "You must specify cluster_type in kube-config.json"
+if [ -z "${PROJECT_ID}" ]; then
+	1>&2 echo "You must specify project_id in gcloud-config.json"
 	exit 1
 fi
 
-CLUSTER_NAME=$(jq -r ".cluster_name" "${ENVIRONMENT_DIR}/kube-config.json")
+"${SCRIPTS_DIR}/tools/activate-gcloud-project.sh" "${PROJECT_ID}" || exit 1
 
-if [ -z "${CLUSTER_NAME}" ]; then
-	1>&2 echo "You must specify cluster_name in kube-config.json"
-	exit 1
+SECRET_NAME=github-user
+
+if gcloud secrets describe github-user >/dev/null 2>&1; then
+	echo -n "${GITHUB_PAT}" | gcloud secrets versions add github-user --data-file=-
+else
+	echo -n "${GITHUB_PAT}" | gcloud secrets create "${SECRET_NAME}" --data-file=- --labels=jenkins-credentials-type=username-password,jenkins-credentials-username=github-user --replication-policy=automatic
 fi
+# gcloud secrets add-iam-policy-binding github-user "--member=serviceAccount:ue-jenkins-controller@${PROJECT_ID}.iam.gserviceaccount.com" --role=roles/secretmanager.secretAccessor
 
-"${SCRIPTS_DIR}/tools/activate_cluster.sh" "${CLUSTER_NAME}" || exit 1
-
-cat "${APPLICATION_DIR}/github-pat.yaml" | sed "s/\<password\>/${GITHUB_PAT}/" | kubectl apply -f -
