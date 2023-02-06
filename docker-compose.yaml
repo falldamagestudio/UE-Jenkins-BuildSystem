@@ -1,5 +1,5 @@
 services:
-  jenkins:
+  controller:
     image: controller:local
 
     ports:
@@ -39,4 +39,33 @@ services:
       OAUTH2_CLIENT_SECRET: ${OAUTH2_CLIENT_SECRET}
       WEB_UI_URL: http://localhost:8080
       SEED_JOB_REPO_URL: https://github.com/falldamagestudio/UE-Jenkins-Jobs
+      GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
+
+  linux-swarm-agent:
+    image: linux-swarm-agent:local
+
+    volumes:
+#      # Ensure the agent's home directory maps to a folder on the host
+#      # This allows upgrading the agent container but keeping workspace
+#      - type: bind
+#        source: ./linux_swarm_agent_jenkins_home
+#        target: /var/jenkins_home
+#        bind:
+#          propagation: rprivate
+#          create_host_path: false
+
+      # Make GCP Service Account credential file available to controller
+      - type: bind
+        source: ./google_application_credentials.json
+        target: /google_application_credentials.json
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: true
+
+    environment:
+      JENKINS_URL: http://controller:8080
+      AGENT_USERNAME: ${AGENT_USERNAME}
+      AGENT_API_TOKEN: ${AGENT_API_TOKEN}
+      LABELS: "smurf"
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
