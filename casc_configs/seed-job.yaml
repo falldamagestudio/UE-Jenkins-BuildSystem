@@ -1,7 +1,12 @@
 jobs:
+
+  # Introduce a Seed Job
+  # When run, this job programmatically generates all other jobs
+
   - script: >
       job('Seed Job') {
 
+        // The Seed Job will run on the controller-agent only
         label('controller-agent')
 
         // Repository which contains job DSL scripts
