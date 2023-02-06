@@ -1,0 +1,8 @@
+jenkins:
+
+  # No executors on the Jenkins built-in node
+  # This isolates jobs from the Jenkins controller
+  #
+  # Instead, we will run an agent called 'controller-agent' for jobs that
+  #   would normally run on the built-in node
+  numExecutors: 0

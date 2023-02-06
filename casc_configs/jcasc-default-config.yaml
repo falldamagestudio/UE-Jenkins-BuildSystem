@@ -1,7 +1,5 @@
 jenkins:
   disableRememberMe: false
-  mode: NORMAL
-  numExecutors: 0
   projectNamingStrategy: "standard"
   markupFormatter:
     plainText
