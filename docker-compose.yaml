@@ -39,6 +39,7 @@ services:
       OAUTH2_CLIENT_SECRET: ${OAUTH2_CLIENT_SECRET}
       WEB_UI_URL: http://localhost:8080
       SEED_JOB_REPO_URL: https://github.com/falldamagestudio/UE-Jenkins-Jobs
+      SEED_JOB_BRANCH: main
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
 
   controller-agent:

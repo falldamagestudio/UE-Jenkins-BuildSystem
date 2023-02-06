@@ -16,7 +16,7 @@ jobs:
               url("${SEED_JOB_REPO_URL}")
               credentials('github-user')
             }
-            branch('*/main')
+            branch('*/${SEED_JOB_BRANCH}')
           }
         }
 
