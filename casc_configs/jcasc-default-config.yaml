@@ -1,18 +1,4 @@
 jenkins:
-
-  # should be in auth.yaml
-  # Disable access for anonymous users
-  authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
-
-  # should be in auth.yaml
-  # Configure google credentials provider plugin's OAuth settings
-  securityRealm:
-    googleOAuth2:
-      clientId: ${OAUTH2_CLIENT_ID}
-      clientSecret: ${OAUTH2_CLIENT_SECRET}
-
   disableRememberMe: false
   mode: NORMAL
   numExecutors: 0

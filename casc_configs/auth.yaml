@@ -1,0 +1,12 @@
+jenkins:
+
+  # Disable access for anonymous users
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+  # Configure google credentials provider plugin's OAuth settings
+  securityRealm:
+    googleOAuth2:
+      clientId: ${OAUTH2_CLIENT_ID}
+      clientSecret: ${OAUTH2_CLIENT_SECRET}
