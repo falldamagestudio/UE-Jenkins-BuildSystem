@@ -41,7 +41,7 @@ services:
       SEED_JOB_REPO_URL: https://github.com/falldamagestudio/UE-Jenkins-Jobs
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
 
-  linux-swarm-agent:
+  controller-companion-agent:
     image: linux-swarm-agent:local
 
     volumes:
@@ -67,5 +67,5 @@ services:
       JENKINS_URL: http://controller:8080
       AGENT_USERNAME: ${AGENT_USERNAME}
       AGENT_API_TOKEN: ${AGENT_API_TOKEN}
-      LABELS: "smurf"
+      LABELS: "controller-companion-agent"
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
