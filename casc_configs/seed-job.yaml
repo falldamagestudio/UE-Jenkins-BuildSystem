@@ -2,7 +2,7 @@ jobs:
   - script: >
       job('Seed Job') {
 
-        label('controller-companion-agent')
+        label('controller-agent')
 
         // Repository which contains job DSL scripts
         scm {
