@@ -1,6 +1,5 @@
 jenkins:
   disableRememberMe: false
-  projectNamingStrategy: "standard"
   markupFormatter:
     plainText
   crumbIssuer:
