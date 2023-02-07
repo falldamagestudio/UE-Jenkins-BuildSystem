@@ -33,13 +33,23 @@ services:
           create_host_path: false
         read_only: true
 
+      # Make Plastic credential files available to controller
+      - type: bind
+        source: ./.plastic4
+        target: /var/jenkins_home/.plastic4
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: false
+
+
     environment:
       CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
       OAUTH2_CLIENT_ID: ${OAUTH2_CLIENT_ID}
       OAUTH2_CLIENT_SECRET: ${OAUTH2_CLIENT_SECRET}
       WEB_UI_URL: http://localhost:8080
       SEED_JOB_REPO_URL: https://github.com/falldamagestudio/UE-Jenkins-Jobs
-      SEED_JOB_BRANCH: main
+      SEED_JOB_BRANCH: 2.x
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
 
   controller-agent:
@@ -55,7 +65,7 @@ services:
 #          propagation: rprivate
 #          create_host_path: false
 
-      # Make GCP Service Account credential file available to controller
+      # Make GCP Service Account credential file available to controller agent
       - type: bind
         source: ./google_application_credentials.json
         target: /google_application_credentials.json
@@ -63,6 +73,15 @@ services:
           propagation: rprivate
           create_host_path: false
         read_only: true
+
+      # Make Plastic credential files available to controller agent
+      - type: bind
+        source: ./.plastic4
+        target: /home/jenkins/.plastic4
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: false
 
     environment:
       JENKINS_URL: http://controller:8080
