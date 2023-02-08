@@ -27,3 +27,10 @@ module "agent_templates_and_vms" {
   agent_templates = var.agent_templates
   static_agents = var.static_agents
 }
+
+module "jobs" {
+
+  source = "./jobs"
+
+  longtail_store_bucket_id = var.longtail_store_bucket_name
+}
