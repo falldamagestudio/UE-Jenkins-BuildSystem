@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: jenkins-controller-from-manual-config
-type: Opaque
-data:
-  google_oauth_client_id: ${GOOGLE_OAUTH_CLIENT_ID}
-  google_oauth_client_secret: ${GOOGLE_OAUTH_CLIENT_SECRET}
