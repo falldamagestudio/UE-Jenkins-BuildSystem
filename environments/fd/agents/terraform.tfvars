@@ -1,5 +1,6 @@
 agent_template_groups = [
 
+/*
     # Dynamic VM templates (Linux)
 
     {
@@ -43,6 +44,7 @@ agent_template_groups = [
             }
         }
     },
+*/
 /*
     # Static VM templates (Linux)
 
