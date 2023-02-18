@@ -3,11 +3,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "project_number" {
-  description = "Number for the GCP project that will contain the license server."
-  type        = string
-}
-
 variable "build_artifacts_location" {
   description = "Docker build artifact registry region/multi_region."
   type        = string

@@ -1,5 +1,4 @@
 project_id = "fd-ue-jenkins-buildsystem"
-project_number = "227513122420"
 region     = "europe-west1"
 zone       = "europe-west1-b"
 
