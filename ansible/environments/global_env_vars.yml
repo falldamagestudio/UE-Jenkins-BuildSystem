@@ -1,0 +1,7 @@
+---
+# Monitoring vars
+notification_email: alerts@example.com
+smtp_server: smtp-relay.gmail.com
+smtp_port: 587
+smtp_user: nonhuman@example.com
+

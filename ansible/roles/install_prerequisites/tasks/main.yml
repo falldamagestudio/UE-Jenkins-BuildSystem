@@ -1,0 +1,56 @@
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+
+- name: Add Docker GPG key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /usr/share/keyrings/docker.asc
+    mode: '0644'
+    force: true
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    filename: docker.list
+    repo: 'deb [signed-by=/usr/share/keyrings/docker.asc] https://download.docker.com/linux/debian bullseye stable'
+    state: present
+
+- name: Install Docker
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: latest
+    update_cache: true
+
+- name: Install Python packages for Docker
+  pip:
+    name:
+      - docker          # Docker SDK for Python
+      - docker-compose
+    state: latest
+
+- name: Configure Docker to use gcloud as authentication helper
+  ansible.builtin.command: echo "Y" | sudo gcloud auth configure-docker europe-west1-docker.pkg.dev # TODO: do not hardcode europe-west1 here
+
+# - name: Ensure group "docker" exists
+#   ansible.builtin.group:
+#     name: docker
+#     state: present
+
+# - name: Ensure ansible user is a member of "docker" group
+#   ansible.builtin.user:
+#     name: ansible
+#     groups: docker
+#     append: yes

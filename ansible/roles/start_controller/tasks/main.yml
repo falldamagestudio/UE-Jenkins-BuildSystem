@@ -1,0 +1,43 @@
+- name: Ensure Docker Compose folder exists
+  ansible.builtin.file:
+    path: /var/controller_stuff
+    state: directory
+    mode: '0644'
+
+- name: copy Docker Compose files
+  copy:
+    src: ../../jenkins-docker/{{ item }}
+    dest: /var/controller_stuff/{{ item }}
+  loop:
+    - docker-compose-controller.yaml
+    - docker-compose-controller.prod.yaml
+
+- name: copy CasC configs
+  copy:
+    src: ../../jenkins-docker/casc_configs
+    dest: /var/controller_stuff/casc_configs
+
+- name: Create .plastic4 folder
+  ansible.builtin.file:
+    path: /var/controller_stuff/.plastic4
+    state: directory
+    mode: '0644'
+
+- name: Create empty google_application_credentials.json
+  ansible.builtin.file:
+    path: /var/controller_stuff/google_application_credentials.json
+    state: touch
+    mode: '0644'
+
+- name: Create jenkins_home folder
+  ansible.builtin.file:
+    path: /var/controller_stuff/jenkins_home
+    state: directory
+    mode: '0644'
+
+- name: deploy Docker Compose stack
+  community.docker.docker_compose:
+    project_src: /var/controller_stuff
+    files:
+      - docker-compose-controller.yaml
+      - docker-compose-controller.prod.yaml
