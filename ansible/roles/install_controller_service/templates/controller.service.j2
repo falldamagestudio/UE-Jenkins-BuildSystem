@@ -8,8 +8,8 @@ After=docker.service
 Type=simple
 User={{ user }}
 WorkingDirectory={{ home }}
-ExecStart=docker-compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml up -d
-ExecStop=docker-compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml down
+ExecStart=docker compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml up -d
+ExecStop=docker compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml down
 RemainAfterExit=yes
 
 [Install]
