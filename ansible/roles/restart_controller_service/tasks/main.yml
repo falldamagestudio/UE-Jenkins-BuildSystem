@@ -1,0 +1,4 @@
+- name: Restart 'controller' service
+  systemd:
+    name: "{{ service_name }}"
+    state: restarted

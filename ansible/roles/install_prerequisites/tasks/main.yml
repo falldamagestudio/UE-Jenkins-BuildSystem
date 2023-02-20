@@ -43,14 +43,3 @@
 
 - name: Configure Docker to use gcloud as authentication helper
   ansible.builtin.command: echo "Y" | sudo gcloud auth configure-docker europe-west1-docker.pkg.dev # TODO: do not hardcode europe-west1 here
-
-# - name: Ensure group "docker" exists
-#   ansible.builtin.group:
-#     name: docker
-#     state: present
-
-# - name: Ensure ansible user is a member of "docker" group
-#   ansible.builtin.user:
-#     name: ansible
-#     groups: docker
-#     append: yes

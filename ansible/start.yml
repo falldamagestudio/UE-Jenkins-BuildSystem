@@ -4,7 +4,7 @@
   gather_facts: true
   pre_tasks:
   roles:
-    - start_controller
+    - start_controller_service
   tasks:
   vars:
     global_env_path: environments

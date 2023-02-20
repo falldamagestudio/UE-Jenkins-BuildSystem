@@ -1,0 +1,4 @@
+- name: Start 'controller' service
+  systemd:
+    name: "{{ service_name }}"
+    state: started

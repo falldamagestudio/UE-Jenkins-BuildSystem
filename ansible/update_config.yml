@@ -4,8 +4,7 @@
   gather_facts: true
   pre_tasks:
   roles:
-    - install_prerequisites
-    - install_controller_service
+    - update_controller_config
   tasks:
   vars:
     global_env_path: environments

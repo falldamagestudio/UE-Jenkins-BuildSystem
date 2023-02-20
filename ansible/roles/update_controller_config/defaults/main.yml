@@ -1,0 +1,4 @@
+group: controller
+user: controller
+home: "/home/{{ user }}"
+service_name: controller
