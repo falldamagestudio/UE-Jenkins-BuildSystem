@@ -43,3 +43,8 @@
 
 - name: Configure Docker to use gcloud as authentication helper
   ansible.builtin.command: echo "Y" | sudo gcloud auth configure-docker europe-west1-docker.pkg.dev # TODO: do not hardcode europe-west1 here
+
+- name: Configure Docker to use journald for logging
+  copy:
+    src: templates/daemon.json
+    dest: /etc/docker/daemon.json
