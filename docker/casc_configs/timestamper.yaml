@@ -1,0 +1,9 @@
+# Configure the timestamper plugin
+#
+# The Timestamper plugin adds timestamps to the console output of Jenkins jobs
+
+unclassified:
+  timestamper:
+    allPipelines: true
+    elapsedTimeFormat: "'<b>'HH:mm:ss.SSS'</b> '"
+    systemTimeFormat: "'<b>'yyyy-MM-dd HH:mm:ss'</b> '"

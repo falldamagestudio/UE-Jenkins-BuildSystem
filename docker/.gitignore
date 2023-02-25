@@ -1,0 +1,7 @@
+/jenkins_home
+
+# Service Account used when authenticating against GCP
+/google_application_credentials.json
+
+# Plastic 'cm' tool configuration, includes authentication and content encryption key
+/.plastic4

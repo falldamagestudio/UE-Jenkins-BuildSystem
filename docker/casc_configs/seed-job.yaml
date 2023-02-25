@@ -1,0 +1,40 @@
+jobs:
+
+  # Introduce a Seed Job
+  # When run, this job programmatically generates all other jobs
+
+  - script: >
+      job('Seed Job') {
+
+        // The Seed Job will run on the controller-agent only
+        label('controller-agent')
+
+        // Repository which contains job DSL scripts
+        scm {
+          git {
+            remote {
+              url("${SEED_JOB_REPO_URL}")
+              credentials('github-user')
+            }
+            branch('*/${SEED_JOB_BRANCH}')
+          }
+        }
+
+        steps {
+          jobDsl {
+
+            // Scan recursively through jobs repository for Job DSL scripts
+            targets "**/*.groovy"
+
+            // Fail build if generated item(s) have the same name as existing items already managed by another seed job.
+            // Reference: https://www.jenkins.io/doc/pipeline/steps/job-dsl/
+            failOnSeedCollision true
+
+            // When a previously generated job/view/config file no longer is being referenced, delete the item
+            // Reference: https://www.jenkins.io/doc/pipeline/steps/job-dsl/
+            removedJobAction "DELETE"
+            removedViewAction "DELETE"
+            removedConfigFilesAction "DELETE"
+          }
+        }
+      }

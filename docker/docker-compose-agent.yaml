@@ -1,0 +1,76 @@
+services:
+  controller-agent:
+    image: linux-swarm-agent:local
+
+    volumes:
+#      # Ensure the agent's home directory maps to a folder on the host
+#      # This allows upgrading the agent container but keeping workspace
+#      - type: bind
+#        source: ./linux_swarm_agent_jenkins_home
+#        target: /var/jenkins_home
+#        bind:
+#          propagation: rprivate
+#          create_host_path: false
+
+      # Make GCP Service Account credential file available to controller agent
+      - type: bind
+        source: ./google_application_credentials.json
+        target: /google_application_credentials.json
+        bind:
+          propagation: rprivate
+        read_only: true
+
+      # Make Plastic credential files available to controller agent
+      - type: bind
+        source: ./.plastic4
+        target: /home/jenkins/.plastic4
+        bind:
+          propagation: rprivate
+        read_only: false
+
+    environment:
+      JENKINS_URL: http://controller:8080
+      AGENT_USERNAME: ${AGENT_USERNAME}
+      AGENT_API_TOKEN: ${AGENT_API_TOKEN}
+      AGENT_NAME: controller-agent
+      LABELS: "controller-agent"
+      GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
+
+#   linux-agent:
+#     image: linux-swarm-agent:local
+
+#     volumes:
+# #      # Ensure the agent's home directory maps to a folder on the host
+# #      # This allows upgrading the agent container but keeping workspace
+# #      - type: bind
+# #        source: ./linux_swarm_agent_jenkins_home
+# #        target: /var/jenkins_home
+# #        bind:
+# #          propagation: rprivate
+# #          create_host_path: false
+
+#       # Make GCP Service Account credential file available to linux agent
+#       - type: bind
+#         source: ./google_application_credentials.json
+#         target: /google_application_credentials.json
+#         bind:
+#           propagation: rprivate
+#           create_host_path: false
+#         read_only: true
+
+#       # Make Plastic credential files available to linux agent
+#       - type: bind
+#         source: ./.plastic4
+#         target: /home/jenkins/.plastic4
+#         bind:
+#           propagation: rprivate
+#           create_host_path: false
+#         read_only: false
+
+#     environment:
+#       JENKINS_URL: http://controller:8080
+#       AGENT_USERNAME: ${AGENT_USERNAME}
+#       AGENT_API_TOKEN: ${AGENT_API_TOKEN}
+#       AGENT_NAME: linux-agent
+#       LABELS: "build-engine-linux-git-dynamic build-game-linux-plastic-dynamic build-game-linux-git-dynamic"
+#       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json

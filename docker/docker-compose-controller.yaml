@@ -1,0 +1,55 @@
+services:
+  controller:
+    image: controller:local
+
+    ports:
+      - 8080:8080
+
+    volumes:
+      # Ensure the controller's home directory maps to a folder on the host
+      # This allows upgrading the jenkins container but keeping all history
+      - type: bind
+        source: ./jenkins_home
+        target: /var/jenkins_home
+        bind:
+          propagation: rprivate
+
+      # Map CasC config files into container
+      - type: bind
+        source: ./casc_configs
+        target: /var/jenkins_home/casc_configs
+        bind:
+          propagation: rprivate
+        read_only: true
+
+      # Make GCP Service Account credential file available to controller
+      - type: bind
+        source: ./google_application_credentials.json
+        target: /google_application_credentials.json
+        bind:
+          propagation: rprivate
+        read_only: true
+
+      # Make Plastic credential files available to controller
+      - type: bind
+        source: ./.plastic4
+        target: /var/jenkins_home/.plastic4
+        bind:
+          propagation: rprivate
+        read_only: false
+
+
+    healthcheck:
+      test: curl --fail http://localhost:8080/login || exit 1
+      interval: 5s
+      retries: 20
+      start_period: 10s
+      timeout: 5s
+
+    environment:
+      CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
+      WEB_UI_URL: http://localhost:8080
+      SEED_JOB_REPO_URL: https://github.com/falldamagestudio/UE-Jenkins-Jobs
+      SEED_JOB_BRANCH: 2.x
+      GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
+

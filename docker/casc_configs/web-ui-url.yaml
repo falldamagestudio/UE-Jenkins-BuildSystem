@@ -1,0 +1,5 @@
+# Set frontend web URL
+# Jenkins will use this URL whenever it needs to generate UI-related URLs to internal pages
+unclassified:
+  location:
+    url: ${WEB_UI_URL}

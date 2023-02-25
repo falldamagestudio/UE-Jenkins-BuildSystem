@@ -1,0 +1,11 @@
+# Some HTTP proxies filter out information that the default crumb issuer uses to
+# calculate the nonce value. If an HTTP proxy sits between your browser client and
+# your Jenkins server and you receive a 403 response when submitting a form to
+# Jenkins, checking this option may help. Using this option makes the nonce value easier to forge.
+#
+# This is known as "Enable proxy compatibility" in the UI.
+
+jenkins:
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true

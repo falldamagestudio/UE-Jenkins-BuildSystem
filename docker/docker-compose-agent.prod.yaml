@@ -1,0 +1,3 @@
+services:
+  controller-agent:
+    image: europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/linux-swarm-agent:a2c5373

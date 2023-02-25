@@ -1,0 +1,10 @@
+# Configure Build Timestamp plugin
+#
+# The Build Timestamp plugin export BUILD_TIMESTAMP as an envrinonment variable,
+#   accessible to build jobs
+
+unclassified:
+  buildTimestamp:
+    enableBuildTimestamp: true
+    pattern: "yyyyMMdd_HHmmss"
+    timezone: "Etc/UTC"

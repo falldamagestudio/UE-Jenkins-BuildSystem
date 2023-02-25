@@ -1,0 +1,21 @@
+jenkins:
+  globalNodeProperties:
+    - envVars:
+        env:
+
+        # Add BUILD_STORE_LIMITED_DURATION_BUCKET_NAME as job environment variable
+        # This will be available in all jobs
+        - key: "BUILD_STORE_LIMITED_DURATION_BUCKET_NAME"
+          value: "fd-ue-jenkins-buildsystem-builds-limited-duration"
+
+        # Add GOOGLE_ROBOT_CREDENTIALS_ID as job environment variable
+        # This will be available in all jobs
+        #
+        # This is the ID of a credential that can be used in any place where a GoogleRobotCredential is needed
+        - key: "GOOGLE_ROBOT_CREDENTIALS_ID"
+          value: "fd-ue-jenkins-buildsystem"
+
+        # Add LONGTAIL_STORE_BUCKET_NAME as a job environment variable
+        # This will be available in all jobs
+        - key: "LONGTAIL_STORE_BUCKET_NAME"
+          value: "fd-ue-jenkins-buildsystem-longtail"
