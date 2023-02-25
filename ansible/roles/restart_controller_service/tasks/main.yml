@@ -1,4 +1,13 @@
-- name: Restart 'controller' service
-  systemd:
-    name: "{{ service_name }}"
-    state: restarted
+- name: Restart 'controller' service, and collect error messages on failure
+  block:
+    - name: Restart 'controller' service
+      systemd:
+        name: "{{ service_name }}"
+        state: restarted
+  rescue:
+    - name: Fetch error messages
+      shell: journalctl -u "{{ service_name }}"
+      register: err_msg
+    - name: Print error messages to console
+      fail:
+        msg: "{{ err_msg.stdout }}"
