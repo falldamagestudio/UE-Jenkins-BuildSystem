@@ -1,29 +1,35 @@
 
+
+# Default to 'fd' environment, if the ENV variable is not set
+ifndef ENV
+ENV:=config/fd
+endif
+
 ###################################################################################################
 
 .PHONY: terraform-apply-core terraform-apply-controller terraform-apply-agents
 
 terraform-apply-core:
-	cd config/fd/terraform/core && terraform init && terraform apply
+	cd $(ENV)/terraform/core && terraform init && terraform apply
 
 terraform-apply-controller:
-	cd config/fd/terraform/controller && terraform init && terraform apply
+	cd $(ENV)/terraform/controller && terraform init && terraform apply
 
 terraform-apply-agents:
-	cd config/fd/terraform/agents && terraform init && terraform apply
+	cd $(ENV)/terraform/agents && terraform init && terraform apply
 
 ###################################################################################################
 
 .PHONY: terraform-destroy-core terraform-destroy-controller terraform-destroy-agents
 
 terraform-destroy-core:
-	cd config/fd/terraform/core && terraform init && terraform destroy
+	cd $(ENV)/terraform/core && terraform init && terraform destroy
 
 terraform-destroy-controller:
-	cd config/fd/terraform/controller && terraform init && terraform destroy
+	cd $(ENV)/terraform/controller && terraform init && terraform destroy
 
 terraform-destroy-agents:
-	cd config/fd/terraform/agents && terraform init && terraform destroy
+	cd $(ENV)/terraform/agents && terraform init && terraform destroy
 
 ###################################################################################################
 
@@ -31,20 +37,20 @@ terraform-destroy-agents:
 
 install-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i config/fd/ansible/hosts.ini ansible/install.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/install.yml
 
 update-config:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i config/fd/ansible/hosts.ini ansible/update_config.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/update_config.yml
 
 start-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i config/fd/ansible/hosts.ini ansible/start.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/start.yml
 
 stop-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i config/fd/ansible/hosts.ini ansible/stop.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/stop.yml
 
 restart-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i config/fd/ansible/hosts.ini ansible/restart.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/restart.yml
