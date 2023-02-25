@@ -4,13 +4,12 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-# Environment=NODE_PORT=30000
-Type=simple
+Type=oneshot
+RemainAfterExit=yes
 User={{ user }}
 WorkingDirectory={{ home }}
-ExecStart=docker compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml up -d
+ExecStart=docker compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml up --wait
 ExecStop=docker compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml down
-RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
