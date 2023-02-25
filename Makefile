@@ -14,6 +14,19 @@ terraform-apply-agents:
 
 ###################################################################################################
 
+.PHONY: terraform-destroy-core terraform-destroy-controller terraform-destroy-agents
+
+terraform-destroy-core:
+	cd config/fd/terraform/core && terraform init && terraform destroy
+
+terraform-destroy-controller:
+	cd config/fd/terraform/controller && terraform init && terraform destroy
+
+terraform-destroy-agents:
+	cd config/fd/terraform/agents && terraform init && terraform destroy
+
+###################################################################################################
+
 .PHONY: install-controller update-config start-controller stop-controller restart-controller
 
 install-controller:
