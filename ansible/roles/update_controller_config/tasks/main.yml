@@ -36,8 +36,3 @@
     mode: '0644'
     group: "{{ group }}"
     owner: "{{ user }}"
-
-- name: Start 'controller' service
-  systemd:
-    name: "{{ service_name }}"
-    state: started
