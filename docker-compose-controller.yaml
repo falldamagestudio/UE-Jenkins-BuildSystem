@@ -39,9 +39,17 @@ services:
         read_only: false
 
 
+    healthcheck:
+      test: curl --fail http://localhost:8080/login || exit 1
+      interval: 5s
+      retries: 20
+      start_period: 10s
+      timeout: 5s
+
     environment:
       CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
       WEB_UI_URL: http://localhost:8080
       SEED_JOB_REPO_URL: https://github.com/falldamagestudio/UE-Jenkins-Jobs
       SEED_JOB_BRANCH: 2.x
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
+
