@@ -1,4 +1,8 @@
 
+# TODO: remove hardcoded controller host IP
+# This should be sourced from $(ENV)/... somewhere
+CONTROLLER_HOST_IP:=130.211.54.100
+
 
 # Default to 'fd' environment, if the ENV variable is not set
 ifndef ENV
@@ -54,3 +58,6 @@ stop-controller:
 restart-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/restart.yml
+
+ssh-controller:
+	ssh -i $(ENV)/ansible/ansible.private_key ansible@$(CONTROLLER_HOST_IP)
