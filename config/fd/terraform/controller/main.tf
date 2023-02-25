@@ -1,6 +1,6 @@
 module "controller" {
 
-    source = "../../../infrastructure/controller"
+    source = "../../../../infrastructure/controller"
 
     project_id = data.terraform_remote_state.core.outputs.project_id
     region = data.terraform_remote_state.core.outputs.region

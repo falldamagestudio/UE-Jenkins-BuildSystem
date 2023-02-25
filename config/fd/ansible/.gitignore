@@ -1,0 +1,6 @@
+# Credentials
+.vault_password
+*_vault.*
+*-secrets.*
+
+ansible.private_key

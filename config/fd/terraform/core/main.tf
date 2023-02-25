@@ -1,6 +1,6 @@
 module "core" {
 
-    source = "../../../infrastructure/core"
+    source = "../../../../infrastructure/core"
 
     project_id = var.project_id
     region = var.region

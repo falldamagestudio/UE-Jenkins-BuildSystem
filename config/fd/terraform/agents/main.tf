@@ -38,7 +38,7 @@ locals {
 }
 module "agents" {
 
-    source = "../../../infrastructure/agents"
+    source = "../../../../infrastructure/agents"
 
     project_id = data.terraform_remote_state.core.outputs.project_id
     zone = data.terraform_remote_state.core.outputs.zone

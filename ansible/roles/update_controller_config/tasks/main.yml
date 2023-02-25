@@ -6,20 +6,26 @@
 
 - name: copy Docker Compose files
   copy:
-    src: ../../jenkins-docker/{{ item }}
-    dest: "{{ home }}/{{ item }}"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     group: "{{ group }}"
     owner: "{{ user }}"
-  loop:
-    - docker-compose-controller.yaml
-    - docker-compose-controller.prod.yaml
+  with_items: "{{ docker_compose_files }}"
+
+- name: Create casc_configs folder
+  file:
+    path: "{{ home }}/casc_configs"
+    state: directory
+    mode: '0644'
+    group: "{{ group }}"
+    owner: "{{ user }}"
 
 - name: copy CasC configs
-  copy:
-    src: ../../jenkins-docker/casc_configs
-    dest: "{{ home }}/casc_configs"
-    group: "{{ group }}"
-    owner: "{{ user }}"
+  ansible.posix.synchronize:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    delete: true
+  with_items: "{{ casc_config_folders }}"
 
 - name: Create .plastic4 folder
   file:

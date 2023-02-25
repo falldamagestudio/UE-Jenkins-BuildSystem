@@ -6,12 +6,6 @@
   roles:
     - restart_controller_service
   tasks:
-  vars:
-    global_env_path: environments
-    env_path: "{{ global_env_path }}/{{ env }}"
   vars_files:
     - "{{ env_path }}/env_vars.yml"
-    - "{{ env_path }}/env_vars_vault.yml"
-    - "{{ global_env_path }}/global_env_vars.yml"
-    - "{{ global_env_path }}/global_env_vars_vault.yml"
-
+    - "{{ global_env_path }}/env_vars.yml"

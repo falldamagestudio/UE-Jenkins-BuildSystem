@@ -8,8 +8,8 @@ Type=oneshot
 RemainAfterExit=yes
 User={{ user }}
 WorkingDirectory={{ home }}
-ExecStart=docker compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml up --wait
-ExecStop=docker compose -f {{ home }}/docker-compose-controller.yaml -f {{ home }}/docker-compose-controller.prod.yaml down
+ExecStart=docker compose -f {{ home }}/docker-compose-controller.base.yaml -f {{ home }}/docker-compose-controller.override.yaml up --wait
+ExecStop=docker compose -f {{ home }}/docker-compose-controller.base.yaml -f {{ home }}/docker-compose-controller.override.yaml down
 
 [Install]
 WantedBy=multi-user.target

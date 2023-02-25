@@ -2,3 +2,15 @@ group: controller
 user: controller
 home: "/home/{{ user }}"
 service_name: controller
+
+docker_compose_files:
+  - src: "{{ env_path }}/../docker/docker-compose-controller.override.yaml"
+    dest: "{{ home }}/docker-compose-controller.override.yaml"
+  - src: "{{ global_env_path }}/../docker/docker-compose-controller.base.yaml"
+    dest: "{{ home }}/docker-compose-controller.base.yaml"
+
+casc_config_folders:
+  - src: "{{ env_path }}/../casc_configs"
+    dest: "{{ home }}/casc_configs/environment_specific"
+  - src: "{{ global_env_path }}/../casc_configs"
+    dest: "{{ home }}/casc_configs/shared"
