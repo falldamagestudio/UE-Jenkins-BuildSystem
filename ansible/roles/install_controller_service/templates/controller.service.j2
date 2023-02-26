@@ -8,8 +8,17 @@ Type=oneshot
 RemainAfterExit=yes
 User={{ user }}
 WorkingDirectory={{ home }}
+
+# Launch controller: wait for container to start, and for health check to show 'healthy' status
+# Note that if the container starts but the healthcheck does not turn healthy within the timeout,
+#   the service will transition to 'failed' state, but the container will remain running
 ExecStart=docker compose -f {{ home }}/docker-compose-controller.base.yaml -f {{ home }}/docker-compose-controller.override.yaml up --wait
-ExecStop=docker compose -f {{ home }}/docker-compose-controller.base.yaml -f {{ home }}/docker-compose-controller.override.yaml down
+
+# Stop container(s)
+# We use ExecStopPost instead of ExecStop, because ExecStopPost runs both when stopping a successfully-started service,
+#   as well as directly after a service transitions to the 'failed' state (which, if this is due to Docker health check failing,
+#   means that there still are containers running)
+ExecStopPost=docker compose -f {{ home }}/docker-compose-controller.base.yaml -f {{ home }}/docker-compose-controller.override.yaml down
 
 [Install]
 WantedBy=multi-user.target
