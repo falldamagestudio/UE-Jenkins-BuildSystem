@@ -17,22 +17,32 @@
   file:
     path: "{{ home }}/casc_configs"
     state: directory
-    mode: '0644'
+    mode: '0755'
     group: "{{ group }}"
     owner: "{{ user }}"
 
-- name: copy CasC configs
+- name: Copy CasC configs
   ansible.posix.synchronize:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    delete: true
+    delete: true  # Remove files in destination folders that do not exist in source folders
+    owner: false  # Do not set owner (this is controlled by the next task)
+    group: false  # Do not set group (this is controlled by the next task)
+  with_items: "{{ casc_config_folders }}"
+
+- name: Fix group/owner of CasC configs
+  file:
+    dest: "{{ item.dest }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: yes
   with_items: "{{ casc_config_folders }}"
 
 - name: Create .plastic4 folder
   file:
     path: "{{ home }}/.plastic4"
     state: directory
-    mode: '0644'
+    mode: '0755'
     group: "{{ group }}"
     owner: "{{ user }}"
 
