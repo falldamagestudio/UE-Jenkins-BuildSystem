@@ -1,13 +1,20 @@
 - name: Start 'controller' service, and collect error messages on failure
   block:
+    - name: Capture start timestamp, in case we need to retrieve logs
+      shell: date --utc "+%Y-%m-%d %H:%M:%S UTC"
+      register: role_start_timestamp
+      changed_when: false
+
     - name: Start 'controller' service
       systemd:
         name: "{{ service_name }}"
         state: started
+
   rescue:
-    - name: Fetch error messages
-      shell: journalctl -u "{{ service_name }}"
-      register: err_msg
-    - name: Print error messages to console
+    - name: Fetch output from invoking docker, and the container
+      shell: journalctl --since "{{ role_start_timestamp.stdout }}" "CONTAINER_NAME={{ docker_container_name }}" + "_SYSTEMD_UNIT={{ service_name }}.service"
+      register: docker_output
+
+    - name: Print output to console
       fail:
-        msg: "{{ err_msg.stdout }}"
+        msg: "{{ docker_output.stdout }}"
