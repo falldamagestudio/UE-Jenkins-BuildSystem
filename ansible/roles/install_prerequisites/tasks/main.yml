@@ -46,3 +46,8 @@
   copy:
     src: templates/daemon.json
     dest: /etc/docker/daemon.json
+
+- name: Restart Docker daemon to pick up logging configuration changes
+  systemd:
+    name: docker
+    state: restarted
