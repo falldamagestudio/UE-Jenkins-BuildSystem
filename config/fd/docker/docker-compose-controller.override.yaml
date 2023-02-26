@@ -1,3 +1,6 @@
 services:
   controller:
     image: europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/controller:commit-69d94b4
+
+    environment:
+      WEB_UI_URL: https://fd-ue-jenkins-buildsystem.falldamagestudio.com
