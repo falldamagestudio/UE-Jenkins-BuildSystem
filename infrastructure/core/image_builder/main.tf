@@ -41,16 +41,12 @@ resource "google_compute_firewall" "allow_ssh_ingress" {
 }
 
 resource "google_service_account" "image_builder_instance_controller" {
-  depends_on = [ var.module_depends_on ]
-
   account_id   = "image-builder-instance-ctl"
   display_name = "Management account for image builder VMs"
 }
 
 // Cloud Builder requires the instance controller account to to have the Compute Admin role
 resource "google_project_iam_member" "image_builder_instance_controller_compute_admin" {
-  depends_on = [ var.module_depends_on ]
-
   // Grant the Compute Admin role
   // Reference: https://cloud.google.com/compute/docs/access/iam#compute.admin
   role   = "roles/compute.admin"
@@ -59,8 +55,6 @@ resource "google_project_iam_member" "image_builder_instance_controller_compute_
 
 // Packer requires the instance controller account to have the Compute Instance Admin (v1) role
 resource "google_project_iam_member" "image_builder_instance_controller_compute_instance_admin_v1" {
-  depends_on = [ var.module_depends_on ]
-
   // Grant the Compute Instance Admin (v1) role
   // Reference: https://cloud.google.com/compute/docs/access/iam#compute.instanceAdmin.v1
   role   = "roles/compute.instanceAdmin.v1"
@@ -70,8 +64,6 @@ resource "google_project_iam_member" "image_builder_instance_controller_compute_
 // Allow the instance controller account to use the artifact uploader account
 // Cloud Builder needs this permission; it will use the artifact uploader account from within the running instance
 resource "google_service_account_iam_member" "image_builder_instance_controller_service_account_user" {
-  depends_on = [ var.module_depends_on ]
-
   service_account_id = var.build_artifact_uploader_service_account_name
 
   // Grant the Service Account User role
@@ -84,8 +76,6 @@ resource "google_service_account_iam_member" "image_builder_instance_controller_
 // GitHub Actions needs this permission; it will peek into GAR to determine which images already exist
 resource "google_artifact_registry_repository_iam_member" "image_builder_instance_controller_build_artifact_uploader_access" {
   provider = google-beta
-
-  depends_on = [ var.module_depends_on ]
 
   location = var.build_artifact_registry_repository_location
   repository = var.build_artifact_registry_repository_name
