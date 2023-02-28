@@ -1,0 +1,5 @@
+group: controller-agent
+user: controller-agent
+service_description: "Jenkins controller agent"
+home: "/home/{{ user }}"
+service_name: controller-agent

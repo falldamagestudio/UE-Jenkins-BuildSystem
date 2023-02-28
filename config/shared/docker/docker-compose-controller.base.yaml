@@ -4,6 +4,7 @@ services:
 
     ports:
       - 8080:8080
+      - 50000:50000
 
     volumes:
       # Ensure the controller's home directory maps to a folder on the host

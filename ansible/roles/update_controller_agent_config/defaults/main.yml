@@ -1,7 +1,7 @@
-group: controller
-user: controller
+group: controller-agent
+user: controller-agent
 home: "/home/{{ user }}"
-service_name: controller
+service_name: controller-agent
 
 region: europe-west1 # TODO: do not hardcode europe-west1 here
 

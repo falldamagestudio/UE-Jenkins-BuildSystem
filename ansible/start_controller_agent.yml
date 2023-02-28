@@ -4,8 +4,7 @@
   gather_facts: true
   pre_tasks:
   roles:
-    - install_prerequisites
-    - install_controller_service
+    - start_controller_agent_service
   tasks:
   vars_files:
     - "{{ env_path }}/env_vars.yml"

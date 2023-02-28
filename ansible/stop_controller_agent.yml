@@ -1,0 +1,12 @@
+---
+- hosts: remote
+  become: yes
+  gather_facts: true
+  pre_tasks:
+  roles:
+    - stop_controller_agent_service
+  tasks:
+  vars_files:
+    - "{{ env_path }}/env_vars.yml"
+    - "{{ global_env_path }}/env_vars.yml"
+

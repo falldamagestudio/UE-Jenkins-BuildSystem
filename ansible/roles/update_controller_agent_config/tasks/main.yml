@@ -1,0 +1,46 @@
+# - name: Ensure Docker Compose folder exists
+#   ansible.builtin.file:
+#     path: /var/controller_stuff
+#     state: directory
+#     mode: '0644'
+
+- name: copy Docker Compose files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+    group: "{{ group }}"
+    owner: "{{ user }}"
+  with_items: "{{ docker_compose_files }}"
+
+- name: Create .plastic4 folder
+  file:
+    path: "{{ home }}/.plastic4"
+    state: directory
+    mode: '0755'
+    group: "{{ group }}"
+    owner: "{{ user }}"
+
+- name: Copy google_application_credentials.json
+  copy:
+    src: "{{ google_application_credentials_file.src }}"
+    dest: "{{ google_application_credentials_file.dest }}"
+    mode: '0644'
+    group: "{{ group }}"
+    owner: "{{ user }}"
+
+- name: Ensure .docker folder exists
+  ansible.builtin.file:
+    path: "{{ home }}/.docker"
+    state: directory
+    mode: '0755'
+    group: "{{ group }}"
+    owner: "{{ user }}"
+
+- name: Configure Docker to use gcloud as authentication helper
+  template:
+    src: templates/config.json.j2
+    dest: "{{ home }}/.docker/config.json"
+    mode: '0600'
+    group: "{{ group }}"
+    owner: "{{ user }}"

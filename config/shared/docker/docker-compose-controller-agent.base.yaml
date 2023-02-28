@@ -3,14 +3,14 @@ services:
     image: linux-swarm-agent:local
 
     volumes:
-#      # Ensure the agent's home directory maps to a folder on the host
-#      # This allows upgrading the agent container but keeping workspace
-#      - type: bind
-#        source: ./linux_swarm_agent_jenkins_home
-#        target: /var/jenkins_home
-#        bind:
-#          propagation: rprivate
-#          create_host_path: false
+      # Ensure the agent's home directory maps to a folder on the host
+      # This allows upgrading the agent container but keeping workspace
+      - type: bind
+        source: ./container-home
+        target: /home/jenkins
+        bind:
+          propagation: rprivate
+          create_host_path: false
 
       # Make GCP Service Account credential file available to controller agent
       - type: bind
@@ -29,7 +29,7 @@ services:
         read_only: false
 
     environment:
-      JENKINS_URL: http://controller:8080
+      JENKINS_URL: http://localhost:50000
       AGENT_USERNAME: ${AGENT_USERNAME}
       AGENT_API_TOKEN: ${AGENT_API_TOKEN}
       AGENT_NAME: controller-agent

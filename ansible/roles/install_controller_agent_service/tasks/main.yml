@@ -1,0 +1,28 @@
+- name: Create 'controller-agent' user
+  user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
+#      shell: /sbin/nologin
+    state: present
+    create_home: yes
+
+- name: Create 'controller-agent' systemd service file
+  template:
+    src: templates/{{ service_name }}.service.j2
+    dest: /lib/systemd/system/{{ service_name }}.service    
+
+# container-home is where the agent Docker container will have its home directory
+# This needs to have 0777 permissions since the host's controller-agent UID and the
+# container's jenkins UID have no correlation
+- name: Create container-home folder
+  file:
+    path: "{{ home }}/container-home"
+    state: directory
+    mode: '0777'
+    group: "{{ group }}"
+    owner: "{{ user }}"
+
+- name: Re-read systemd configurations
+  systemd:
+    daemon_reload: true
