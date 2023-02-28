@@ -1,13 +1,3 @@
-locals {
-  wait = length(google_compute_network.image_builder_network.id
-    ) + length(google_compute_subnetwork.image_builder_subnetwork.id
-    ) + length(google_compute_firewall.allow_winrm_ingress.id
-    ) + length(google_service_account.image_builder_instance_controller.id
-    ) + length(google_project_iam_member.image_builder_instance_controller_compute_admin.etag
-    ) + length(google_project_iam_member.image_builder_instance_controller_compute_instance_admin_v1.etag
-    ) + length(google_service_account_iam_member.image_builder_instance_controller_service_account_user.etag)
-}
-
 resource "google_compute_network" "image_builder_network" {
   name = "image-builder-network"
   auto_create_subnetworks = false

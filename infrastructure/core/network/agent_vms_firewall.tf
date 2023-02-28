@@ -1,6 +1,4 @@
 resource "google_compute_firewall" "agent_vms_allow_winrm" {
-  depends_on = [ var.module_depends_on ]
-
   name = "agent-vms-allow-winrm"
   
   network = google_compute_network.agent_vms.name
@@ -16,8 +14,6 @@ resource "google_compute_firewall" "agent_vms_allow_winrm" {
 }
 
 resource "google_compute_firewall" "agent_vms_allow_ssh" {
-  depends_on = [ var.module_depends_on ]
-
   name = "agent-vms-allow-ssh"
   
   network = google_compute_network.agent_vms.name
@@ -33,8 +29,6 @@ resource "google_compute_firewall" "agent_vms_allow_ssh" {
 }
 
 resource "google_compute_firewall" "agent_vms_allow_rdp" {
-  depends_on = [ var.module_depends_on ]
-
   name = "agent-vms-allow-rdp"
 
   network = google_compute_network.agent_vms.name

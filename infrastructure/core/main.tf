@@ -4,6 +4,8 @@ module "google_apis" {
 }
 
 module "network" {
+  depends_on = [module.google_apis]
+
   source = "./network"
 
   agent_vms_subnetwork_cidr_range = var.agent_vms_subnetwork_cidr_range
@@ -11,7 +13,7 @@ module "network" {
 }
 
 module "docker_build_artifacts" {
-  module_depends_on = [module.google_apis.wait]
+  depends_on = [module.google_apis]
 
   source = "./docker_build_artifacts"
 
@@ -21,7 +23,7 @@ module "docker_build_artifacts" {
 
 module "image_builder" {
 
-  module_depends_on = [module.google_apis.wait]
+  depends_on = [module.google_apis]
 
   source = "./image_builder"
 
@@ -34,7 +36,7 @@ module "image_builder" {
 
 module "longtail_store" {
 
-  module_depends_on = [module.google_apis.wait]
+  depends_on = [module.google_apis]
 
   source = "./longtail_store"
 
@@ -44,7 +46,7 @@ module "longtail_store" {
 
 module "ssh_vm_windows_auth" {
 
-  module_depends_on = [module.google_apis.wait]
+  depends_on = [module.google_apis]
 
   source = "./ssh_vm_windows_auth"
 }
