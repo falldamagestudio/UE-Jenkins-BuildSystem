@@ -37,9 +37,9 @@ terraform-destroy-agents:
 
 ###################################################################################################
 
-.PHONY: ssh-controller
+.PHONY: ssh-controller-vm
 
-ssh-controller:
+ssh-controller-vm:
 	ssh -i $(ENV)/ansible/ansible.private_key ansible@$(CONTROLLER_HOST_IP)
 
 ###################################################################################################
