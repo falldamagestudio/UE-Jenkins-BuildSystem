@@ -7,13 +7,11 @@ services:
       - 50000:50000
 
     volumes:
-      # Ensure the controller's home directory maps to a folder on the host
+      # Ensure the controller's home directory maps to a Docker volume
       # This allows upgrading the jenkins container but keeping all history
-      - type: bind
-        source: ./jenkins_home
+      - type: volume
+        source: controller-home
         target: /var/jenkins_home
-        bind:
-          propagation: rprivate
 
       # Map CasC config files into container
       - type: bind
@@ -54,3 +52,6 @@ services:
       SEED_JOB_BRANCH: 2.x
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
 
+volumes:
+  controller-home:
+    name: controller-home

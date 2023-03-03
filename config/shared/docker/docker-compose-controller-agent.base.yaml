@@ -3,14 +3,11 @@ services:
     image: linux-swarm-agent:local
 
     volumes:
-      # Ensure the agent's home directory maps to a folder on the host
+      # Ensure the controller agent's home directory maps to a Docker volume
       # This allows upgrading the agent container but keeping workspace
-      - type: bind
-        source: ./container-home
+      - type: volume
+        source: controller-agent-home
         target: /home/jenkins
-        bind:
-          propagation: rprivate
-          create_host_path: false
 
       # Make GCP Service Account credential file available to controller agent
       - type: bind
@@ -35,6 +32,11 @@ services:
       AGENT_NAME: controller-agent
       LABELS: "controller-agent"
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
+
+volumes:
+  controller-agent-home:
+    name: controller-agent-home
+
 
 #   linux-agent:
 #     image: linux-swarm-agent:local

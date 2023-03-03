@@ -12,17 +12,6 @@
     src: templates/{{ service_name }}.service.j2
     dest: /lib/systemd/system/{{ service_name }}.service    
 
-# jenkins_home is where the controller Docker container will write its data
-# This needs to have 0777 permissions since the host's controller UID and the
-# container's jenkins UID have no correlation
-- name: Create jenkins_home folder
-  file:
-    path: "{{ home }}/jenkins_home"
-    state: directory
-    mode: '0777'
-    group: "{{ group }}"
-    owner: "{{ user }}"
-
 - name: Re-read systemd configurations
   systemd:
     daemon_reload: true
