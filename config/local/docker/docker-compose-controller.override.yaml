@@ -1,0 +1,6 @@
+services:
+  controller:
+    image: controller:local
+
+    environment:
+      WEB_UI_URL: http://localhost:8080

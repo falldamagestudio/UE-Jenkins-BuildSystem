@@ -1,0 +1,3 @@
+services:
+  controller-agent:
+    image: linux-swarm-agent:local

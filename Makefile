@@ -89,3 +89,14 @@ stop-controller-agent:
 restart-controller-agent:
 	ansible-galaxy install collections -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/restart_controller_agent.yml
+
+###################################################################################################
+
+.PHONY: run-local-controller run-local-controller-agent
+
+run-local-controller:
+	(docker compose -f $(ENV)/../shared/docker/docker-compose-controller.base.yaml -f $(ENV)/../local/docker/docker-compose-controller.override.yaml up)
+
+run-local-controller-agent:
+	(docker compose -f $(ENV)/../shared/docker/docker-compose-controller-agent.base.yaml -f $(ENV)/../local/docker/docker-compose-controller-agent.override.yaml up)
+
