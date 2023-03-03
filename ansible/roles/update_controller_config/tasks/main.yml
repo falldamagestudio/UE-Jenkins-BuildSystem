@@ -1,9 +1,3 @@
-# - name: Ensure Docker Compose folder exists
-#   ansible.builtin.file:
-#     path: /var/controller_stuff
-#     state: directory
-#     mode: '0644'
-
 - name: copy Docker Compose files
   copy:
     src: "{{ item.src }}"
