@@ -26,7 +26,7 @@ services:
         read_only: false
 
     environment:
-      JENKINS_URL: http://localhost:50000
+      JENKINS_URL: http://controller:8080
       AGENT_USERNAME: ${AGENT_USERNAME}
       AGENT_API_TOKEN: ${AGENT_API_TOKEN}
       AGENT_NAME: controller-agent
