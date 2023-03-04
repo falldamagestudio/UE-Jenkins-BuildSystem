@@ -2,5 +2,26 @@ services:
   controller:
     image: controller:local
 
+    volumes:
+      # Map shared CasC config files into container
+      - type: bind
+        source: ../../../config/shared/casc_configs
+        target: /var/jenkins_home/casc_configs/shared
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: true
+
+      # Map local CasC config files into container
+      - type: bind
+        source: ../../../config/local/casc_configs
+        target: /var/jenkins_home/casc_configs/local
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: true
+
+        # TODO: make Plastic config files available to controller
+
     environment:
       WEB_UI_URL: http://localhost:8080

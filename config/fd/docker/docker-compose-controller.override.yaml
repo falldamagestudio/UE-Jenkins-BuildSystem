@@ -2,5 +2,24 @@ services:
   controller:
     image: europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/controller:commit-69d94b4
 
+    volumes:
+      # Map CasC config files into container
+      - type: bind
+        source: ./casc_configs
+        target: /var/jenkins_home/casc_configs
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: true
+
+      # Make Plastic credential files available to controller
+      - type: bind
+        source: ./.plastic4
+        target: /var/jenkins_home/.plastic4
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: false
+
     environment:
       WEB_UI_URL: https://fd-ue-jenkins-buildsystem.falldamagestudio.com

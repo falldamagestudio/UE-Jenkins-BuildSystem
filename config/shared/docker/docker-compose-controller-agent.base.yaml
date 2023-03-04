@@ -15,15 +15,8 @@ services:
         target: /google_application_credentials.json
         bind:
           propagation: rprivate
+          create_host_path: false
         read_only: true
-
-      # Make Plastic credential files available to controller agent
-      - type: bind
-        source: ./.plastic4
-        target: /home/jenkins/.plastic4
-        bind:
-          propagation: rprivate
-        read_only: false
 
     environment:
       JENKINS_URL: http://controller:8080

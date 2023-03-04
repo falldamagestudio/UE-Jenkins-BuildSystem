@@ -1,3 +1,14 @@
 services:
   controller-agent:
     image: europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/linux-swarm-agent:commit-69d94b4
+
+    volumes:
+
+      # Make Plastic credential files available to controller agent
+      - type: bind
+        source: ./.plastic4
+        target: /home/jenkins/.plastic4
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: false

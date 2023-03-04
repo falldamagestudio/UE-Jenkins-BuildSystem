@@ -13,30 +13,14 @@ services:
         source: controller-home
         target: /var/jenkins_home
 
-      # Map CasC config files into container
-      - type: bind
-        source: ./casc_configs
-        target: /var/jenkins_home/casc_configs
-        bind:
-          propagation: rprivate
-        read_only: true
-
       # Make GCP Service Account credential file available to controller
       - type: bind
         source: ./google_application_credentials.json
         target: /google_application_credentials.json
         bind:
           propagation: rprivate
+          create_host_path: false
         read_only: true
-
-      # Make Plastic credential files available to controller
-      - type: bind
-        source: ./.plastic4
-        target: /var/jenkins_home/.plastic4
-        bind:
-          propagation: rprivate
-        read_only: false
-
 
     healthcheck:
       test: curl --fail http://localhost:8080/login || exit 1
