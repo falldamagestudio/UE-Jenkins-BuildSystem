@@ -6,6 +6,8 @@ module "agents" {
 
   swarm_agent_settings = {
     jenkins-url = "http://${var.internal_ip_address}"
+    swarm-agent-username = var.swarm_agent_username
+    swarm-agent-api-token = var.swarm_agent_api_token
   }
 
   ssh_agent_settings = {

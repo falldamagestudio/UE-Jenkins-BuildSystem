@@ -11,5 +11,7 @@ variable "ssh_agent_settings" {
 variable "swarm_agent_settings" {
   type = object({
     jenkins-url = string
+    swarm-agent-username = string
+    swarm-agent-api-token = string
   })
 }

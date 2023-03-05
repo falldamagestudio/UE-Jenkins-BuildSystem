@@ -52,6 +52,9 @@ module "agents" {
 
     windows_vm_ssh_public_key = data.terraform_remote_state.core.outputs.ssh_vm_public_key_windows
 
+    swarm_agent_username = data.terraform_remote_state.controller.outputs.swarm_agent_username
+    swarm_agent_api_token = data.terraform_remote_state.controller.outputs.swarm_agent_api_token
+
     agent_templates = local.agent_templates_flattened
 
     static_agents = var.static_agents

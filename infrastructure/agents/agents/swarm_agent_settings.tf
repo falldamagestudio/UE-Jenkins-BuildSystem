@@ -6,6 +6,14 @@ locals {
         jenkins-url = {
           version = var.swarm_agent_settings.jenkins-url
         }
+
+        swarm-agent-username = {
+          version = var.swarm_agent_settings.swarm-agent-username
+        }
+
+        swarm-agent-api-token = {
+          version = var.swarm_agent_settings.swarm-agent-api-token
+        }
     }
 
     swarm_agent_secrets = {

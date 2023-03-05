@@ -21,7 +21,16 @@ services:
           create_host_path: false
         read_only: true
 
-        # TODO: make Plastic config files available to controller
+      # Map shared init.groovy.d files into container
+      - type: bind
+        source: ../../../config/shared/init.groovy.d
+        target: /var/jenkins_home/init.groovy.d
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: true
+
+      # TODO: make Plastic config files available to controller
 
     environment:
       WEB_UI_URL: http://localhost:8080

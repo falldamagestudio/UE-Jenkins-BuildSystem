@@ -7,3 +7,12 @@ output "controller_vm_service_account_key" {
   value = base64decode(google_service_account_key.controller_service_account_key.private_key)
   sensitive = true
 }
+
+output "swarm_agent_username" {
+  value = local.secrets.swarm_agent_username
+}
+
+output "swarm_agent_api_token" {
+  value = local.secrets.swarm_agent_api_token
+  sensitive = true
+}

@@ -43,3 +43,11 @@ variable "static_agents" {
 variable "windows_vm_ssh_public_key" {
   type = string
 }
+
+variable "swarm_agent_username" {
+  type = string
+}
+
+variable "swarm_agent_api_token" {
+  type = string
+}
