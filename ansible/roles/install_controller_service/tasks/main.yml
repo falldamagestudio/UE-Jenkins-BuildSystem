@@ -1,5 +1,5 @@
 - name: Create 'controller' user
-  user:
+  ansible.builtin.user:
     name: "{{ user }}"
     groups: docker
     append: yes
@@ -8,10 +8,10 @@
     create_home: yes
 
 - name: Create 'controller' systemd service file
-  template:
+  ansible.builtin.template:
     src: templates/{{ service_name }}.service.j2
     dest: /lib/systemd/system/{{ service_name }}.service    
 
 - name: Re-read systemd configurations
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true

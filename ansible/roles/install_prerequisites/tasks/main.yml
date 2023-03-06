@@ -1,5 +1,5 @@
 - name: Install required system packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - ca-certificates
@@ -26,7 +26,7 @@
     state: present
 
 - name: Install Docker
-  apt:
+  ansible.builtin.apt:
     pkg:
       - docker-ce
       - docker-ce-cli
@@ -36,18 +36,18 @@
     update_cache: true
 
 - name: Install Python packages for Docker
-  pip:
+  ansible.builtin.pip:
     name:
       - docker          # Docker SDK for Python
       - docker-compose
     state: latest
 
 - name: Configure Docker to use journald for logging
-  copy:
+  ansible.builtin.copy:
     src: templates/daemon.json
     dest: /etc/docker/daemon.json
 
 - name: Restart Docker daemon to pick up logging configuration changes
-  systemd:
+  ansible.builtin.systemd:
     name: docker
     state: restarted

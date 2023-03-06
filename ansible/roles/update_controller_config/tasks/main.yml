@@ -1,5 +1,5 @@
 - name: copy Docker Compose files
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     mode: '0644'
@@ -8,7 +8,7 @@
   with_items: "{{ docker_compose_files }}"
 
 - name: Create init.groovy.d folder
-  file:
+  ansible.builtin.file:
     path: "{{ home }}/init.groovy.d"
     state: directory
     mode: '0755'
@@ -24,7 +24,7 @@
     group: false  # Do not set group (this is controlled by the next task)
 
 - name: Create casc_configs folder
-  file:
+  ansible.builtin.file:
     path: "{{ home }}/casc_configs"
     state: directory
     mode: '0755'
@@ -41,7 +41,7 @@
   with_items: "{{ casc_config_folders }}"
 
 - name: Fix group/owner of CasC configs
-  file:
+  ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ user }}"
     group: "{{ group }}"
@@ -49,7 +49,7 @@
   with_items: "{{ casc_config_folders }}"
 
 - name: Create .plastic4 folder
-  file:
+  ansible.builtin.file:
     path: "{{ home }}/.plastic4"
     state: directory
     mode: '0755'
@@ -57,7 +57,7 @@
     owner: "{{ user }}"
 
 - name: Copy google_application_credentials.json
-  copy:
+  ansible.builtin.copy:
     src: "{{ google_application_credentials_file.src }}"
     dest: "{{ google_application_credentials_file.dest }}"
     mode: '0644'
@@ -73,7 +73,7 @@
     owner: "{{ user }}"
 
 - name: Configure Docker to use gcloud as authentication helper
-  template:
+  ansible.builtin.template:
     src: templates/config.json.j2
     dest: "{{ home }}/.docker/config.json"
     mode: '0600'
