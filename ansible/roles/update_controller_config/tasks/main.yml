@@ -7,6 +7,14 @@
     owner: "{{ user }}"
   with_items: "{{ docker_compose_files }}"
 
+- name: Copy init.groovy.d scripts
+  ansible.posix.synchronize:
+    src: "{{ init_groovy_d_folder.src }}"
+    dest: "{{ init_groovy_d_folder.dest }}"
+    delete: true  # Remove files in destination folders that do not exist in source folders
+    owner: false  # Do not set owner (this is controlled by the next task)
+    group: false  # Do not set group (this is controlled by the next task)
+
 - name: Create casc_configs folder
   file:
     path: "{{ home }}/casc_configs"

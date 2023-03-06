@@ -5,6 +5,10 @@ service_name: controller
 
 region: europe-west1 # TODO: do not hardcode europe-west1 here
 
+init_groovy_d_folder:
+  src: "{{ global_env_path }}/../init.groovy.d"
+  dest: "{{ home }}"
+
 docker_compose_files:
   - src: "{{ env_path }}/../docker/docker-compose-{{ service_name }}.override.yaml"
     dest: "{{ home }}/docker-compose-{{ service_name }}.override.yaml"

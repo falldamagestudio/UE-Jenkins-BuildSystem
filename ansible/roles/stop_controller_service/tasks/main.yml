@@ -10,7 +10,20 @@
         name: "{{ service_name }}"
         state: stopped
 
+    # Print logs after successful service operation
+
+    - name: Fetch output from invoking docker, and the container
+      shell: journalctl --since "{{ role_start_timestamp.stdout }}" "CONTAINER_NAME={{ docker_container_name }}" + "_SYSTEMD_UNIT={{ service_name }}.service"
+      register: docker_output
+
+    - name: Print output to console
+      debug:
+        msg: "{{ docker_output.stdout }}"
+
   rescue:
+
+    # Print logs after failed service operation
+
     - name: Fetch output from invoking docker, and the container
       shell: journalctl --since "{{ role_start_timestamp.stdout }}" "CONTAINER_NAME={{ docker_container_name }}" + "_SYSTEMD_UNIT={{ service_name }}.service"
       register: docker_output
