@@ -12,6 +12,15 @@ services:
           create_host_path: false
         read_only: true
 
+      # Map shared init.groovy.d files into container
+      - type: bind
+        source: ./init.groovy.d
+        target: /var/jenkins_home/init.groovy.d
+        bind:
+          propagation: rprivate
+          create_host_path: false
+        read_only: true
+
       # Make Plastic credential files available to controller
       - type: bind
         source: ./.plastic4
