@@ -1,6 +1,6 @@
 services:
   controller-agent:
-    image: europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/linux-swarm-agent:commit-69d94b4
+    image: europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/linux-swarm-agent:commit-e07ca60
 
     volumes:
 
