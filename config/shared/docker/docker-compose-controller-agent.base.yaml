@@ -20,10 +20,6 @@ services:
 
     environment:
       JENKINS_URL: http://controller:8080
-      AGENT_USERNAME: api_user
-      AGENT_API_TOKEN: 110123456789abcdef0123456789abcdef
-#      AGENT_USERNAME: ${AGENT_USERNAME}
-#      AGENT_API_TOKEN: ${AGENT_API_TOKEN}
       AGENT_NAME: controller-agent
       LABELS: "controller-agent"
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
