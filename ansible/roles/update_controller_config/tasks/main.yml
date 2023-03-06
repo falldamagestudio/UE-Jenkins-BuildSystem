@@ -7,6 +7,14 @@
     owner: "{{ user }}"
   with_items: "{{ docker_compose_files }}"
 
+- name: Create init.groovy.d folder
+  file:
+    path: "{{ home }}/init.groovy.d"
+    state: directory
+    mode: '0755'
+    group: "{{ group }}"
+    owner: "{{ user }}"
+
 - name: Copy init.groovy.d scripts
   ansible.posix.synchronize:
     src: "{{ init_groovy_d_folder.src }}"

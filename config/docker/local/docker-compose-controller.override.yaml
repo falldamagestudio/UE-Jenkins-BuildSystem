@@ -5,7 +5,7 @@ services:
     volumes:
       # Map shared CasC config files into container
       - type: bind
-        source: ../../../config/shared/casc_configs
+        source: ../../casc_configs/shared
         target: /var/jenkins_home/casc_configs/shared
         bind:
           propagation: rprivate
@@ -14,7 +14,7 @@ services:
 
       # Map local CasC config files into container
       - type: bind
-        source: ../../../config/local/casc_configs
+        source: ../../casc_configs/local
         target: /var/jenkins_home/casc_configs/local
         bind:
           propagation: rprivate
@@ -23,7 +23,7 @@ services:
 
       # Map shared init.groovy.d files into container
       - type: bind
-        source: ../../../config/shared/init.groovy.d
+        source: ../../init.groovy.d/shared
         target: /var/jenkins_home/init.groovy.d
         bind:
           propagation: rprivate

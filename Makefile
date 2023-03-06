@@ -1,12 +1,12 @@
 
 # TODO: remove hardcoded controller host IP
-# This should be sourced from $(ENV)/... somewhere
+# This should be sourced from $(CONFIG)/... somewhere
 CONTROLLER_HOST_IP:=130.211.54.100
 
 
-# Default to 'fd' environment, if the ENV variable is not set
-ifndef ENV
-ENV:=config/fd
+# Default to 'config' folder, if the CONFIG variable is not set
+ifndef CONFIG
+CONFIG:=config
 endif
 
 ###################################################################################################
@@ -14,33 +14,33 @@ endif
 .PHONY: terraform-apply-core terraform-apply-controller terraform-apply-agents
 
 terraform-apply-core:
-	cd $(ENV)/terraform/core && terraform init && terraform apply
+	cd $(CONFIG)/terraform/remote/core && terraform init && terraform apply
 
 terraform-apply-controller:
-	cd $(ENV)/terraform/controller && terraform init && terraform apply
+	cd $(CONFIG)/terraform/remote/controller && terraform init && terraform apply
 
 terraform-apply-agents:
-	cd $(ENV)/terraform/agents && terraform init && terraform apply
+	cd $(CONFIG)/terraform/remote/agents && terraform init && terraform apply
 
 ###################################################################################################
 
 .PHONY: terraform-destroy-core terraform-destroy-controller terraform-destroy-agents
 
 terraform-destroy-core:
-	cd $(ENV)/terraform/core && terraform init && terraform destroy
+	cd $(CONFIG)/terraform/remote/core && terraform init && terraform destroy
 
 terraform-destroy-controller:
-	cd $(ENV)/terraform/controller && terraform init && terraform destroy
+	cd $(CONFIG)/terraform/remote/controller && terraform init && terraform destroy
 
 terraform-destroy-agents:
-	cd $(ENV)/terraform/agents && terraform init && terraform destroy
+	cd $(CONFIG)/terraform/remote/agents && terraform init && terraform destroy
 
 ###################################################################################################
 
 .PHONY: ssh-controller-vm
 
 ssh-controller-vm:
-	ssh -i $(ENV)/ansible/ansible.private_key ansible@$(CONTROLLER_HOST_IP)
+	ssh -i $(CONFIG)/ansible/remote/ansible.private_key ansible@$(CONTROLLER_HOST_IP)
 
 ###################################################################################################
 
@@ -48,23 +48,23 @@ ssh-controller-vm:
 
 install-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/install_controller.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/install_controller.yml
 
 update-controller-config:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/update_controller_config.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/update_controller_config.yml
 
 start-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/start_controller.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/start_controller.yml
 
 stop-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/stop_controller.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/stop_controller.yml
 
 restart-controller:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/restart_controller.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/restart_controller.yml
 
 ###################################################################################################
 
@@ -72,31 +72,30 @@ restart-controller:
 
 install-controller-agent:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/install_controller_agent.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/install_controller_agent.yml
 
 update-controller-agent-config:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/update_controller_agent_config.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/update_controller_agent_config.yml
 
 start-controller-agent:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/start_controller_agent.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/start_controller_agent.yml
 
 stop-controller-agent:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/stop_controller_agent.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/stop_controller_agent.yml
 
 restart-controller-agent:
 	ansible-galaxy install collections -r ansible/requirements.yml
-	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(ENV)/ansible/hosts.ini ansible/restart_controller_agent.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/restart_controller_agent.yml
 
 ###################################################################################################
 
 .PHONY: run-local-controller run-local-controller-agent
 
 run-local-controller:
-	(docker compose -f $(ENV)/../shared/docker/docker-compose-controller.base.yaml -f $(ENV)/../local/docker/docker-compose-controller.override.yaml up)
+	(docker compose -f $(CONFIG)/docker/shared/docker-compose-controller.base.yaml -f $(CONFIG)/docker/local/docker-compose-controller.override.yaml up)
 
 run-local-controller-agent:
-	(docker compose -f $(ENV)/../shared/docker/docker-compose-controller-agent.base.yaml -f $(ENV)/../local/docker/docker-compose-controller-agent.override.yaml up)
-
+	(docker compose -f $(CONFIG)/docker/shared/docker-compose-controller-agent.base.yaml -f $(CONFIG)/docker/local/docker-compose-controller-agent.override.yaml up)

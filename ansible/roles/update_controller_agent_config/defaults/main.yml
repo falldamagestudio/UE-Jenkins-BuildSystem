@@ -6,17 +6,11 @@ service_name: controller-agent
 region: europe-west1 # TODO: do not hardcode europe-west1 here
 
 docker_compose_files:
-  - src: "{{ env_path }}/../docker/docker-compose-{{ service_name }}.override.yaml"
+  - src: "{{ config_path }}/docker/{{ env }}/docker-compose-{{ service_name }}.override.yaml"
     dest: "{{ home }}/docker-compose-{{ service_name }}.override.yaml"
-  - src: "{{ global_env_path }}/../docker/docker-compose-{{ service_name }}.base.yaml"
+  - src: "{{ config_path }}/docker/shared/docker-compose-{{ service_name }}.base.yaml"
     dest: "{{ home }}/docker-compose-{{ service_name }}.base.yaml"
 
-casc_config_folders:
-  - src: "{{ env_path }}/../casc_configs"
-    dest: "{{ home }}/casc_configs/environment_specific"
-  - src: "{{ global_env_path }}/../casc_configs"
-    dest: "{{ home }}/casc_configs/shared"
-
 google_application_credentials_file:
-  src: "{{ global_env_path }}/../docker/google_application_credentials.json"
+  src: "{{ config_path }}/docker/shared/google_application_credentials.json"
   dest: "{{ home }}/google_application_credentials.json"
