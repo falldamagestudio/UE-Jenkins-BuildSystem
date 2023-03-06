@@ -36,6 +36,14 @@ services:
       SEED_JOB_BRANCH: 2.x
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
 
+    networks:
+      - controller-vm
+
 volumes:
   controller-home:
     name: controller-home
+
+networks:
+  controller-vm:
+    driver: bridge
+    name: controller-vm
