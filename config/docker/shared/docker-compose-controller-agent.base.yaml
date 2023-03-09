@@ -2,6 +2,8 @@ services:
   controller-agent:
     image: linux-swarm-agent:local
 
+    container_name: controller-agent
+
     volumes:
       # Ensure the controller agent's home directory maps to a Docker volume
       # This allows upgrading the agent container but keeping workspace

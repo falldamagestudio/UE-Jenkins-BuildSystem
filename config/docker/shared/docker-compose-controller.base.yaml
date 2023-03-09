@@ -6,6 +6,8 @@ services:
       - 8080:8080
       - 50000:50000
 
+    container_name: controller
+
     volumes:
       # Ensure the controller's home directory maps to a Docker volume
       # This allows upgrading the jenkins container but keeping all history
