@@ -1,3 +1,11 @@
+## Bring up a local Jenkins controller + GCE cloud on your workstation
+
+* Ensure you have access to the GCP project and `gcloud` points to the project.
+* Fetch latest.
+* Run `./scripts/get-private-keys-from-terraform.sh`.
+* Run `make run-local-controller`.
+* Run `make run-local-controller-agent`.
+
 ## Change Jenkins configuration
 
 * Change contents of `values/*`

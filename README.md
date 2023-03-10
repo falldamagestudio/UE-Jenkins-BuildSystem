@@ -1,8 +1,8 @@
-# Build Unreal Engine & games with Jenkins on GKE/GCE
+# Build Unreal Engine & games with Jenkins on GCE
 
 # Overview
 
-This is a [Jenkins](https://www.jenkins.io/)-based build system that runs on [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) / [Google Compute Engine (GCE)](https://cloud.google.com/compute). It is designed to build Unreal Engine and UE-based games. Windows and Linux targets supported.
+This is a [Jenkins](https://www.jenkins.io/)-based build system that runs on [Google Compute Engine (GCE)](https://cloud.google.com/compute). It is designed to build Unreal Engine and UE-based games. Windows and Linux targets supported.
 
 Build jobs are typically run on VMs whose disks are persistent (to support quick incremental builds) but are started/stopped as necessary (to reduce cost).
 
@@ -10,9 +10,16 @@ You can access the Jenkins UI directly over the Internet; it is protected using 
 
 The build system is complex to operate, and pricey, but it is reliable and convenient for users.
 
+# Differences from v1.x
+
+v1.x (available [here](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/tree/1.x)) ran the Jenkins controller on a single-node GKE cluster. V2.x runs the controller natively on a VM, with Ansible as the control mechanism. This means that there are fewer moving parts, and it's easier to troubleshoot when something goes wrong.
+
+
 # Status
 
-We are using this in production.
+V2.x is still in development.
+
+We are using v1.x in production.
 
 Example jobs:
 
@@ -31,42 +38,23 @@ There are some other jobs, which are mainly for R&D purposes:
 
 ![Operation](docs/images/Operation.png)
 
-[Terraform](https://www.terraform.io/) is used to create all infrastructure. This includes load balancers, storage buckets, and a Kubernetes cluster. The cluster has a couple of node pools, some of which scale dynamically based on demand.
+[Terraform](https://www.terraform.io/) is used to create all infrastructure. This includes load balancers, storage buckets, the VM which the controller will run on, and VM templates for any build agents.
 
-[Helm](https://helm.sh/) is used to deploy the Jenkins controller.
+[Ansible](https://docs.ansible.com/) is used to control the Jenkins controller as well as its companion agent (used for non resource intensive maintenance jobs).
 
 The Jenkins controller contains a Seed job. When the Seed job is run, a couple of [Job DSL](https://jenkinsci.github.io/job-dsl-plugin/) files are processed; these in turn create the engine/game specific jobs.
 
-Terraform is used to create static VMs, and templates for dynamic agent VMs.
-
 [A modified version of Jenkins' GCE plugin](https://github.com/falldamagestudio/google-compute-engine-plugin) is capable of creating and destroying agent VMs on-demand. These "dynamic" agent VMs can also be retained (changed to stopped state, instead of being destroyed) between jobs by the modified GCE plugin. This eliminates most of the cost for the dynamic VMs when they are not in use, while keeping the warm-up time for jobs low.
 
-It is also possible to run jobs on Kubernetes. These will suffer from long image pull times when new nodes are provisioned. For incremental builds, the jobs will need to have PVCs provisioned.
+Each agent has a single executor, and thus serves only one job at a time.
 
-Regardless of agent type, each agent has a single executor, and thus serves only one job at a time.
-
-For VMs: The Jenkins agent and all build tools are installed directly onto the VM, and build jobs are run directly on the VM as well.
-
-For Kubernetes: The Jenkins agent runs within a Docker container. Build jobs are also run within a Docker container (via the Kubernetes pipeline plugin). The build tools container images contain all software necessary to build a typical UE engine or game on Linux and Windows.
+The Jenkins agent and all build tools are installed directly onto the VM, and build jobs are run directly on the VM as well.
 
 # Agent types
 
 ## Dynamic VMs (Recommended for GCP)
 
 The most cost-efficient way to use this on GCP is via Dynamic VMs. The GCE plugin maintains a small pool of VMs for each individual build job (or for each group of build jobs). These VMs are stopped when not in use; this maintains state on their disks, but at a relatively low cost. These VMs are relatively quick to start up (30-60 seconds depending on OS).
-
-## Static VMs
-
-These agents are ready to accept jobs at a moment's notice. However, be careful with costs! The primary reason for these is to validate that the swarm agent works (that's how you'd run on-premises agents).
-
-## Kubernetes pods 
-
-These _can_ run UE jobs ... but it is rarely a good idea when run on auto-scaled GKE, since [provisioning a new Windows node and pulling the required images can take 20 minutes](https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/20) and GKE does not allow us to modify the autoscaling logic. If you want to do incremental builds, you need to create PVCs within the Kubernetes cluster and change the corresponding jobs to use those PVCs. Incremental builds on GKE with autoscaling are not compatible with Plastic SCM, because Plastic needs to persist some info in the .plastic4 folder together with the workspace, and Jenkins Kubernetes plugin does not allow us enough control to persist that correctly.
-
-Jobs run on Kubernetes should rather be things that run on Linux only, does not need so much state, and does not need large build tools containers.
-
-Jobs run on Kubernetes might make sense for an on-premises OpenShift cluster. Since the nodes won't be dynamically-provisioned there, the Docker containers will quickly be cached on all nodes. However, the Plastic
-compatibility problems remain unsolved; you'd need to sort that out yourself.
 
 ## Self-hosted agents (recommended for on-premises hardware)
 
@@ -78,7 +66,7 @@ This build system is designed to be safe to expose to the Internet.
 
 ## Controller
 
-The Jenkins controller runs within GKE.
+The Jenkins controller runs within a Docker container on the controller VM.
 
 It is exposed to the Internet via a load balancer.
 Identity-Aware Proxy is enabled for that load balancer. This ensures that anyone who wants to send HTTP traffic to the Jenkins controller has authenticated with a Google account on your internal domain first. Non-authenticated HTTP calls will not reach the Jenkins controller and can therefore not be used to exploit security holes.
@@ -87,7 +75,7 @@ The Jenkins controller also exposes an internal load balancer. This is not behin
 
 ## Agents
 
-Agents run in their own network, separate from the GKE cluster. They have a few ports open to the Internet (typically WinRM & SSH). They have a route to the internal load balancer.
+Agents run in their own network, separate from the controller VM. They have a few ports open to the Internet (typically WinRM & SSH). They have a route to the internal load balancer.
 
 ## Image builders
 
@@ -124,7 +112,6 @@ GCP wins on flexibility, but a well-run on-premises cluster is cheaper than anyt
 In our case - team of 50 developers, a couple of CI jobs run on every commit, a couple of manually-triggered jobs - the system costs $20/day during weekends and $70/day during workdays. This adds up to $1700/month.
 
 There are some cost cutting measures that you can do on GCP with this build system:
-- Make sure to use Dynamic VMs or self-hosted agents. Otherwise the CPU, RAM & OS license rental costs will explode.
 - Being careful with disk sizes (do you really need X GB for job Y?) and disk type (`pd-ssd` vs `pd-balanced`) reduces the disk rental costs.
 - Being careful with CPUs for jobs (do you really need X cores for job Y?) reduces the CPU & Windows license costs, but may increase build times.
 
@@ -144,7 +131,9 @@ You will use at least this on a regular basis:
 * Terraform
 * Scripting languages - Bash, PowerShell
 * Google Cloud Platform - Cloud Console, `gcloud`, `gsutil` - VMs, load balancers, cloud storage buckets, firewall rules, Google Kubernetes Engine, Secrets Manager, Service Accounts, IAM permissions
-* Kubernetes - `kubectl`, `gcloud container`, `helm` - nodes, pods, secrets, yaml resource definitions
+* Docker - docker, compose - manage & inspect containers
+* Ansible - homewritten roles & playbooks
+* Systemd - install and manage custom-made services
 * Jenkins - JCasC, Groovy script, Job DSL, pipeline DSL
 
 # Setup and teardown
