@@ -1,10 +1,9 @@
 agent_template_groups = [
 
-/*
     # Dynamic VM templates (Linux)
 
     {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-018e7be-linux"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-6086a18-linux"
 
         agent_templates = {
             "build-engine-linux-dynamic" = {
@@ -26,7 +25,7 @@ agent_template_groups = [
     # Dynamic VM templates (Windows)
 
     {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-018e7be-windows"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-23a0fbc-windows"
 
         agent_templates = {
             "build-engine-win64-dynamic" = {
@@ -44,7 +43,7 @@ agent_template_groups = [
             }
         }
     },
-*/
+
 /*
     # Static VM templates (Linux)
 
