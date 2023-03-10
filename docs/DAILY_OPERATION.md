@@ -1,10 +1,14 @@
 ## Bring up a local Jenkins controller + GCE cloud on your workstation
 
 * Ensure you have access to the GCP project and `gcloud` points to the project.
-* Fetch latest.
+* Fetch latest, from here and the Images repo.
 * Run `./scripts/get-private-keys-from-terraform.sh`.
-* Run `make run-local-controller`.
-* Run `make run-local-controller-agent`.
+* In the Images repo, run `make build-controller build-swarm-agent-linux`.
+* Back to this repo. Open two terminal windows:
+  * In terminal 1, run `make run-local-controller`.
+  * In terminal 2, run `make run-local-controller-agent`.
+
+  This will bring up the latest version of Jenkins + agent on your workstation. You can reach it at http://localhost:8080 . You may need to restart it once to make all settings "stick".
 
 ## Change Jenkins configuration
 
