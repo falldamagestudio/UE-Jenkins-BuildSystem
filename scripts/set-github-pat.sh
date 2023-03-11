@@ -2,15 +2,15 @@
 
 SCRIPTS_DIR="${BASH_SOURCE%/*}/"
 
-ENVIRONMENT_DIR=$1
-GITHUB_PAT=$2
+ENVIRONMENT_DIR="${SCRIPTS_DIR}/../config"
+GITHUB_PAT=$1
 
-if [ $# -ne 2 ]; then
-	1>&2 echo "Usage: set-github-pat.sh <environment dir> <personal access token for GitHub>"
+if [ $# -ne 1 ]; then
+	1>&2 echo "Usage: set-github-pat.sh <personal access token for GitHub>"
 	exit 1
 fi
 
-PROJECT_ID=$(jq -r ".project_id" "${ENVIRONMENT_DIR}/gcloud-config.json")
+PROJECT_ID=$(jq -r ".project_id" "${ENVIRONMENT_DIR}/terraform/remote/gcloud-config.json")
 
 if [ -z "${PROJECT_ID}" ]; then
 	1>&2 echo "You must specify project_id in gcloud-config.json"
