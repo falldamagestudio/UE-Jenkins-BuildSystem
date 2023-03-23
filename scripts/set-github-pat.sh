@@ -2,7 +2,7 @@
 
 SCRIPTS_DIR="${BASH_SOURCE%/*}/"
 
-ENVIRONMENT_DIR="${SCRIPTS_DIR}/../config"
+CONFIG_DIR="${SCRIPTS_DIR}/../config"
 GITHUB_PAT=$1
 
 if [ $# -ne 1 ]; then
@@ -10,7 +10,7 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
-PROJECT_ID=$(jq -r ".project_id" "${ENVIRONMENT_DIR}/terraform/remote/gcloud-config.json")
+PROJECT_ID=$(jq -r ".project_id" "${CONFIG_DIR}/terraform/remote/gcloud-config.json")
 
 if [ -z "${PROJECT_ID}" ]; then
 	1>&2 echo "You must specify project_id in gcloud-config.json"
