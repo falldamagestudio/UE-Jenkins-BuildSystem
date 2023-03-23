@@ -37,6 +37,10 @@ services:
       SEED_JOB_REPO_URL: https://github.com/falldamagestudio/UE-Jenkins-Jobs
       SEED_JOB_BRANCH: 2.x
       GOOGLE_APPLICATION_CREDENTIALS: /google_application_credentials.json
+      # Choose which GCP project's Secret Manager to scan for credentials
+      # The Service Account that the Jenknis Controller runs under needs certain permissions,
+      #   see https://github.com/jenkinsci/gcp-secrets-manager-credentials-provider-plugin#iam
+      GCP_SECRETS_MANAGER_PROJECT: fd-ue-jenkins-buildsystem
 
     networks:
       - controller-vm
