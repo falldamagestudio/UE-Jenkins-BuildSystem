@@ -17,14 +17,12 @@ if [ -z "${PROJECT_ID}" ]; then
 	exit 1
 fi
 
-"${SCRIPTS_DIR}/tools/activate-gcloud-project.sh" "${PROJECT_ID}" || exit 1
-
 SECRET_NAME=github-user
 
-if gcloud secrets describe github-user >/dev/null 2>&1; then
-	echo -n "${GITHUB_PAT}" | gcloud secrets versions add github-user --data-file=-
+if gcloud --project="${PROJECT_ID}" secrets describe github-user >/dev/null 2>&1; then
+	echo -n "${GITHUB_PAT}" | gcloud --project="${PROJECT_ID}" secrets versions add github-user --data-file=-
 else
-	echo -n "${GITHUB_PAT}" | gcloud secrets create "${SECRET_NAME}" --data-file=- --labels=jenkins-credentials-type=username-password,jenkins-credentials-username=github-user --replication-policy=automatic
+	echo -n "${GITHUB_PAT}" | gcloud --project="${PROJECT_ID}" secrets create "${SECRET_NAME}" --data-file=- --labels=jenkins-credentials-type=username-password,jenkins-credentials-username=github-user --replication-policy=automatic
 fi
-# gcloud secrets add-iam-policy-binding github-user "--member=serviceAccount:ue-jenkins-controller@${PROJECT_ID}.iam.gserviceaccount.com" --role=roles/secretmanager.secretAccessor
+# gcloud --project="${PROJECT_ID}" secrets add-iam-policy-binding github-user "--member=serviceAccount:ue-jenkins-controller@${PROJECT_ID}.iam.gserviceaccount.com" --role=roles/secretmanager.secretAccessor
 
