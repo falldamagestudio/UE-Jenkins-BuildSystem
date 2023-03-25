@@ -42,6 +42,23 @@ jenkins:
             zone:               "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/zones/europe-west1-b"
             template:           "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/global/instanceTemplates/build-game-linux-dynamic"
 
+          - namePrefix:         game-linux-plastic
+            description:        Build Game (Linux, Plastic)
+            maxNumInstancesToCreateStr: 1
+            maxNumInstancesToPersistStr: 1
+            launchTimeoutSecondsStr: 300
+            retentionTimeMinutesStr: 6
+            mode:               EXCLUSIVE
+            labelString:        game-linux-plastic build-game-linux-plastic-dynamic
+            numExecutorsStr:    1
+            runAsUser:          jenkins
+            remoteFs:           /home/jenkins
+            oneShot:            false
+            createSnapshot:     false
+            region:             "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/regions/europe-west1"
+            zone:               "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/zones/europe-west1-b"
+            template:           "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/global/instanceTemplates/build-game-linux-dynamic"
+
           - namePrefix:         ue-win64
             description:        Build Engine (Win64)
             maxNumInstancesToCreateStr: 1
@@ -69,6 +86,25 @@ jenkins:
             retentionTimeMinutesStr: 6
             mode:               EXCLUSIVE
             labelString:        game-win64-git build-game-win64-git-dynamic
+            numExecutorsStr:    1
+            runAsUser:          jenkins
+            remoteFs:           C:\W
+            oneShot:            false
+            createSnapshot:     false
+            windowsConfiguration:
+              privateKeyCredentialsId: gce-plugin-windows-vm-ssh-private-key
+            region:             "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/regions/europe-west1"
+            zone:               "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/zones/europe-west1-b"
+            template:           "https://www.googleapis.com/compute/v1/projects/fd-ue-jenkins-buildsystem/global/instanceTemplates/build-game-win64-dynamic"
+
+          - namePrefix:         game-win64-plastic
+            description:        Build Game (Win64, Plastic)
+            maxNumInstancesToCreateStr: 1
+            maxNumInstancesToPersistStr: 1
+            launchTimeoutSecondsStr: 600
+            retentionTimeMinutesStr: 6
+            mode:               EXCLUSIVE
+            labelString:        game-win64-plastic build-game-win64-plastic-dynamic
             numExecutorsStr:    1
             runAsUser:          jenkins
             remoteFs:           C:\W
