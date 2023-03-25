@@ -56,6 +56,4 @@ module "agents" {
     swarm_agent_api_token = data.terraform_remote_state.controller.outputs.swarm_agent_api_token
 
     agent_templates = local.agent_templates_flattened
-
-    static_agents = var.static_agents
 }

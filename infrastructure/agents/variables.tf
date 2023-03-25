@@ -33,13 +33,6 @@ variable "agent_templates" {
   }))
 }
 
-variable "static_agents" {
-  type = map(object({
-    template = string
-    jenkins_labels = string
-  }))
-}
-
 variable "windows_vm_ssh_public_key" {
   type = string
 }

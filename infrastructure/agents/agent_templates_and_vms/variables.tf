@@ -19,10 +19,3 @@ variable "agent_templates" {
     preemptible = bool
   }))
 }
-
-variable "static_agents" {
-  type = map(object({
-    template = string
-    jenkins_labels = string
-  }))
-}

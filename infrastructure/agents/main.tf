@@ -27,7 +27,6 @@ module "agent_templates_and_vms" {
   agent_service_account_email = module.agents.agent_service_account_email
 
   agent_templates = var.agent_templates
-  static_agents = var.static_agents
 }
 
 module "jobs" {
