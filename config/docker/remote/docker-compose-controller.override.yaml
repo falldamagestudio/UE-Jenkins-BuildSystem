@@ -1,6 +1,6 @@
 services:
   controller:
-    image: europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/controller:commit-d3b2675
+    image: europe-west1-docker.pkg.dev/fd-ue-jenkins-buildsystem/docker-build-artifacts/controller:commit-d464fe1
 
     volumes:
       # Map CasC config files into container
