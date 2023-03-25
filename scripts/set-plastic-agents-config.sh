@@ -2,14 +2,15 @@
 
 SCRIPTS_DIR="${BASH_SOURCE%/*}/"
 
-ENVIRONMENT_DIR=$1
-USERNAME=$2
-ENCRYPTED_PASSWORD=$3
-SERVER=$4
-ENCRYPTED_CONTENT_ENCRYPTION_KEY=$5
+CONFIG_DIR="${SCRIPTS_DIR}/../config"
 
-if [ $# -ne 5 ]; then
-	1>&2 echo "Usage: set-plastic-agents-config.sh <environment dir> <username> <encrypted password> <server> <encrypted content encryption key>"
+USERNAME=$1
+ENCRYPTED_PASSWORD=$2
+SERVER=$3
+ENCRYPTED_CONTENT_ENCRYPTION_KEY=$4
+
+if [ $# -ne 4 ]; then
+	1>&2 echo "Usage: set-plastic-agents-config.sh <username> <encrypted password> <server> <encrypted content encryption key>"
 	exit 1
 fi
 
@@ -23,7 +24,7 @@ if [ "${ENCRYPTED_CONTENT_ENCRYPTION_KEY::5}" != "|SoC|" ]; then
 	exit 1
 fi
 
-PROJECT_ID=$(jq -r ".project_id" "${ENVIRONMENT_DIR}/gcloud-config.json")
+PROJECT_ID=$(jq -r ".project_id" "${CONFIG_DIR}/gcloud-config.json")
 
 if [ -z "${PROJECT_ID}" ]; then
 	1>&2 echo "You must specify project_id in gcloud-config.json"
