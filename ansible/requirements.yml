@@ -1,3 +1,5 @@
 collections:
   - name: ansible.posix
     version: ">=1.5.0"
+roles:
+  - name: googlecloudplatform.google_cloud_ops_agents

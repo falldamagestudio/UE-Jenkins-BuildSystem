@@ -31,6 +31,13 @@ resource "google_project_iam_member" "controller_cloud_logging_write_access" {
   member = "serviceAccount:${google_service_account.controller_service_account.email}"
 }
 
+# Allow controller VM to send events to Cloud Monitoring
+resource "google_project_iam_member" "controller_cloud_monitoring_write_access" {
+
+  role   = "roles/monitoring.metricWriter"
+  member = "serviceAccount:${google_service_account.controller_service_account.email}"
+}
+
 # Allow controller VM to access the payload of all secrets in project
 resource "google_project_iam_member" "controller_secret_manager_secret_accessor" {
 

@@ -37,33 +37,37 @@ terraform-destroy-agents:
 
 ###################################################################################################
 
-.PHONY: ssh-controller-vm
+.PHONY: ssh-controller-vm install-controller-ops-agent
 
 ssh-controller-vm:
 	ssh -i $(CONFIG)/ansible/remote/ansible.private_key ansible@$(CONTROLLER_HOST_IP)
+
+install-controller-ops-agent:
+	ansible-galaxy install -r ansible/requirements.yml
+	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/install_controller_ops_agent.yml
 
 ###################################################################################################
 
 .PHONY: install-controller update-controller-config start-controller stop-controller restart-controller
 
 install-controller:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/install_controller.yml
 
 update-controller-config:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/update_controller_config.yml
 
 start-controller:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/start_controller.yml
 
 stop-controller:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/stop_controller.yml
 
 restart-controller:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/restart_controller.yml
 
 ###################################################################################################
@@ -71,23 +75,23 @@ restart-controller:
 .PHONY: install-controller-agent update-controller-agent-config start-controller-agent stop-controller-agent restart-controller-agent
 
 install-controller-agent:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/install_controller_agent.yml
 
 update-controller-agent-config:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/update_controller_agent_config.yml
 
 start-controller-agent:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/start_controller_agent.yml
 
 stop-controller-agent:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/stop_controller_agent.yml
 
 restart-controller-agent:
-	ansible-galaxy install collections -r ansible/requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 	ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -i $(CONFIG)/ansible/remote/hosts.ini ansible/restart_controller_agent.yml
 
 ###################################################################################################
