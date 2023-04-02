@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPTS_DIR="${BASH_SOURCE%/*}/"
+SCRIPTS_DIR="${BASH_SOURCE%/*}"
 
 CONFIG_DIR="${SCRIPTS_DIR}/../config"
 GITHUB_PAT=$1
