@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPTS_DIR="${BASH_SOURCE%/*}/"
+SCRIPTS_DIR="${BASH_SOURCE%/*}"
 
 CONFIG_DIR="${SCRIPTS_DIR}/../config"
 
@@ -24,7 +24,7 @@ if [ "${ENCRYPTED_CONTENT_ENCRYPTION_KEY::5}" != "|SoC|" ]; then
 	exit 1
 fi
 
-PROJECT_ID=$(jq -r ".project_id" "${CONFIG_DIR}/gcloud-config.json")
+PROJECT_ID=$(jq -r ".project_id" "${CONFIG_DIR}/terraform/remote/gcloud-config.json")
 
 if [ -z "${PROJECT_ID}" ]; then
 	1>&2 echo "You must specify project_id in gcloud-config.json"
@@ -38,34 +38,44 @@ fi
 
 SECURITY_CONFIG="::0:${USERNAME}:${ENCRYPTED_PASSWORD:5}:" # The string in client.conf should not include the '|SoC|' prefix
 
-SERVER=${SERVER} SECURITY_CONFIG=${SECURITY_CONFIG} envsubst < "${SCRIPTS_DIR}/../application/plastic/client.conf.template" > "${SCRIPTS_DIR}/client.conf"
-SERVER=${SERVER} envsubst < "${SCRIPTS_DIR}/../application/plastic/cryptedservers.conf.template" > "${SCRIPTS_DIR}/cryptedservers.conf"
-ENCRYPTED_CONTENT_ENCRYPTION_KEY=${ENCRYPTED_CONTENT_ENCRYPTION_KEY} envsubst < "${SCRIPTS_DIR}/../application/plastic/cryptedserver.key.template" > "${SCRIPTS_DIR}/cryptedserver.key"
+# Create Windows versions of config files
+
+SERVER=${SERVER} SECURITY_CONFIG=${SECURITY_CONFIG} envsubst < "${CONFIG_DIR}/plastic/windows/client.conf.template" > "${CONFIG_DIR}/client.conf"
+SERVER=${SERVER} envsubst < "${CONFIG_DIR}/plastic/windows/cryptedservers.conf.template" > "${CONFIG_DIR}/cryptedservers.conf"
+ENCRYPTED_CONTENT_ENCRYPTION_KEY=${ENCRYPTED_CONTENT_ENCRYPTION_KEY} envsubst < "${CONFIG_DIR}/plastic/windows/cryptedserver.key.template" > "${CONFIG_DIR}/cryptedserver.key"
 
 # Add .zipped config files to GCP's Secrets Manager
 # These will be used by build jobs on Windows
 
-(cd "${SCRIPTS_DIR}" && zip plastic-config.zip client.conf cryptedservers.conf cryptedserver.key >/dev/null)
+(cd "${CONFIG_DIR}" && zip plastic-config.zip client.conf cryptedservers.conf cryptedserver.key >/dev/null)
 
 if gcloud "--project=${PROJECT_ID}" secrets describe plastic-config-zip >/dev/null 2>&1; then
-	gcloud "--project=${PROJECT_ID}" secrets versions add plastic-config-zip "--data-file=${SCRIPTS_DIR}/plastic-config.zip"
+	gcloud "--project=${PROJECT_ID}" secrets versions add plastic-config-zip "--data-file=${CONFIG_DIR}/plastic-config.zip"
 else
-	gcloud "--project=${PROJECT_ID}" secrets create plastic-config-zip "--data-file=${SCRIPTS_DIR}/plastic-config.zip"
+	gcloud "--project=${PROJECT_ID}" secrets create plastic-config-zip "--data-file=${CONFIG_DIR}/plastic-config.zip"
 fi
-gcloud "--project=${PROJECT_ID}" secrets add-iam-policy-binding plastic-config-zip --member=serviceAccount:ue-jenkins-agent-vm@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
+
+# Remove temp files
+
+rm "${CONFIG_DIR}/client.conf" "${CONFIG_DIR}/cryptedservers.conf" "${CONFIG_DIR}/cryptedserver.key" "${CONFIG_DIR}/plastic-config.zip"
+
+# Create Linux versions of config files
+
+SERVER=${SERVER} SECURITY_CONFIG=${SECURITY_CONFIG} envsubst < "${CONFIG_DIR}/plastic/linux/client.conf.template" > "${CONFIG_DIR}/client.conf"
+SERVER=${SERVER} envsubst < "${CONFIG_DIR}/plastic/linux/cryptedservers.conf.template" > "${CONFIG_DIR}/cryptedservers.conf"
+ENCRYPTED_CONTENT_ENCRYPTION_KEY=${ENCRYPTED_CONTENT_ENCRYPTION_KEY} envsubst < "${CONFIG_DIR}/plastic/linux/cryptedserver.key.template" > "${CONFIG_DIR}/cryptedserver.key"
 
 # Add .tgz'ed config files to GCP's Secrets Manager
 # These will be used by build jobs on Linux
 
-(cd "${SCRIPTS_DIR}" && tar -czvf plastic-config.tgz client.conf cryptedservers.conf cryptedserver.key >/dev/null)
+(cd "${CONFIG_DIR}" && tar -czvf plastic-config.tgz client.conf cryptedservers.conf cryptedserver.key >/dev/null)
 
 if gcloud "--project=${PROJECT_ID}" secrets describe plastic-config-tgz >/dev/null 2>&1; then
-	gcloud "--project=${PROJECT_ID}" secrets versions add plastic-config-tgz "--data-file=${SCRIPTS_DIR}/plastic-config.tgz"
+	gcloud "--project=${PROJECT_ID}" secrets versions add plastic-config-tgz "--data-file=${CONFIG_DIR}/plastic-config.tgz"
 else
-	gcloud "--project=${PROJECT_ID}" secrets create plastic-config-tgz "--data-file=${SCRIPTS_DIR}/plastic-config.tgz"
+	gcloud "--project=${PROJECT_ID}" secrets create plastic-config-tgz "--data-file=${CONFIG_DIR}/plastic-config.tgz"
 fi
-gcloud "--project=${PROJECT_ID}" secrets add-iam-policy-binding plastic-config-tgz --member=serviceAccount:ue-jenkins-agent-vm@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
 
 # Remove temp files
 
-rm "${SCRIPTS_DIR}/client.conf" "${SCRIPTS_DIR}/cryptedservers.conf" "${SCRIPTS_DIR}/cryptedserver.key" "${SCRIPTS_DIR}/plastic-config.zip" "${SCRIPTS_DIR}/plastic-config.tgz"
+rm "${CONFIG_DIR}/client.conf" "${CONFIG_DIR}/cryptedservers.conf" "${CONFIG_DIR}/cryptedserver.key" "${CONFIG_DIR}/plastic-config.tgz"

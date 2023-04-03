@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ClientConfigData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Language>en</Language>
+  <WorkspaceServer>${SERVER}</WorkspaceServer>
+  <WorkingMode>LDAPWorkingMode</WorkingMode>
+  <SecurityConfig>${SECURITY_CONFIG}</SecurityConfig>
+  <ShowPerformanceWarnings>yes</ShowPerformanceWarnings>
+  <MergeWithPendingChanges>no</MergeWithPendingChanges>
+  <StackTrace>no</StackTrace>
+  <SetFilesAsReadOnly>no</SetFilesAsReadOnly>
+  <SetRevisionFileDate>no</SetRevisionFileDate>
+  <SupportSmbWorkspaces>no</SupportSmbWorkspaces>
+  <PerformAddPlusCi>no</PerformAddPlusCi>
+  <CheckFileContentForChanged>yes</CheckFileContentForChanged>
+  <CaseSensitiveFsOnMac>no</CaseSensitiveFsOnMac>
+  <SameItemDifferentCaseError>no</SameItemDifferentCaseError>
+  <CheckinQueuesSize>50</CheckinQueuesSize>
+  <DownloadPoolSize>6</DownloadPoolSize>
+  <PendingChangesOnSwitchAction>Fail</PendingChangesOnSwitchAction>
+  <LastRunningEdition>cloud</LastRunningEdition>
+</ClientConfigData>
