@@ -19,15 +19,6 @@ resource "google_secret_manager_secret" "agent_secret" {
   }
 }
 
-resource "google_secret_manager_secret_iam_member" "agent_secret_agent_access" {
-
-  for_each = local.secrets
-
-  secret_id = google_secret_manager_secret.agent_secret[each.key].secret_id
-  role = "roles/secretmanager.secretAccessor"
-  member = "serviceAccount:${google_service_account.agent_service_account.email}"
-}
-
 resource "google_secret_manager_secret_version" "agent_secret_version" {
 
   for_each = local.secrets

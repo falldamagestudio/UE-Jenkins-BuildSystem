@@ -24,15 +24,6 @@ resource "google_secret_manager_secret" "ssh_agent_secret" {
   }
 }
 
-resource "google_secret_manager_secret_iam_member" "ssh_agent_secret_agent_access" {
-
-  for_each = local.ssh_agent_secrets
-
-  secret_id = google_secret_manager_secret.ssh_agent_secret[each.key].secret_id
-  role = "roles/secretmanager.secretAccessor"
-  member = "serviceAccount:${google_service_account.agent_service_account.email}"
-}
-
 resource "google_secret_manager_secret_version" "ssh_agent_secret_version" {
 
   for_each = local.ssh_agent_secrets
