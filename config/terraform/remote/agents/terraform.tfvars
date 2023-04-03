@@ -3,7 +3,7 @@ agent_template_groups = [
     # Dynamic VM templates (Linux)
 
     {
-        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-6086a18-linux"
+        vm_image_name = "projects/fd-ue-jenkins-buildsystem/global/images/ssh-agent-7a5a478-linux"
 
         agent_templates = {
             "build-engine-linux-dynamic" = {
