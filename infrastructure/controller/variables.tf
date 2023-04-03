@@ -1,5 +1,4 @@
 variable "project_id" {
-  description = "ID for the GCP project that will contain the license server."
   type        = string
 }
 
@@ -20,6 +19,10 @@ variable "controller_vm_subnetwork" {
 }
 
 variable "longtail_store_bucket_name" {
+  type = string
+}
+
+variable "ssh_vm_private_key_windows" {
   type = string
 }
 

@@ -1,5 +1,4 @@
 variable "project_id" {
-  description = "ID for the GCP project that will contain the license server."
   type        = string
 }
 

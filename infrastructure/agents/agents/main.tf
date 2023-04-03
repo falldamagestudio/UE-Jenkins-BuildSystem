@@ -30,3 +30,18 @@ resource "google_project_iam_member" "agent_cloud_logging_write_access" {
   role   = "roles/logging.logWriter"
   member = "serviceAccount:${google_service_account.agent_service_account.email}"
 }
+
+# Allow agent VMs to access the payload of all secrets in project
+
+resource "google_project_iam_member" "controller_secret_manager_secret_accessor" {
+
+  role   = "roles/secretmanager.secretAccessor"
+  member = "serviceAccount:${google_service_account.agent_service_account.email}"
+}
+
+# Allow agent VMs to view metadata of all secrets in project
+resource "google_project_iam_member" "controller_secret_manager_viewer" {
+
+  role   = "roles/secretmanager.viewer"
+  member = "serviceAccount:${google_service_account.agent_service_account.email}"
+}
