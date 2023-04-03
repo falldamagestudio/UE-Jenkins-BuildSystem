@@ -11,6 +11,8 @@ module "controller" {
 
     longtail_store_bucket_name = data.terraform_remote_state.core.outputs.longtail_store_bucket_name
 
+    ssh_vm_private_key_windows = data.terraform_remote_state.core.outputs.ssh_vm_private_key_windows
+
     controller_web_endpoint_domain = var.controller_web_endpoint_domain
 
     oauth2_client_id = var.oauth2_client_id
